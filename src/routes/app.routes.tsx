@@ -11,7 +11,7 @@ import Statistics from '../screens/Statistics';
 import Notifications from '../screens/Notifications';
 import PostActivity from '../screens/PostActivity';
 
-const AppNavigator = () => {
+const AppRoutes = () => {
   const Tab = createMaterialBottomTabNavigator();
 
   return (
@@ -55,4 +55,4 @@ const AppNavigator = () => {
   );
 };
 
-export default AppNavigator;
+export default AppRoutes;
