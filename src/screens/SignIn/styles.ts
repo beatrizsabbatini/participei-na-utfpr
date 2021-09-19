@@ -1,17 +1,12 @@
 import styled from 'styled-components/native';
 
-import { TextInput, Button } from 'react-native-paper';
 import { LinearGradient } from 'expo-linear-gradient';
-
-interface LoginButtonProps{
-  register?: boolean
-}
+import { RFValue } from 'react-native-responsive-fontsize';
 
 export const Logo = styled.Image`
-  height: 140px;
-  width: 210px;
+  height: ${RFValue(140)}px;
+  width: ${RFValue(210)}px;
   resizeMode: contain;
-  margin-bottom: 20px;
 `
 
 export const Background = styled.View`
@@ -19,13 +14,6 @@ export const Background = styled.View`
   justify-content: space-between; 
   align-items: center;
   background-color: ${({theme }) => theme.colors.background };
-`
-
-export const LoginInput = styled(TextInput)`
-  background-color: ${({theme }) => theme.colors.background };
-  width: 300px;
-  height: 50px;
-  margin-top: 12px;
 `
 
 export const ForgotPassword = styled.Text`
@@ -39,14 +27,8 @@ export const ForgotPassword = styled.Text`
 
 export const LinearGradientBox = styled(LinearGradient)`
   width: 100%;
-  height: 27px;
-`
-export const LoginButton = styled(Button)<LoginButtonProps>`
-  width: 300px;
-  height: 50px;
-  justify-content: center;
-  background-color: ${({theme, register}) => register ? theme.colors.primary_dark : theme.colors.primary_light};
-  margin-top: 12px;
+  height: ${RFValue(27)}px;
+  position: relative;
 `
 
 export const ThirdPartyLoginContainer = styled.View`
@@ -72,3 +54,19 @@ export const GreyText = styled.Text`
   color: #C4C4C4;
   font-weight: 100;
 `
+
+export const Shadow = styled.View`
+  height: 1px;
+  width: 100%;
+  position: absolute;
+  top: ${RFValue(27)}px;
+  shadow-color: #000;
+  shadow-offset: {
+    width: 0;
+    height: 2;
+  };
+  shadow-opacity: 0.8;
+  shadow-radius: 5px;
+  elevation: 5;
+`
+

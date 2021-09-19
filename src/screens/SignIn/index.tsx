@@ -5,24 +5,24 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 import { useNavigation } from '@react-navigation/core';
 import { StackNavigationProp } from '@react-navigation/stack';
 
-import { useAuth } from '../../hooks/auth';
+import { useAuth } from '../../hooks/Auth';
+import { RootStackParamList } from '../../routes/auth.routes';
 import LogoImage from '../../../assets/Logo.png';
 import FacebookLogo from '../../../assets/svg/facebook.svg';
 import GoogleLogo from '../../../assets/svg/google.svg';
-
+import Button from '../../components/Button';
 import { 
   Logo, 
   Background, 
-  LoginInput, 
   ForgotPassword, 
   LinearGradientBox,
-  LoginButton,
   ThirdPartyLoginContainer,
   Trace,
   Row,
-  GreyText
+  GreyText,
+  Shadow
 } from './styles';
-import { RootStackParamList } from '../../routes/auth.routes';
+import Input from '../../components/Input';
 
 type LoginScreenProp = StackNavigationProp<RootStackParamList, 'SignUp'>;
 
@@ -39,27 +39,18 @@ const SignIn: React.FC = () => {
         end={{ x: 1, y: 0 }} 
         colors={['#3dbdf8', '#1b79d1']}
       />
+      <Shadow />
       <Logo source={LogoImage}/>
       <View>
-        <LoginInput
-          mode='outlined'
-          label="E-mail ou RA"
-          value={''}
-          onChangeText={() => {}}
-        />
-        <LoginInput
-          mode='outlined'
-          label="Senha"
-          value={''}
-          onChangeText={() => {}}
-        />
-        <TouchableOpacity>
+        <Input placeholder="E-mail ou RA"/>
+        <Input placeholder="Senha"/>
+        <TouchableOpacity onPress={() => navigate('ForgotPassword')}>
           <ForgotPassword>Esqueci minha senha</ForgotPassword>
         </TouchableOpacity>
       </View>
       <View>
-        <LoginButton mode="contained" onPress={() => setIsAuthenticated(true)}>Entrar</LoginButton>
-        <LoginButton register mode="contained" onPress={() => navigate('SignUp')}>Cadastrar</LoginButton>
+        <Button onPress={() => setIsAuthenticated(true)} type="primary">Entrar</Button>
+        <Button onPress={() => navigate('SignUp')} type="dark">Cadastrar</Button>
       </View>
       <ThirdPartyLoginContainer>
         <Row>

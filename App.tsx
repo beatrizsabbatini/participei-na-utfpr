@@ -11,10 +11,10 @@ import {
 } from '@expo-google-fonts/roboto'
 
 import Routes from './src/routes';
-import { AuthProvider } from './src/hooks/auth';
 import theme from './src/global/styles/theme';
 import reactNativePaperTheme from './src/global/styles/reactNativePaperTheme';
 import { StatusBar } from 'react-native';
+import AppProvider from './src/hooks';
 
 const App = () =>{
 
@@ -31,10 +31,10 @@ const App = () =>{
   return (
     <ThemeProvider theme={theme}>
       <PaperProvider theme={reactNativePaperTheme}>
-        <AuthProvider>
-          <StatusBar barStyle='light-content' />
-          <Routes />
-        </AuthProvider>
+        <AppProvider>
+            <StatusBar/>
+            <Routes />
+        </AppProvider>
       </PaperProvider>
     </ThemeProvider>
   );
