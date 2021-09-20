@@ -58,8 +58,9 @@ export const GreyText = styled.Text`
 export const Shadow = styled.View`
   height: 1px;
   width: 100%;
+  background-color: #fff;
   position: absolute;
-  top: ${RFValue(27)}px;
+  top: ${RFValue(26)}px;
   shadow-color: #000;
   shadow-offset: {
     width: 0;

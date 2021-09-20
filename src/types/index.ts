@@ -1,3 +1,11 @@
+export interface IActivity{
+  id: string,
+  title: string,
+  group: number,
+  points: number,
+  category: string
+}
+
 export enum LEFT_ICON_TYPES{
   BACK = 'back',
   MENU = 'menu',

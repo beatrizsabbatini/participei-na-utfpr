@@ -3,10 +3,11 @@ import React from 'react';
 import { View } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons'; 
 
-import { LEFT_ICON_TYPES, RIGHT_ICON_TYPES } from '../../types/headerIconTypes';
+import { LEFT_ICON_TYPES, RIGHT_ICON_TYPES } from '../../types';
 import { useNavigation } from '@react-navigation/core';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { LinearGradientBox, HeaderTitle, Shadow } from './styles';
+import FilterIcon from '../FilterIcon';
 
 interface CustomHeaderProps{
   title: string;
@@ -21,6 +22,9 @@ const CustomHeader: React.FC<CustomHeaderProps> = ({title, leftIconType, rightIc
     switch (rightIconType) {
       case RIGHT_ICON_TYPES.NONE:
         return  <View/>
+
+      case RIGHT_ICON_TYPES.FILTER:
+        return  <FilterIcon/>
     
       default:
         return <View/>
@@ -39,11 +43,13 @@ const CustomHeader: React.FC<CustomHeaderProps> = ({title, leftIconType, rightIc
             <MaterialIcons name="arrow-back" size={32} color="white" />
           </TouchableOpacity> 
         ) : (
-          <View/>
+          <TouchableOpacity onPress={() => {}}>
+            <MaterialIcons name="menu" size={32} color="white" />
+          </TouchableOpacity> 
         )}
         <HeaderTitle>{title}</HeaderTitle>
         <View>
-          {generateRightIcon}
+          {generateRightIcon()}
         </View>
       </LinearGradientBox>
       <Shadow />

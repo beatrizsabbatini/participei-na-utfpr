@@ -5,7 +5,10 @@ export default{
     primary_dark: '#006BA7',
     primary_disabled_background: '#69B6D9',
     primary_disabled_text: '#C2E2FA',
-    background: '#fff'
+    secondary: '#A6A6A6',
+    secondary_dark: '#8E8E8E',
+    background: '#fff',
+    border: '#C9C9C9'
   },
   
   fonts: {

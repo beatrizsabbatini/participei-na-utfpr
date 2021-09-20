@@ -6,7 +6,7 @@ import SignIn from '../screens/SignIn';
 import SignUp from '../screens/SignUp';
 import ForgotPassword from '../screens/ForgotPassword';
 import CustomHeader from '../components/CustomHeader';
-import { LEFT_ICON_TYPES, RIGHT_ICON_TYPES } from '../types/headerIconTypes';
+import { LEFT_ICON_TYPES, RIGHT_ICON_TYPES } from '../types';
 
 const { Navigator, Screen } = createStackNavigator();
 
