@@ -20,11 +20,11 @@ export const HeaderTitle = styled.Text`
 export const Shadow = styled.View`
   height: 1px;
   width: 100%;
-  background-color: #fff;
+  background-color: transparent;
   shadow-color: #000;
   shadow-offset: {
     width: 0;
-    height: 2;
+    height: 3;
   };
   shadow-opacity: 0.25;
   shadow-radius: 3.84px;
