@@ -1,13 +1,14 @@
 import React from 'react';
 
-import { View } from 'react-native';
+import { View, Image } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons'; 
 
 import { LEFT_ICON_TYPES, RIGHT_ICON_TYPES } from '../../types';
 import { useNavigation } from '@react-navigation/core';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import { LinearGradientBox, HeaderTitle, Shadow } from './styles';
+import { LinearGradientBox, HeaderTitle, Shadow, ClockImage } from './styles';
 import FilterIcon from '../FilterIcon';
+import ClockIcon from '../../../assets/clock.png';
 
 interface CustomHeaderProps{
   title: string;
@@ -25,6 +26,9 @@ const CustomHeader: React.FC<CustomHeaderProps> = ({title, leftIconType, rightIc
 
       case RIGHT_ICON_TYPES.FILTER:
         return  <FilterIcon/>
+
+      case RIGHT_ICON_TYPES.CLOCK_ICON:
+        return  <ClockImage source={ClockIcon} />
     
       default:
         return <View/>

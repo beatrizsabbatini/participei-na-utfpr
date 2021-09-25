@@ -11,8 +11,15 @@ import Statistics from '../screens/Statistics';
 import Notifications from '../screens/Notifications';
 import PostActivity from '../screens/PostActivity';
 import CustomHeader from '../components/CustomHeader';
-import { LEFT_ICON_TYPES, RIGHT_ICON_TYPES } from '../types';
+import { IActivity, LEFT_ICON_TYPES, RIGHT_ICON_TYPES } from '../types';
 import theme from '../global/styles/theme';
+import { createStackNavigator } from '@react-navigation/stack';
+import ActivityDetails from '../screens/ActivityDetails';
+
+export type HomeStackParamList = {
+  ActivitiesFeed: undefined;
+  ActivityDetails: { data: IActivity };
+};
 
 const AppRoutes = () => {
   const Tab = createBottomTabNavigator();
@@ -28,16 +35,10 @@ const AppRoutes = () => {
     >
       <Tab.Screen 
         name="Home" 
-        component={Home} 
+        component={HomeStack} 
         options={{
+          headerShown: false,
           tabBarIcon: () => <MaterialIcons name="home" size={24} color="#fff" />,
-          header: () => (
-            <CustomHeader 
-              title="Atividades divulgadas" 
-              leftIconType={LEFT_ICON_TYPES.MENU} 
-              rightIconType={RIGHT_ICON_TYPES.FILTER}
-            />
-          )
         }}
       />
       <Tab.Screen 
@@ -101,3 +102,37 @@ const AppRoutes = () => {
 };
 
 export default AppRoutes;
+
+const HomeStack = () => {
+  const { Navigator, Screen } = createStackNavigator();
+
+  return(
+    <Navigator >
+      <Screen
+       name="ActivitiesFeed" 
+       component={Home} 
+       options={{
+         header: () => (
+           <CustomHeader 
+             title="Atividades divulgadas" 
+             leftIconType={LEFT_ICON_TYPES.MENU} 
+             rightIconType={RIGHT_ICON_TYPES.FILTER}
+           />
+         )
+       }}
+      />
+      <Screen
+        name="ActivityDetails"
+        component={ActivityDetails}
+        options={{
+          header: () => (
+            <CustomHeader 
+              title="Detalhes da atividade" 
+              leftIconType={LEFT_ICON_TYPES.BACK} 
+              rightIconType={RIGHT_ICON_TYPES.CLOCK_ICON}
+          />
+        )}}
+      />
+    </Navigator>
+  )
+}

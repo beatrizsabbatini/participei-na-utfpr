@@ -31,3 +31,7 @@ export const Shadow = styled.View`
   elevation: 5;
 `
 
+export const ClockImage = styled.Image`
+  height: ${RFValue(42)}px;
+  width: ${RFValue(42)}px;
+`

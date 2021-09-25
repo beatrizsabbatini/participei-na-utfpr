@@ -12,10 +12,10 @@ import Step3 from './Steps/Step3';
 import Step4 from './Steps/Step4';
 import Button from '../../components/Button';
 import { useSteps } from '../../hooks/Steps';
-import { RootStackParamList } from '../../routes/auth.routes';
+import { AuthStackParamList } from '../../routes/auth.routes';
 import { Background, ButtonContainer } from './styles';
 
-type SignUpScreenProp = StackNavigationProp<RootStackParamList, 'SignIn'>;
+type SignUpScreenProp = StackNavigationProp<AuthStackParamList, 'SignIn'>;
 
 const SignUp: React.FC = () => {
 

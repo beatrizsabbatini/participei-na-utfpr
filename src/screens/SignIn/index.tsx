@@ -6,7 +6,7 @@ import { useNavigation } from '@react-navigation/core';
 import { StackNavigationProp } from '@react-navigation/stack';
 
 import { useAuth } from '../../hooks/Auth';
-import { RootStackParamList } from '../../routes/auth.routes';
+import { AuthStackParamList } from '../../routes/auth.routes';
 import LogoImage from '../../../assets/Logo.png';
 import FacebookLogo from '../../../assets/svg/facebook.svg';
 import GoogleLogo from '../../../assets/svg/google.svg';
@@ -24,7 +24,7 @@ import {
 } from './styles';
 import Input from '../../components/Input';
 
-type LoginScreenProp = StackNavigationProp<RootStackParamList, 'SignUp'>;
+type LoginScreenProp = StackNavigationProp<AuthStackParamList, 'SignUp'>;
 
 const SignIn: React.FC = () => {
 

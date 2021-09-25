@@ -7,7 +7,8 @@ export default{
     primary_disabled_text: '#C2E2FA',
     secondary: '#A6A6A6',
     secondary_dark: '#8E8E8E',
-    background: '#fff',
+    secondary_light: '#B7B7B7',
+    background: '#fcfdff',
     border: '#C9C9C9'
   },
   

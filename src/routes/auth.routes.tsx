@@ -10,7 +10,7 @@ import { LEFT_ICON_TYPES, RIGHT_ICON_TYPES } from '../types';
 
 const { Navigator, Screen } = createStackNavigator();
 
-export type RootStackParamList = {
+export type AuthStackParamList = {
   SignIn: undefined;
   SignUp: undefined;
   ForgotPassword: undefined;

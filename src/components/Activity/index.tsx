@@ -20,11 +20,12 @@ import theme from '../../global/styles/theme';
 
 interface ActivityProps{
   data: IActivity;
+  onPress: () => void;
 }
 
-const Activity: React.FC<ActivityProps> = ({data}) => {
+const Activity: React.FC<ActivityProps> = ({data, onPress}) => {
   return (
-    <Container>
+    <Container onPress={onPress}>
       <CardTop>
         <View>
           <Category>{data.category}</Category>

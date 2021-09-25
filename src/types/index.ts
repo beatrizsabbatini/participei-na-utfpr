@@ -3,7 +3,11 @@ export interface IActivity{
   title: string,
   group: number,
   points: number,
-  category: string
+  category: string,
+  userName: string,
+  userId: string,
+  description?: string
+  images?: string[]
 }
 
 export enum LEFT_ICON_TYPES{
