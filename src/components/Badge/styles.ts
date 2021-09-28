@@ -13,7 +13,7 @@ export const Container = styled.View<BadgeStyleProps>`
   border-radius: 100px;
   align-items: center;
   justify-content: center;
-  width: 80px;
+  width: auto;
   margin-vertical: ${({ marginVertical }) => marginVertical ? `${RFValue(2.6)}px` : 0};
   margin-horizontal: ${({ marginHorizontal }) => marginHorizontal ? `${RFValue(5)}px` : 0};
   shadow-color: #000;

@@ -38,14 +38,14 @@ const AppRoutes = () => {
         component={HomeStack} 
         options={{
           headerShown: false,
-          tabBarIcon: () => <MaterialIcons name="home" size={24} color="#fff" />,
+          tabBarIcon: ({focused}) => <MaterialIcons name="home" size={24} color={focused ? '#fff' : '#74AEE5'} />,
         }}
       />
       <Tab.Screen 
         name="Statistics" 
         component={Statistics} 
         options={{
-          tabBarIcon: () => <FontAwesome name="bar-chart-o" size={24} color="#fff" />,
+          tabBarIcon: ({focused}) => <FontAwesome name="bar-chart-o" size={24} color={focused ? '#fff' : '#74AEE5'} />,
           header: () => (
             <CustomHeader 
               title="Suas estatísticas" 
@@ -59,7 +59,7 @@ const AppRoutes = () => {
         name="PostActivity" 
         component={PostActivity} 
         options={{
-          tabBarIcon: () => <Feather name="plus" size={24} color="#fff" />,
+          tabBarIcon: ({focused}) => <Feather name="plus" size={34} color={focused ? '#fff' : '#74AEE5'} />,
           header: () => (
             <CustomHeader 
               title="Publicar atividade" 
@@ -73,7 +73,7 @@ const AppRoutes = () => {
         name="Notifications" 
         component={Notifications} 
         options={{
-          tabBarIcon: () => <MaterialIcons name="notifications" size={24} color="#fff" />,
+          tabBarIcon: ({focused}) => <MaterialIcons name="notifications" size={24} color={focused ? '#fff' : '#74AEE5'} />,
           header: () => (
             <CustomHeader 
               title="Notificações" 
@@ -87,7 +87,7 @@ const AppRoutes = () => {
         name="Profile" 
         component={Profile} 
         options={{
-          tabBarIcon: () => <FontAwesome name="user" size={24} color="#fff" />,
+          tabBarIcon: ({focused}) => <FontAwesome name="user" size={24} color={focused ? '#fff' : '#74AEE5'} />,
           header: () => (
             <CustomHeader 
               title="Perfil" 

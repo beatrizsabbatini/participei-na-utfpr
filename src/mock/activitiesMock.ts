@@ -1,3 +1,5 @@
+import { RFValue } from "react-native-responsive-fontsize"
+
 export const activities = [
   {
     id: '1',
@@ -107,5 +109,50 @@ export const activities = [
     category: 'Trabalho Voluntário',
     userName: 'Beatriz Schwartz',
     userId: '7263214'
+  }
+]
+
+export const groupsData = [
+  {
+    points: [
+      {
+        pointsAvailable: 10,
+        pointsAchieved: 20,
+      }
+    ],
+    colors: ['#2DB3F0', '#EFEFEF'],
+    height: RFValue(160),
+    minimalValue: 20
+  },
+  {
+    points: [
+      {
+        pointsAvailable: 20,
+        pointsAchieved: 10,
+      }
+    ],
+    colors: ['#63E27F', '#EFEFEF'],
+    height: RFValue(160),
+    minimalValue: 20
+  },
+  {
+    points: [
+      {
+        pointsAvailable: 20,
+        pointsAchieved: 20,
+      }
+    ],
+    colors: ['#FBCF7B', '#EFEFEF'],
+    height: RFValue(203.5),
+    minimalValue: 20
+  },
+]
+
+export const totalPointsData = [
+  {
+    group1: 20,
+    group2: 10,
+    group3: 20,
+    availablePoints: 50
   }
 ]
