@@ -2,10 +2,6 @@ import styled from 'styled-components/native';
 import { RFValue } from 'react-native-responsive-fontsize';
 import { MaterialIcons } from '@expo/vector-icons'; 
 
-interface GroupBadgeProps{
-  color?: string;
-}
-
 export const Container = styled.View`
   background-color: ${({theme}) => theme.colors.background};
   flex: 1;
@@ -35,35 +31,6 @@ export const BadgesRow = styled.TouchableOpacity`
   flex-direction: row;
   align-items: center;
   margin: ${RFValue(30)}px 0 ${RFValue(20)}px 0;
-`
-
-export const GroupBadge = styled.View<GroupBadgeProps>`
-  background-color: ${({color}) => color};
-  border-radius: 100px;
-  align-items: center;
-  justify-content: center;
-  shadow-color: #000;
-  shadow-offset: {
-    width: 0;
-    height: 5;
-  };
-  shadow-opacity: 0.25;
-  shadow-radius: 3.84px;
-  elevation: 4;
-  margin: 5px;
-`
-
-export const PointsBadge = styled(GroupBadge)`
-  background-color: ${({theme}) => theme.colors.primary_dark};
-  margin-left: ${RFValue(10)}px;
-`
-
-export const BadgeText = styled.Text`
-  color: #fff;
-  font-weight: bold;
-  font-size: ${RFValue(11)}px;
-  padding-vertical: ${RFValue(3)}px;
-  padding-horizontal: ${RFValue(12)}px;
 `
 
 export const CategoryTitle = styled.Text`

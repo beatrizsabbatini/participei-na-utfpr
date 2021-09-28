@@ -12,7 +12,7 @@ export const activities = [
   {
     id: '2',
     title: 'Furiosos Cheerleaders',
-    group: 1,
+    group: 2,
     points: 30,
     category: 'Atividades Esportivas',
     userName: 'Beatriz Schwartz',
@@ -30,7 +30,7 @@ export const activities = [
   {
     id: '4',
     title: 'Natal Solidário 2019',
-    group: 3,
+    group: 1,
     points: 30,
     category: 'Trabalho Voluntário',
     userName: 'Beatriz Schwartz',
@@ -48,7 +48,7 @@ export const activities = [
   {
     id: '6',
     title: 'Natal Solidário 2019',
-    group: 3,
+    group: 2,
     points: 30,
     category: 'Trabalho Voluntário',
     userName: 'Beatriz Schwartz',

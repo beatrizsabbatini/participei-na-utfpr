@@ -9,14 +9,12 @@ import {
   CardTop, 
   Title, 
   Category,
-  BadgeText,
-  GroupBadge,
-  PointsBadge,
   CardBottom,
   SeeMoreContainer,
   SeeMoreText
 } from './styles';
 import theme from '../../global/styles/theme';
+import Badge from '../Badge';
 
 interface ActivityProps{
   data: IActivity;
@@ -32,12 +30,8 @@ const Activity: React.FC<ActivityProps> = ({data, onPress}) => {
           <Title>{data.title}</Title>
         </View>
         <View>
-          <GroupBadge color="#FBCF7B">
-            <BadgeText>Grupo {data.group}</BadgeText>
-          </GroupBadge>
-          <PointsBadge>
-            <BadgeText>{data.points} pontos</BadgeText>
-          </PointsBadge>
+          <Badge group={data.group} marginVertical/>
+          <Badge points={data.points} marginVertical/>
         </View>
       </CardTop>
       <CardBottom>

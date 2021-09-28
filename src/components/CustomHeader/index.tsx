@@ -25,11 +25,22 @@ const CustomHeader: React.FC<CustomHeaderProps> = ({title, leftIconType, rightIc
         return  <View/>
 
       case RIGHT_ICON_TYPES.FILTER:
-        return  <FilterIcon/>
+        return (
+          <TouchableOpacity>
+            <FilterIcon/>
+          </TouchableOpacity>
+        )
 
       case RIGHT_ICON_TYPES.CLOCK_ICON:
         return  <ClockImage source={ClockIcon} />
-    
+       
+      case RIGHT_ICON_TYPES.HELP:
+        return (
+          <TouchableOpacity>
+            <MaterialIcons name="help" size={24} color="white" />
+          </TouchableOpacity>
+        )
+
       default:
         return <View/>
     }
@@ -40,7 +51,7 @@ const CustomHeader: React.FC<CustomHeaderProps> = ({title, leftIconType, rightIc
       <LinearGradientBox 
         start={{ x: -1, y: 0 }}
         end={{ x: 1, y: 0 }} 
-        colors={['#3dbdf8', '#1b79d1']}
+        colors={['#55c4f8', '#1b79d1']}
       >
         {leftIconType === LEFT_ICON_TYPES.BACK ? (
           <TouchableOpacity onPress={goBack}>

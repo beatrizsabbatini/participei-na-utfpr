@@ -50,7 +50,7 @@ const AppRoutes = () => {
             <CustomHeader 
               title="Suas estatísticas" 
               leftIconType={LEFT_ICON_TYPES.MENU} 
-              rightIconType={RIGHT_ICON_TYPES.NONE}
+              rightIconType={RIGHT_ICON_TYPES.HELP}
             />
           )
         }}

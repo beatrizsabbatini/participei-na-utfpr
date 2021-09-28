@@ -1,10 +1,6 @@
 import styled from 'styled-components/native';
 import { RFValue } from 'react-native-responsive-fontsize';
 
-interface GroupBadgeProps{
-  color?: string;
-}
-
 export const Container = styled.TouchableOpacity`
   background-color: #fff;
   align-self: stretch;
@@ -38,26 +34,6 @@ export const Title = styled.Text`
   font-weight: bold;
   font-size: ${RFValue(18)}px;
   color: ${({theme}) => theme.colors.secondary};
-`
-
-export const GroupBadge = styled.View<GroupBadgeProps>`
-  background-color: ${({color}) => color};
-  border-radius: 100;
-  align-items: center;
-  justify-content: center;
-`
-
-export const PointsBadge = styled(GroupBadge)`
-  background-color: ${({theme}) => theme.colors.primary_dark};
-  margin-top: ${RFValue(4)}px;
-`
-
-export const BadgeText = styled.Text`
-  color: #fff;
-  font-weight: bold;
-  font-size: ${RFValue(11)}px;
-  padding-vertical: ${RFValue(3)}px;
-  padding-horizontal: ${RFValue(8)}px;
 `
 
 export const CardBottom = styled.View`

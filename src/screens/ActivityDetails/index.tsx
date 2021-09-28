@@ -4,7 +4,7 @@ import { View } from 'react-native';
 import { useRoute, RouteProp } from '@react-navigation/native';
 import { MaterialIcons } from '@expo/vector-icons'; 
 
-
+import Badge from '../../components/Badge';
 import theme from '../../global/styles/theme';
 import { HomeStackParamList } from '../../routes/app.routes';
 
@@ -14,9 +14,6 @@ import {
   Row, 
   PersonIcon,
   BadgesRow,
-  BadgeText,
-  GroupBadge,
-  PointsBadge,
   CategoryTitle,
   ActivityTitle,
   ActivityDescription,
@@ -41,12 +38,8 @@ const ActivityDetails: React.FC = () => {
           <UserName>{data?.userName || 'Not found'}</UserName>
         </Row>
         <BadgesRow>
-          <GroupBadge color={theme.colors.primary_light}>
-            <BadgeText>Grupo {data?.group}</BadgeText>
-          </GroupBadge>
-          <PointsBadge> 
-            <BadgeText>{data?.points} pontos</BadgeText>
-          </PointsBadge>
+          <Badge group={data?.group}/>
+          <Badge points={data?.points} marginHorizontal/>
         </BadgesRow>
         <CategoryTitle>{data?.category}</CategoryTitle>
         <ActivityTitle>{data?.title}</ActivityTitle>
