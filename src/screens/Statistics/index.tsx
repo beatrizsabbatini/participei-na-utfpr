@@ -90,7 +90,7 @@ const Statistics: React.FC = () => {
       <InstructionsContainer>
         <Row alignItems="center">
           <RedLine/>
-          <Instructions>Mínimo de pontos que se deve atingir em cada grupo.</Instructions>
+          <Instructions>Mínimo de pontos que se deve atingir em cada grupo (20 pontos).</Instructions>
         </Row>
         <Row alignItems="center" paddingTop>
           <GrayRectangle/>
@@ -110,7 +110,7 @@ const Statistics: React.FC = () => {
 
       <Row alignItems="center" paddingTop>
         <BlueLine/>
-        <Instructions>Linha vermelha: Mínimo de pontos que se deve atingir em cada grupo.</Instructions>
+        <Instructions>Mínimo de pontos que os alunos devem atingir para poderem se formar (70 pontos).</Instructions>
       </Row>
 
     </Background>
