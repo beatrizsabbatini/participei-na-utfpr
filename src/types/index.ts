@@ -10,6 +10,12 @@ export interface IActivity{
   images?: string[]
 }
 
+export interface INotification{
+  id: string,
+  message: string,
+  highlight: string,
+}
+
 export enum LEFT_ICON_TYPES{
   BACK = 'back',
   MENU = 'menu',

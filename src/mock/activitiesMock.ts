@@ -156,3 +156,26 @@ export const totalPointsData = [
     availablePoints: 50
   }
 ]
+
+export const notificationsMock = [
+  {
+    id: "1",
+    message: "Nova atividade do Grupo 1 disponível",
+    highlight: "Furiosos Cheerleaders 2022"
+  },
+  {
+    id: "2",
+    message: "Nova atividade do Grupo 1 disponível",
+    highlight: "Furiosos Cheerleaders 2022"
+  },
+  {
+    id: "3",
+    message: "Nova atividade do Grupo 1 disponível",
+    highlight: "Furiosos Cheerleaders 2022"
+  },
+  {
+    id: "4",
+    message: "Nova atividade do Grupo 1 disponível",
+    highlight: "Furiosos Cheerleaders 2022"
+  }
+]
