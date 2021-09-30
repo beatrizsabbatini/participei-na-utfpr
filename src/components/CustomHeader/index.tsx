@@ -41,6 +41,13 @@ const CustomHeader: React.FC<CustomHeaderProps> = ({title, leftIconType, rightIc
           </TouchableOpacity>
         )
 
+      case RIGHT_ICON_TYPES.EDIT_PROFILE:
+        return (
+          <TouchableOpacity>
+            <MaterialIcons name="edit" size={24} color="white" />
+          </TouchableOpacity>
+        )
+
       default:
         return <View/>
     }

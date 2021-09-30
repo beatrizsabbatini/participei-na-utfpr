@@ -87,12 +87,12 @@ const AppRoutes = () => {
         name="Profile" 
         component={Profile} 
         options={{
-          tabBarIcon: ({focused}) => <FontAwesome name="user" size={24} color={focused ? '#fff' : '#74AEE5'} />,
+          tabBarIcon: ({focused}) => <MaterialIcons name="person" size={24} color={focused ? '#fff' : '#74AEE5'} />,
           header: () => (
             <CustomHeader 
               title="Perfil" 
               leftIconType={LEFT_ICON_TYPES.MENU} 
-              rightIconType={RIGHT_ICON_TYPES.NONE}
+              rightIconType={RIGHT_ICON_TYPES.EDIT_PROFILE}
             />
           )
         }}

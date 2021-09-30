@@ -179,3 +179,28 @@ export const notificationsMock = [
     highlight: "Furiosos Cheerleaders 2022"
   }
 ]
+
+export const publishedActivitiesMock = [
+  {
+    id: '1',
+    title: 'Natal Solidário 2018',
+    group: 3,
+    points: 30,
+    category: 'Trabalho Voluntário',
+    userName: 'Beatriz Schwartz',
+    userId: '7263214',
+    description: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. '
+  },
+]
+
+export const savedActivitiesMock = [
+  {
+    id: '2',
+    title: 'Furiosos Cheerleaders',
+    group: 2,
+    points: 30,
+    category: 'Atividades Esportivas',
+    userName: 'Beatriz Schwartz',
+    userId: '7263214'
+  },
+]

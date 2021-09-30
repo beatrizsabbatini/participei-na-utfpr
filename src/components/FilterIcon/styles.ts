@@ -9,7 +9,7 @@ export const Container = styled.View`
 
 export const FilterNumberBadge = styled.View`
   background-color: #DF4343;
-  border-radius: 25px;
+  border-radius: ${RFValue(25)}px;
   align-items: center;
   justify-content: center;
   height: ${RFValue(12)}px;

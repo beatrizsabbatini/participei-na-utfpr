@@ -5,7 +5,7 @@ export const Container = styled.TouchableOpacity`
   background-color: #fff;
   align-self: stretch;
   border: 1px solid ${({theme}) => theme.colors.border};
-  border-radius: 11;
+  border-radius: ${RFValue(11)}px;
   padding: ${RFValue(10)}px;
   shadow-color: #000;
   shadow-offset: {

@@ -10,7 +10,7 @@ interface BadgeStyleProps{
 
 export const Container = styled.View<BadgeStyleProps>`
   background-color: ${({color, theme}) => color || theme.colors.primary_dark};
-  border-radius: 100px;
+  border-radius: ${RFValue(25)}px;
   align-items: center;
   justify-content: center;
   width: auto;

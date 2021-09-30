@@ -11,7 +11,7 @@ export const NotificationContainer = styled.View`
   flex-direction: row;
   align-items: center;
   background-color: #EDF4F5;
-  padding: ${RFValue(25)}px;
+  padding: ${RFValue(18)}px;
 `
 
 export const ClockIcon = styled.Image`
