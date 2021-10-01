@@ -62,8 +62,8 @@ export const CertificateContainer = styled.TouchableOpacity<CertificateContainer
   left: 0.5;
   right: 0.3;
   bottom: 1;
-  border-bottom-left-radius: 7;
-  border-bottom-right-radius: 7;
+  border-bottom-left-radius: ${RFValue(7)}px;
+  border-bottom-right-radius: ${RFValue(7)}px;
   height: ${RFValue(35)}px;
   background-color: ${({containsCertificate}) => containsCertificate ? '#FFF5DA' : '#F3F3F3'};
   position: absolute;
