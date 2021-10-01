@@ -49,7 +49,7 @@ const SignIn: React.FC = () => {
         </TouchableOpacity>
       </View>
       <View>
-        <Button onPress={() => setIsAuthenticated(true)} type="primary">Entrar</Button>
+        <Button onPress={() => setIsAuthenticated(true)} type="light">Entrar</Button>
         <Button onPress={() => navigate('SignUp')} type="dark">Cadastrar</Button>
       </View>
       <ThirdPartyLoginContainer>

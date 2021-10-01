@@ -1,12 +1,17 @@
 import styled from 'styled-components/native';
 import { RFValue } from 'react-native-responsive-fontsize';
 
+interface CertificateContainerProps{
+  containsCertificate?: boolean
+}
+
 export const Container = styled.TouchableOpacity`
   background-color: #fff;
   align-self: stretch;
   border: 1px solid ${({theme}) => theme.colors.border};
   border-radius: ${RFValue(11)}px;
   padding: ${RFValue(10)}px;
+  padding-bottom: ${RFValue(45)}px;
   shadow-color: #000;
   shadow-offset: {
     width: 0;
@@ -51,4 +56,29 @@ export const SeeMoreContainer = styled.TouchableOpacity`
 export const SeeMoreText = styled.Text`
   color: ${({ theme }) => theme.colors.primary_light};
   font-size: ${RFValue(12)}px;
+`
+
+export const CertificateContainer = styled.TouchableOpacity<CertificateContainerProps>`
+  left: 0.5;
+  right: 0.3;
+  bottom: 1;
+  border-bottom-left-radius: 7;
+  border-bottom-right-radius: 7;
+  height: ${RFValue(35)}px;
+  background-color: ${({containsCertificate}) => containsCertificate ? '#FFF5DA' : '#F3F3F3'};
+  position: absolute;
+  border: 1px solid ${({theme}) => theme.colors.secondary};
+  border-bottom-width: 0;
+  border-left-width: 0;
+  border-right-width: 0;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+`
+
+export const ThinText = styled.Text`
+  font-weight: 100;
+  font-size: ${RFValue(13)}px;
+  color: ${({theme}) => theme.colors.secondary};
+  margin-right: ${RFValue(8)}px;
 `

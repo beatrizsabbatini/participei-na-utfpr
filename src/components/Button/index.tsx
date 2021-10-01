@@ -31,7 +31,16 @@ const Button: React.FC<ButtonComponentProps> = ({type, children, onPress}) => {
     generateButtonColor();
   }, [])
 
-  return <PrimaryButton mode="contained" color={buttonColor} onPress={onPress}>{children}</PrimaryButton>
+  return (
+    <PrimaryButton 
+      mode="contained" 
+      color={buttonColor} 
+      onPress={onPress}
+      labelStyle={{ color: "white" }}
+    >
+      {children}
+    </PrimaryButton>
+  )
 }
 
 export default Button;

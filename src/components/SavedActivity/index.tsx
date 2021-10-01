@@ -2,8 +2,15 @@ import React from 'react';
 
 import { View, TouchableOpacity } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons'; 
+import { FontAwesome5 } from '@expo/vector-icons'; 
+import { Entypo } from '@expo/vector-icons'; 
+import { useNavigation } from '@react-navigation/native';
+import { StackNavigationProp } from '@react-navigation/stack';
 
 import { IActivity } from '../../types';
+import theme from '../../global/styles/theme';
+import Badge from '../Badge';
+import { HomeStackParamList } from '../../routes/app.routes';
 import { 
   Container, 
   CardTop, 
@@ -11,15 +18,12 @@ import {
   Category,
   CardBottom,
   SeeMoreContainer,
-  SeeMoreText
+  SeeMoreText,
+  CertificateContainer,
+  ThinText
 } from './styles';
-import theme from '../../global/styles/theme';
-import Badge from '../Badge';
-import { useNavigation } from '@react-navigation/native';
-import { StackNavigationProp } from '@react-navigation/stack';
-import { HomeStackParamList } from '../../routes/app.routes';
 
-interface ActivityProps{
+interface SavedActivityProps{
   data: IActivity;
   onPress: () => void;
   userPublished?: boolean;
@@ -28,7 +32,7 @@ interface ActivityProps{
 
 type HomeScreenProp = StackNavigationProp<HomeStackParamList, 'ActivityDetails'>;
 
-const Activity: React.FC<ActivityProps> = ({data, onPress, userPublished}) => {
+const SavedActivity: React.FC<SavedActivityProps> = ({ data, onPress }) => {
   const { navigate } = useNavigation<HomeScreenProp>();
 
   return (
@@ -49,15 +53,22 @@ const Activity: React.FC<ActivityProps> = ({data, onPress, userPublished}) => {
           <SeeMoreText>Toque para ver mais</SeeMoreText>
         </SeeMoreContainer>
         <TouchableOpacity>
-          {userPublished ? (
-            <MaterialIcons name="edit" size={24} color={theme.colors.secondary} />
-          ) : (
-            <MaterialIcons name="folder" size={24} color={theme.colors.primary_light} />
-          )}
+        <FontAwesome5 name="trash" size={18} color={theme.colors.secondary} />
         </TouchableOpacity>
       </CardBottom>
+        {data.certificate ? (
+          <CertificateContainer containsCertificate={data.certificate}>
+            <ThinText>Visualizar certificado</ThinText>
+            <Entypo name="trophy" size={15} color={theme.colors.secondary} />
+          </CertificateContainer>
+        ) : (
+          <CertificateContainer>
+            <ThinText>Adicionar certificado</ThinText>
+            <MaterialIcons name="note-add" size={18} color={theme.colors.secondary} />
+          </CertificateContainer>
+        )}
     </Container>
   )
 }
 
-export default Activity;
+export default SavedActivity;

@@ -1,11 +1,12 @@
 import React from 'react';
 
-import { View, Image } from 'react-native';
+import { View } from 'react-native';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 import { MaterialIcons } from '@expo/vector-icons'; 
+import { useNavigation } from '@react-navigation/core';
+import { DrawerActions } from '@react-navigation/native';
 
 import { LEFT_ICON_TYPES, RIGHT_ICON_TYPES } from '../../types';
-import { useNavigation } from '@react-navigation/core';
-import { TouchableOpacity } from 'react-native-gesture-handler';
 import { LinearGradientBox, HeaderTitle, Shadow, ClockImage } from './styles';
 import FilterIcon from '../FilterIcon';
 import ClockIcon from '../../../assets/clock.png';
@@ -17,7 +18,7 @@ interface CustomHeaderProps{
 }
 
 const CustomHeader: React.FC<CustomHeaderProps> = ({title, leftIconType, rightIconType }) => {
-  const { goBack } = useNavigation();
+  const navigation = useNavigation();
 
   const generateRightIcon = () => {
     switch (rightIconType) {
@@ -61,11 +62,11 @@ const CustomHeader: React.FC<CustomHeaderProps> = ({title, leftIconType, rightIc
         colors={['#55c4f8', '#1b79d1']}
       >
         {leftIconType === LEFT_ICON_TYPES.BACK ? (
-          <TouchableOpacity onPress={goBack}>
+          <TouchableOpacity onPress={() => navigation.goBack()}>
             <MaterialIcons name="arrow-back" size={32} color="white" />
           </TouchableOpacity> 
         ) : (
-          <TouchableOpacity onPress={() => {}}>
+          <TouchableOpacity onPress={() => navigation.dispatch(DrawerActions.openDrawer())}>
             <MaterialIcons name="menu" size={32} color="white" />
           </TouchableOpacity> 
         )}

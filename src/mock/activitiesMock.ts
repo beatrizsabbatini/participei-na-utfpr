@@ -196,11 +196,22 @@ export const publishedActivitiesMock = [
 export const savedActivitiesMock = [
   {
     id: '2',
-    title: 'Furiosos Cheerleaders',
+    title: 'Furiosos Cheerleaders 2018/01',
     group: 2,
     points: 30,
     category: 'Atividades Esportivas',
     userName: 'Beatriz Schwartz',
-    userId: '7263214'
+    userId: '7263214',
+    certificate: true
+  },
+  {
+    id: '3',
+    title: 'Furiosos Cheerleaders 2018/02',
+    group: 2,
+    points: 30,
+    category: 'Atividades Esportivas',
+    userName: 'Beatriz Schwartz',
+    userId: '7263214',
+    certificate: false
   },
 ]

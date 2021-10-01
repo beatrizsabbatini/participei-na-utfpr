@@ -7,7 +7,8 @@ export interface IActivity{
   userName: string,
   userId: string,
   description?: string
-  images?: string[]
+  images?: string[],
+  certificate?: any
 }
 
 export interface INotification{

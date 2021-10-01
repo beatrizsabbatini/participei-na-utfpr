@@ -21,13 +21,11 @@ import {
   SaveOrReport
 } from './styles';
 
-
 const ActivityDetails: React.FC = () => {
 
   const route = useRoute<RouteProp<HomeStackParamList, 'ActivityDetails'>>();
 
   const { data } = route.params;
-
   //const renderImages: ListRenderItem<IActivity> = ({ item, index }) => <CustomImage source={item} />;
   
   return (
