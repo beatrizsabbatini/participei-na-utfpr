@@ -38,11 +38,11 @@ const SavedActivity: React.FC<SavedActivityProps> = ({ data, onPress }) => {
   return (
     <Container onPress={onPress}>
       <CardTop>
-        <View>
+        <View style={{flex: 7}}>
           <Category>{data.category}</Category>
           <Title>{data.title}</Title>
         </View>
-        <View>
+        <View style={{flex: 3}}>
           <Badge group={data.group} marginVertical/>
           <Badge points={data.points} marginVertical/>
         </View>

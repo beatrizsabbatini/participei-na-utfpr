@@ -215,3 +215,36 @@ export const savedActivitiesMock = [
     certificate: false
   },
 ]
+
+export const categories = [
+  {
+    id: '0',
+    placeholder: true,
+    label: '',
+    value: ''
+  },
+  {
+    id: '1',
+    label: 'Atividade de extensão',
+    value: 'Atividade de extensão'
+  },
+  {
+    id: '2',
+    label: 'Atividade esportiva',
+    value: 'Atividade esportiva'
+  }
+]
+
+export const mockCampuses = [
+  {
+    id: '0',
+    placeholder: true,
+    label: '',
+    value: ''
+  },
+  {
+    id: '1',
+    label: 'Cornélio Procópio',
+    value: '1'
+  }
+]

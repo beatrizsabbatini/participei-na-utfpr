@@ -8,7 +8,8 @@ interface CertificateContainerProps{
 export const Container = styled.TouchableOpacity`
   background-color: #fff;
   align-self: stretch;
-  border: 1px solid ${({theme}) => theme.colors.border};
+  border-width: ${RFValue(1)}px;
+  border-color: ${({theme}) => theme.colors.border};
   border-radius: ${RFValue(11)}px;
   padding: ${RFValue(10)}px;
   padding-bottom: ${RFValue(45)}px;
@@ -27,6 +28,7 @@ export const CardTop = styled.View`
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
+  flex: 10;
 `
 
 export const Category = styled.Text`
@@ -61,13 +63,14 @@ export const SeeMoreText = styled.Text`
 export const CertificateContainer = styled.TouchableOpacity<CertificateContainerProps>`
   left: 0.5;
   right: 0.3;
-  bottom: 1;
+  bottom: ${RFValue(1)}px;
   border-bottom-left-radius: ${RFValue(7)}px;
   border-bottom-right-radius: ${RFValue(7)}px;
   height: ${RFValue(35)}px;
   background-color: ${({containsCertificate}) => containsCertificate ? '#FFF5DA' : '#F3F3F3'};
   position: absolute;
-  border: 1px solid ${({theme}) => theme.colors.secondary};
+  border-width: ${RFValue(1)}px;
+  border-color: ${({theme}) => theme.colors.border};
   border-bottom-width: 0;
   border-left-width: 0;
   border-right-width: 0;

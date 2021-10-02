@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 
-import Input from '../../../../components/Input';
+import Dropdown from '../../../../components/Dropdown';
+import { mockCampuses } from '../../../../mock/activitiesMock';
 
 const Step4: React.FC = () => {
-  return <Input placeholder="Selecione seu câmpus" />
+  const [value, setValue] = useState()
+  return <Dropdown list={mockCampuses} value={value} setValue={setValue} placeholder="Selecione um campus"/>
 }
 
 export default Step4;

@@ -5,7 +5,6 @@ import { RFValue } from "react-native-responsive-fontsize";
 export const CustomInput = styled(TextInput)`
   background-color: ${({theme }) => theme.colors.background };
   width: ${RFValue(300)}px;
-  height: ${RFValue(45)}px;
   margin-top: ${RFValue(12)}px;
   shadow-color: #000;
   shadow-offset: {

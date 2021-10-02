@@ -9,7 +9,7 @@ const theme = {
     placeholder: '#B7B7B7',
     borderColor: '#B7B7B7',
   },
-  roundness: 26
+  roundness: 30
 };
 
 export default theme;
