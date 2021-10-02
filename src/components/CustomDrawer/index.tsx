@@ -15,7 +15,7 @@ const CustomDrawer = (props: any) => {
   const navigation = useNavigation();
 
   const handleLogout = () => {
-    navigation.dispatch(DrawerActions.openDrawer());
+    navigation.dispatch(DrawerActions.closeDrawer());
     setIsAuthenticated(false);
   }
   

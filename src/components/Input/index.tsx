@@ -23,7 +23,7 @@ const Input: React.FC<InputProps> = (props) => {
   return (
     <CustomInput  
       mode='outlined' 
-      label={props.placeholder}
+      label={`    ${props.placeholder}`}
       value={props.value}
       onChangeText={() => props.onChangeText}
     />
