@@ -9,13 +9,17 @@ import {
   Roboto_700Bold,
   Roboto_400Regular
 } from '@expo-google-fonts/roboto'
+import firebase from 'firebase/app';
+import { Provider } from 'react-redux';
 
 import Routes from './src/routes';
 import theme from './src/global/styles/theme';
 import reactNativePaperTheme from './src/global/styles/reactNativePaperTheme';
 import { StatusBar } from 'react-native';
 import AppProvider from './src/hooks';
-
+import { firebaseConfig } from './firebase';
+import store from './src/store';
+ 
 const App = () =>{
 
   const [fontsLoaded] = useFonts({
@@ -28,12 +32,16 @@ const App = () =>{
     return <AppLoading/>
   }
 
+  firebase.initializeApp(firebaseConfig);
+
   return (
     <ThemeProvider theme={theme}>
       <PaperProvider theme={reactNativePaperTheme}>
         <AppProvider>
-            <StatusBar/>
-            <Routes />
+          <Provider store={store}>
+              <StatusBar/>
+              <Routes />
+          </Provider>
         </AppProvider>
       </PaperProvider>
     </ThemeProvider>

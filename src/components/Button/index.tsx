@@ -6,9 +6,10 @@ import { PrimaryButton } from './styles';
 interface ButtonComponentProps{
   type: 'primary' | 'light' | 'dark',
   onPress: () => void;
+  loading?: boolean;
 }
 
-const Button: React.FC<ButtonComponentProps> = ({type, children, onPress}) => {
+const Button: React.FC<ButtonComponentProps> = ({type, children, onPress, loading = false}) => {
   const [buttonColor, setButtonColor] = useState<string>(theme.colors.primary);
 
   const generateButtonColor = () => {
@@ -37,6 +38,7 @@ const Button: React.FC<ButtonComponentProps> = ({type, children, onPress}) => {
       color={buttonColor} 
       onPress={onPress}
       labelStyle={{ color: "white" }}
+      loading={loading}
     >
       {children}
     </PrimaryButton>

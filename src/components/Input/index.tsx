@@ -4,28 +4,27 @@ import { TextInputProps } from 'react-native';
 
 import { CustomInput } from './styles';
 export interface InputProps extends TextInputProps { // added extends TextInputProps and renamed interface
-  mode?: 'flat' | 'outlined';
   disabled?: boolean;
   label?: string;
   placeholder?: string;
   error?: boolean;
-  onChangeText?: () => void;
-  underlineColor?: string;
+  onChangeText?: any;
   multiline?: boolean;
   numberOfLines?: number;
-  onFocus?: () => any;
-  onBlur?: () => any;
   value?: string;
-  style?: any;
 }
 
-const Input: React.FC<InputProps> = (props) => {
+const Input: React.FC<InputProps> = ({...props}) => {
   return (
     <CustomInput  
+      error={props.error}
+      disabled={props.disabled}
       mode='outlined' 
       label={`    ${props.placeholder}`}
       value={props.value}
-      onChangeText={() => props.onChangeText}
+      onChangeText={props.onChangeText}
+      numberOfLines={props.numberOfLines}
+      multiline={props.multiline}
     />
   )
 }
