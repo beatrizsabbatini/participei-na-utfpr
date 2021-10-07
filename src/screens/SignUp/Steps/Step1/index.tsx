@@ -1,12 +1,21 @@
 import React from 'react';
 
 import { View } from 'react-native';
+
+import { Step } from '../..';
 import Input from '../../../../components/Input';
 
-const Step1: React.FC = () => {
+
+const Step1: React.FC<Step> = ({formProps}) => {
   return (
     <View>
-      <Input placeholder="Digite um e-mail"/>
+      <Input 
+        placeholder={formProps.errors.email || "Digite um e-mail"} 
+        error={formProps.errors.email}
+        value={formProps.values.email} 
+        onChangeText={(text: string) => formProps.setFieldValue('email', text)}
+        onBlur={() => formProps.validateField('email')}
+      />
     </View>
   )
 }

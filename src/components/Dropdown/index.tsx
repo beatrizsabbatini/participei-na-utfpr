@@ -9,7 +9,8 @@ interface DropDownProps {
   placeholder: string,
   value: any,
   setValue: (value: any) => void,
-  list: any[]
+  list: any[],
+  onValueChange: (value: any) => void;
 }
 
 const Dropdown: React.FC<DropDownProps> = (props) => {  
@@ -18,7 +19,10 @@ const Dropdown: React.FC<DropDownProps> = (props) => {
     <PickerContainer>
       <CustomPicker
         selectedValue={props.value}
-        onValueChange={(itemValue) => props.setValue(itemValue)}
+        onValueChange={(itemValue) => {
+          props.setValue(itemValue);
+          props.onValueChange(itemValue);
+        }}
       >
         {props.list.map(item => (
           <Picker.Item 

@@ -47,9 +47,9 @@ const SignIn: React.FC = () => {
 
   const loginFormSchema = Yup.object().shape({
     email: Yup.string()
-      .required('Campo obrigatório!')
+      .required('E-mail é obrigatório!')
       .email('Digite um email válido!'),
-    password: Yup.string().required('Campo obrigatório!'),
+    password: Yup.string().required('Senha é obrigatório!'),
   });
 
   const loginService = async (values: any) => {

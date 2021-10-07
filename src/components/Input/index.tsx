@@ -12,6 +12,8 @@ export interface InputProps extends TextInputProps { // added extends TextInputP
   multiline?: boolean;
   numberOfLines?: number;
   value?: string;
+  secureTextEntry?: boolean;
+  onBlur?: () => void;
 }
 
 const Input: React.FC<InputProps> = ({...props}) => {
@@ -25,6 +27,8 @@ const Input: React.FC<InputProps> = ({...props}) => {
       onChangeText={props.onChangeText}
       numberOfLines={props.numberOfLines}
       multiline={props.multiline}
+      secureTextEntry={props.secureTextEntry}
+      onBlur={props.onBlur}
     />
   )
 }
