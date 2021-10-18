@@ -51,8 +51,9 @@ const Home: React.FC = () => {
       if (snapshotValue){
         const activitiesArray: IActivity[] = Object.values(snapshotValue);
         dispatch(getActivitiesSuccess(activitiesArray));
+      } else {
+        dispatch(getActivitiesSuccess([]));
       }
-      dispatch(getActivitiesSuccess([]));
     }, (error: any) => {
       Alert.alert("Erro ao buscar atividades!", error.message);
       dispatch(getActivitiesError(error))
