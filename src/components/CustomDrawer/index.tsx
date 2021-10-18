@@ -3,6 +3,7 @@ import React from 'react';
 import { DrawerActions, useNavigation } from '@react-navigation/native';
 import { DrawerContentScrollView } from '@react-navigation/drawer';
 import { SimpleLineIcons } from '@expo/vector-icons'; 
+import firebase from 'firebase';
 
 import theme from '../../global/styles/theme';
 import LogoImage from '../../../assets/Logo.png';
@@ -14,8 +15,9 @@ const CustomDrawer = (props: any) => {
   const { setIsAuthenticated } = useAuth();
   const navigation = useNavigation();
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
     navigation.dispatch(DrawerActions.closeDrawer());
+    await firebase.auth().signOut()
     setIsAuthenticated(false);
   }
   

@@ -22,7 +22,7 @@ const Input: React.FC<InputProps> = ({...props}) => {
       error={props.error}
       disabled={props.disabled}
       mode='outlined' 
-      label={`    ${props.placeholder}`}
+      label={props.placeholder}
       value={props.value}
       onChangeText={props.onChangeText}
       numberOfLines={props.numberOfLines}

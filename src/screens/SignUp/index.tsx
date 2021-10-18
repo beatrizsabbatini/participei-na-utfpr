@@ -3,12 +3,12 @@ import React, { useEffect, useState } from 'react';
 import { View, Alert } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { useNavigation } from '@react-navigation/core';
-import StepIndicator from 'react-native-step-indicator';
 import { Formik } from 'formik';
+import StepIndicator from 'react-native-step-indicator';
+import Spinner from 'react-native-loading-spinner-overlay';
 import * as Yup from 'yup';
-import firebase from 'firebase';
 
-import theme from '../../global/styles/theme';
+import Step0 from './Steps/Step0';
 import Step1 from './Steps/Step1';
 import Step2 from './Steps/Step2';
 import Step3 from './Steps/Step3';
@@ -18,8 +18,9 @@ import { useSteps } from '../../hooks/Steps';
 import { AuthStackParamList } from '../../routes/auth.routes';
 import { useAuth } from '../../hooks/Auth';
 import { Background, ButtonsContainer, customStepsStyles } from './styles';
-import Spinner from 'react-native-loading-spinner-overlay';
-import Step0 from './Steps/Step0';
+import { signUp } from './services';
+import { getMessageByErrorCode, getStepFieldsToValidate } from './utils';
+import firebase from 'firebase';
 
 type SignUpScreenProp = StackNavigationProp<AuthStackParamList, 'SignIn'>;
 
@@ -54,6 +55,7 @@ const SignUp: React.FC = () => {
     };
   }, []);
 
+  const labels = ["Nome", "E-mail", "Senha", "RA", "Campus"];
   const signUpFormSchema = Yup.object().shape({
     name: Yup.string()
       .required('Nome é obrigatório!'),
@@ -71,78 +73,6 @@ const SignUp: React.FC = () => {
     campusId: Yup.string()
       .required('Campus é obrigatório!')
   });
-
-  const createUserInDataBase = (values: any) => {
-
-    firebase
-    .database()
-    .ref(`/userss`)
-    .push({
-      name: values.name,
-      ra: values.ra,
-      campus: values.campusId,
-      image: null,
-      postedActivities: [],
-      savedActivities: [],
-      group1Points: 0,
-      group2Points: 0,
-      group3Points: 0,
-    })
-    .then(() => {
-      Alert.alert(
-        'Usuário criado!',
-        'Deseja realizar o login com este usuário?',
-        [
-          {
-            text: 'Sim',
-            onPress: () => {
-              setIsAuthenticated(true);
-              setLoading(false);
-            },
-          },
-          {
-            text: 'Não',
-            onPress: () => {
-              navigation.goBack();
-              setLoading(false);
-            },
-          },
-        ]
-      );
-    })
-  }
-
-  const signUpService = (values: any) => {
-    setLoading(true);
-    firebase
-      .auth()
-      .createUserWithEmailAndPassword(values.email, values.password)
-      .then((res: any) => {
-          res.user.updateProfile({
-          displayName: values.name
-        })
-        createUserInDataBase(values);
-      })
-      .catch((error) => {
-        Alert.alert('Erro!', getMessageByErrorCode(error));
-        setLoading(false);
-      });
-  };
-
-  function getMessageByErrorCode(error: any) {
-    switch (error.code) {
-      case 'auth/email-already-in-use':
-        return 'Já existe um usuário com esse e-mail cadastrado! Crie uma conta com outro e-mail.';
-
-      case 'auth/weak-password':
-        return 'Senha fraca! Digite uma senha com no mínimo 6 caracteres.';
-
-      default:
-        return error.message;
-    }
-  }
-
-  const labels = ["Nome", "E-mail", "Senha", "RA", "Campus"];
 
   const renderStep = (param: number, formProps: FormProps) => {
     switch(param) {
@@ -164,20 +94,9 @@ const SignUp: React.FC = () => {
     }
   }
 
-  const getStepFieldsToValidate = () => {
-    switch (currentStep) {
-      case 0: return ['name'];
-      case 1: return ['email'];
-      case 2: return ['password', 'confirmPassword'];
-      case 3: return ['ra'];
-      case 4: return ['campusId'];
-      default: return []
-    }
-  }
-
   const handleValidate = async (formProps: FormProps) => {
     const errors: any[] = [];
-    const currentStepFields: string[] = getStepFieldsToValidate();
+    const currentStepFields: string[] = getStepFieldsToValidate(currentStep);
 
     currentStepFields.forEach(async(field) => {
       // to show the inputs in the error style (in case of having errors):
@@ -196,8 +115,36 @@ const SignUp: React.FC = () => {
 
   const handleNext = (values: any) => {
     if (currentStep < 4) setCurrentStep(currentStep + 1);
-    else signUpService(values);
+    else signUp(values, onCreationSuccess, onCreationError);
   } 
+
+  const onCreationSuccess = () => {
+    Alert.alert(
+      'Usuário criado!',
+      'Deseja realizar o login com este usuário?',
+      [
+        {
+          text: 'Sim',
+          onPress: () => {
+            setIsAuthenticated(true);
+            setLoading(false);
+          },
+        },
+        {
+          text: 'Não',
+          onPress: () => {
+            navigation.goBack();
+            setLoading(false);
+          },
+        },
+      ]
+    );
+  }
+
+  const onCreationError = (error: any) => {
+    Alert.alert('Erro!', getMessageByErrorCode(error));
+    setLoading(false);
+  }
   
   return (
     <Background>
@@ -224,7 +171,7 @@ const SignUp: React.FC = () => {
           ra: '',
           campusId: ''
         }}
-        onSubmit={(values) => signUpService(values)}
+        onSubmit={(values) => signUp(values, onCreationSuccess, onCreationError)}
       >
         {(formProps: FormProps) => (
           <>

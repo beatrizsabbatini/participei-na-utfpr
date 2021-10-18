@@ -13,6 +13,7 @@ const AuthContext = createContext({} as AuthProps);
 
 function AuthProvider({children, }: AuthProviderProps){
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
+
   return(
     <AuthContext.Provider 
       value={{

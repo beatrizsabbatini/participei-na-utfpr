@@ -1,20 +1,46 @@
-import { useNavigation } from '@react-navigation/core';
-import { StackNavigationProp } from '@react-navigation/stack';
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 import { Animated, ListRenderItem, View } from 'react-native';
+import { useNavigation } from '@react-navigation/core';
+import { StackNavigationProp } from '@react-navigation/stack';
 import { Searchbar } from 'react-native-paper';
 import { RFValue } from 'react-native-responsive-fontsize';
+import firebase from 'firebase';
 
 import Activity from '../../components/Activity';
 import { activities } from '../../mock/activitiesMock';
 import { HomeStackParamList } from '../../routes/app.routes';
 import { IActivity } from '../../types';
 import { Background } from './styles';
+import { useDispatch } from 'react-redux';
+import { getUserDataError, getUserDataRequest, getUserDataSuccess } from '../../store/modules/userData/actions';
 
 type HomeScreenProp = StackNavigationProp<HomeStackParamList, 'ActivityDetails'>;
 
 const Home: React.FC = () => {
+
+  const dispatch = useDispatch();
+
+  const userEmail = firebase.auth().currentUser?.email;
+  const usersRef = firebase.database().ref('users');
+
+  async function getUserData(){
+    if (userEmail){
+      dispatch(getUserDataRequest());
+
+      await usersRef.orderByChild("email").equalTo(userEmail).once("value", function (snapshot) {
+        snapshot.forEach((childSnapshot) => {
+          const userData = childSnapshot.val();
+          dispatch(getUserDataSuccess(userData))
+        });
+        
+      }).catch(error => dispatch(getUserDataError(error)));
+    }
+  }
+
+  useEffect(() => {
+    getUserData();
+  }, [userEmail])
 
   const { navigate } = useNavigation<HomeScreenProp>();
   const [searchQuery, setSearchQuery] = useState<string>('');

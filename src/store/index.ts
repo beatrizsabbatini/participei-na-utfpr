@@ -1,13 +1,19 @@
-import { createStore, combineReducers } from 'redux';
+import { createStore, applyMiddleware } from 'redux';
+import createSagaMiddleware from 'redux-saga';
 
-import login from './ducks/login';
-import myTopics from './ducks/myTopics';
+import rootReducer from './modules/rootReducer';
+import { IUserDataState } from './modules/userData/types';
 
-const reducers = combineReducers({
-  login,
-  myTopics
-});
+export interface IState{
+  userData: IUserDataState;
+}
 
-const store = createStore(reducers);
+// const sagaMiddleware = createSagaMiddleware();
+
+// const middlewares = [sagaMiddleware];
+
+const store = createStore(rootReducer); //, applyMiddleware(...middlewares)
+
+// sagaMiddleware.run();
 
 export default store;

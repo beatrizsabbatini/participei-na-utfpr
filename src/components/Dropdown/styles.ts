@@ -13,7 +13,6 @@ export const CustomPicker = styled(Picker)`
 export const PickerContainer = styled.View`
   border-width: ${RFValue(1)}px;
   border-color: ${({theme}) => theme.colors.secondary};
-  border-radius: ${RFValue(28)}px;
+  border-radius: ${RFValue(10)}px;
   margin-top: ${RFValue(18)}px;
-  padding-left: ${RFValue(16)}px;
 `

@@ -221,17 +221,21 @@ export const categories = [
     id: '0',
     placeholder: true,
     label: '',
-    value: ''
+    value: '',
   },
   {
     id: '1',
     label: 'Atividade de extensão',
-    value: 'Atividade de extensão'
+    value: '1',
+    group: 3,
+    points: 10
   },
   {
     id: '2',
     label: 'Atividade esportiva',
-    value: 'Atividade esportiva'
+    value: '2',
+    group: 1,
+    points: 10
   }
 ]
 

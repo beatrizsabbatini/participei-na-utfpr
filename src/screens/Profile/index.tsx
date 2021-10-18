@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { useWindowDimensions } from 'react-native';
 import { TabView, SceneMap, TabBar } from 'react-native-tab-view';
+import { useSelector } from 'react-redux';
 
 import theme from '../../global/styles/theme';
+import { IState } from '../../store';
 import ProfileHeader from './components/ProfileHeader';
 import PublishedActivities from './components/PublishedActivities';
 import SavedActivities from './components/SavedActivities';

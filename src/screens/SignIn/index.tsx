@@ -39,6 +39,7 @@ interface FormProps{
 }
 
 const SignIn: React.FC = () => {
+
   const [loading, setLoading] = useState<boolean>(false);
 
   const { setIsAuthenticated } = useAuth();
@@ -66,7 +67,6 @@ const SignIn: React.FC = () => {
           setLoading(false);
           Alert.alert('Erro!', getMessageByErrorCode(error.code));
         });
-      
     }
   
   function getMessageByErrorCode(code: any) {
@@ -102,8 +102,8 @@ const SignIn: React.FC = () => {
         validateOnChange={false}
         validateOnBlur={false}
         initialValues={{
-          email: '',
-          password: '',
+          email: 'beatriz@teste.com', 
+          password: '123456',
         }}
         onSubmit={(values) => loginService(values)}
       >
