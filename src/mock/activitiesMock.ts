@@ -8,7 +8,7 @@ export const activities = [
     points: 30,
     category: 'Trabalho Voluntário',
     userName: 'Beatriz Schwartz',
-    userId: '7263214',
+    userRa: '7263214',
     description: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. '
   },
   {
@@ -18,7 +18,7 @@ export const activities = [
     points: 30,
     category: 'Atividades Esportivas',
     userName: 'Beatriz Schwartz',
-    userId: '7263214'
+    userRa: '7263214'
   },
   {
     id: '3',
@@ -27,7 +27,7 @@ export const activities = [
     points: 30,
     category: 'Atividades de extensão',
     userName: 'Beatriz Schwartz',
-    userId: '7263214'
+    userRa: '7263214'
   },
   {
     id: '4',
@@ -36,7 +36,7 @@ export const activities = [
     points: 30,
     category: 'Trabalho Voluntário',
     userName: 'Beatriz Schwartz',
-    userId: '7263214'
+    userRa: '7263214'
   },
   {
     id: '5',
@@ -45,7 +45,7 @@ export const activities = [
     points: 30,
     category: 'Atividades de extensão',
     userName: 'Beatriz Schwartz',
-    userId: '7263214'
+    userRa: '7263214'
   },
   {
     id: '6',
@@ -54,7 +54,7 @@ export const activities = [
     points: 30,
     category: 'Trabalho Voluntário',
     userName: 'Beatriz Schwartz',
-    userId: '7263214'
+    userRa: '7263214'
   },
   {
     id: '7',
@@ -63,7 +63,7 @@ export const activities = [
     points: 30,
     category: 'Trabalho Voluntário',
     userName: 'Beatriz Schwartz',
-    userId: '7263214'
+    userRa: '7263214'
   },
   {
     id: '8',
@@ -72,7 +72,7 @@ export const activities = [
     points: 30,
     category: 'Atividades de extensão',
     userName: 'Beatriz Schwartz',
-    userId: '7263214'
+    userRa: '7263214'
   },
   {
     id: '9',
@@ -81,7 +81,7 @@ export const activities = [
     points: 30,
     category: 'Trabalho Voluntário',
     userName: 'Beatriz Schwartz',
-    userId: '7263214'
+    userRa: '7263214'
   },
   {
     id: '10',
@@ -90,7 +90,7 @@ export const activities = [
     points: 30,
     category: 'Trabalho Voluntário',
     userName: 'Beatriz Schwartz',
-    userId: '7263214'
+    userRa: '7263214'
   },
   {
     id: '11',
@@ -99,7 +99,7 @@ export const activities = [
     points: 30,
     category: 'Atividades de extensão',
     userName: 'Beatriz Schwartz',
-    userId: '7263214'
+    userRa: '7263214'
   },
   {
     id: '12',
@@ -108,7 +108,7 @@ export const activities = [
     points: 30,
     category: 'Trabalho Voluntário',
     userName: 'Beatriz Schwartz',
-    userId: '7263214'
+    userRa: '7263214'
   }
 ]
 
@@ -188,7 +188,7 @@ export const publishedActivitiesMock = [
     points: 30,
     category: 'Trabalho Voluntário',
     userName: 'Beatriz Schwartz',
-    userId: '7263214',
+    userRa: '7263214',
     description: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. '
   },
 ]
@@ -201,7 +201,7 @@ export const savedActivitiesMock = [
     points: 30,
     category: 'Atividades Esportivas',
     userName: 'Beatriz Schwartz',
-    userId: '7263214',
+    userRa: '7263214',
     certificate: true
   },
   {
@@ -211,7 +211,7 @@ export const savedActivitiesMock = [
     points: 30,
     category: 'Atividades Esportivas',
     userName: 'Beatriz Schwartz',
-    userId: '7263214',
+    userRa: '7263214',
     certificate: false
   },
 ]

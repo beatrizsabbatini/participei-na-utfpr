@@ -1,19 +1,14 @@
-import { createStore, applyMiddleware } from 'redux';
-import createSagaMiddleware from 'redux-saga';
+import { createStore } from 'redux';
+import { IActivitiesState } from './modules/activities/types';
 
 import rootReducer from './modules/rootReducer';
 import { IUserDataState } from './modules/userData/types';
 
 export interface IState{
   userData: IUserDataState;
+  activities: IActivitiesState
 }
 
-// const sagaMiddleware = createSagaMiddleware();
-
-// const middlewares = [sagaMiddleware];
-
-const store = createStore(rootReducer); //, applyMiddleware(...middlewares)
-
-// sagaMiddleware.run();
+const store = createStore(rootReducer); 
 
 export default store;

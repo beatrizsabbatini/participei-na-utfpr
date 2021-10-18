@@ -3,10 +3,11 @@ import { RFValue } from 'react-native-responsive-fontsize';
 
 export const Container = styled.TouchableOpacity`
   background-color: #fff;
+  height: ${RFValue(122)}px;
   align-self: stretch;
   border-width: ${RFValue(1)}px;
   border-color: ${({theme}) => theme.colors.border};
-  border-radius: ${RFValue(11)}px;
+  border-radius: ${RFValue(10)}px;
   padding: ${RFValue(10)}px;
   shadow-color: #000;
   shadow-offset: {

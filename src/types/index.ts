@@ -1,14 +1,23 @@
+import { NumberSchema } from "yup";
+
 export interface IActivity{
   id: string,
   title: string,
   group: number,
   points: number,
-  category: string,
-  userName: string,
-  userId: string,
+  category: ICategory,
   description?: string
+  publisherName: string,
+  publisherRa: string,
   images?: string[],
   certificate?: any
+}
+
+export interface ICategory{
+  id: string,
+  group: number,
+  label: string,
+  points: number,
 }
 
 export interface INotification{

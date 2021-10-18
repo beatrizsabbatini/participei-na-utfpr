@@ -33,13 +33,13 @@ const ActivityDetails: React.FC = () => {
       <View>
         <Row>
           <PersonIcon name="person" size={18}/>
-          <UserName>{data?.userName || 'Not found'}</UserName>
+          <UserName>{data?.publisherName || 'Not found'}</UserName>
         </Row>
         <BadgesRow>
-          <Badge group={data?.group}/>
-          <Badge points={data?.points} marginHorizontal/>
+          <Badge group={data?.category.group}/>
+          <Badge points={data?.category.points} marginHorizontal/>
         </BadgesRow>
-        <CategoryTitle>{data?.category}</CategoryTitle>
+        <CategoryTitle>{data?.category.label}</CategoryTitle>
         <ActivityTitle>{data?.title}</ActivityTitle>
         <ActivityDescription>{data?.description || "..."}</ActivityDescription>
         {/* {data?.images  && (

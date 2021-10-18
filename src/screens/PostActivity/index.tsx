@@ -54,6 +54,7 @@ const PostActivity: React.FC = () => {
       description: values.description,
       category: categoryData,
       publisherRa: userData.data.ra,
+      publisherName: userData.data.name,
     })
     .then(() => {
       actions.resetForm();

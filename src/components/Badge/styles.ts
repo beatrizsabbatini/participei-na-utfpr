@@ -13,7 +13,7 @@ export const Container = styled.View<BadgeStyleProps>`
   border-radius: ${RFValue(25)}px;
   align-items: center;
   justify-content: center;
-  width: auto;
+  width: ${RFValue(80)}px;
   margin-vertical: ${({ marginVertical }) => marginVertical ? `${RFValue(2.6)}px` : 0};
   margin-horizontal: ${({ marginHorizontal }) => marginHorizontal ? `${RFValue(5)}px` : 0};
   shadow-color: #000;
@@ -29,7 +29,6 @@ export const Container = styled.View<BadgeStyleProps>`
 export const BadgeText = styled.Text`
   color: #fff;
   font-weight: bold;
-  font-size: ${RFValue(12)}px;
+  font-size: ${RFValue(11)}px;
   padding-vertical: ${RFValue(3)}px;
-  padding-horizontal: ${RFValue(8)}px;
 `
