@@ -35,8 +35,8 @@ const Activity: React.FC<ActivityProps> = ({data, onPress, userPublished}) => {
     <Container onPress={onPress}>
       <CardTop>
         <View style={{flex: 7}}>
-          <Category>{data.category.label}</Category>
-          <Title>{data.title}</Title>
+          <Category>{data?.category.label}</Category>
+          <Title>{data?.title}</Title>
         </View>
         <View style={{flex: 3, alignItems: 'flex-end'}}>
           <Badge group={data.category.group} marginVertical/>

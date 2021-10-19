@@ -1,10 +1,11 @@
 import React, { useEffect, useRef, useState } from 'react';
 
-import { Alert, Animated, ListRenderItem, View } from 'react-native';
+import { Alert, Animated, ListRenderItem, TouchableOpacityBase, View } from 'react-native';
 import { useNavigation } from '@react-navigation/core';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { ActivityIndicator, Searchbar } from 'react-native-paper';
 import { RFValue } from 'react-native-responsive-fontsize';
+import { Feather } from '@expo/vector-icons'; 
 import { useDispatch, useSelector } from 'react-redux';
 import firebase from 'firebase';
 
@@ -17,56 +18,58 @@ import { getUserDataError, getUserDataRequest, getUserDataSuccess } from '../../
 import { getActivitiesError, getActivitiesRequest, getActivitiesSuccess } from '../../store/modules/activities/actions';
 import { IState } from '../../store';
 import { Background, EmptyMessageContainer, EmptyIcon, EmptyMessage } from './styles';
+import { getActivitiesByQuery, getAllActivities, getUserData } from './services';
+import { IUserData } from '../../store/modules/userData/types';
+import Search from '../../components/Search';
 
 type HomeScreenProp = StackNavigationProp<HomeStackParamList, 'ActivityDetails'>;
 
 const Home: React.FC = () => {
-
-  const dispatch = useDispatch();
-  const { loading, data } = useSelector((state: IState) => state.activities);
-
+  const [searchQuery, setSearchQuery] = useState<string>('');
+  
   const userEmail = firebase.auth().currentUser?.email;
   const usersRef = firebase.database().ref('users');
   const activitiesRef = firebase.database().ref('activities');
 
-  async function getUserData(){
+  const { loading, data } = useSelector((state: IState) => state.activities);
+  const { navigate } = useNavigation<HomeScreenProp>();
+  const dispatch = useDispatch();
+
+  async function getUser(){
     if (userEmail){
       dispatch(getUserDataRequest());
-      await usersRef.orderByChild("email").equalTo(userEmail).once("value", function (snapshot) {
-        snapshot.forEach((childSnapshot) => {
-          const userData = childSnapshot.val();
-          dispatch(getUserDataSuccess(userData))
-        });
-      }).catch(error => {
-        Alert.alert("Erro ao buscar seus dados!", error.message);
-        dispatch(getUserDataError(error))
-      })
+      getUserData(usersRef, userEmail, onGetUserDataSuccess, onGetUserDataError);
     }
   }
 
-  async function getActivities(){
+  async function getActivities(shouldClear?: boolean){
     dispatch(getActivitiesRequest());
-    activitiesRef.on('value', (snapshot) => {
-      const snapshotValue = snapshot.val();
-      if (snapshotValue){
-        const activitiesArray: IActivity[] = Object.values(snapshotValue);
-        dispatch(getActivitiesSuccess(activitiesArray));
-      } else {
-        dispatch(getActivitiesSuccess([]));
-      }
-    }, (error: any) => {
-      Alert.alert("Erro ao buscar atividades!", error.message);
-      dispatch(getActivitiesError(error))
-    });
+
+    if (searchQuery.length > 0 && !shouldClear){
+      getActivitiesByQuery(searchQuery, onGetActivitiesSuccess, data);
+    } else {
+      getAllActivities(activitiesRef, onGetActivitiesSuccess, onGetActivitiesError);
+    }
+  }
+
+  const onGetActivitiesSuccess = (activities: IActivity[]) => dispatch(getActivitiesSuccess(activities));
+  
+  const onGetActivitiesError = (error: any) => {
+    Alert.alert("Erro ao buscar atividades!", error.message);
+    dispatch(getActivitiesError(error))
+  }
+
+  const onGetUserDataSuccess = (userData: IUserData) => dispatch(getUserDataSuccess(userData));
+
+  const onGetUserDataError = (error: any) => {
+    Alert.alert("Erro ao buscar seus dados!", error.message);
+    dispatch(getUserDataError(error))
   }
 
   useEffect(() => {
-    getUserData();
+    getUser();
     getActivities();
   }, [userEmail])
-
-  const { navigate } = useNavigation<HomeScreenProp>();
-  const [searchQuery, setSearchQuery] = useState<string>('');
 
   const scrollY = useRef(new Animated.Value(0)).current;
   const ITEM_SIZE = RFValue(132); // height of the activity card (if its wrong, animation will have issues)
@@ -90,11 +93,10 @@ const Home: React.FC = () => {
 
   return (
     <Background>
-      <Searchbar
-        placeholder="Busque uma atividade"
-        onChangeText={(query) => setSearchQuery(query)}
+      <Search
         value={searchQuery}
-        inputStyle={{borderColor: 'red'}}
+        onChangeText={(query) => setSearchQuery(query.toLowerCase())}
+        onSubmitEditing={(shouldClear?: boolean) => getActivities(shouldClear)}
       />
         {
           loading ? (
