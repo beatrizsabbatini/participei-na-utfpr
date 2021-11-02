@@ -102,7 +102,7 @@ const SignIn: React.FC = () => {
         validateOnChange={false}
         validateOnBlur={false}
         initialValues={{
-          email: 'beatriz@teste.com', 
+          email: 'bea@teste.com', 
           password: '123456',
         }}
         onSubmit={(values) => loginService(values)}

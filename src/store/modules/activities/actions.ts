@@ -1,9 +1,10 @@
 import { IActivity } from "../../../types";
 import { Types } from "./types";
 
-export function getActivitiesRequest(){
+export function getActivitiesRequest(params?: any){
   return {
     type: Types.GET_ACTIVITIES_REQUEST,
+    payload: params || null
   }
 }
 

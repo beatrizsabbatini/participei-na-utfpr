@@ -5,7 +5,6 @@ import { useNavigation } from '@react-navigation/core';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { ActivityIndicator, Searchbar } from 'react-native-paper';
 import { RFValue } from 'react-native-responsive-fontsize';
-import { Feather } from '@expo/vector-icons'; 
 import { useDispatch, useSelector } from 'react-redux';
 import firebase from 'firebase';
 
@@ -15,10 +14,10 @@ import EmptyList from '../../../assets/empty.png';
 import { HomeStackParamList } from '../../routes/app.routes';
 import { IActivity } from '../../types';
 import { getUserDataError, getUserDataRequest, getUserDataSuccess } from '../../store/modules/userData/actions';
-import { getActivitiesError, getActivitiesRequest, getActivitiesSuccess } from '../../store/modules/activities/actions';
+import { getActivitiesRequest } from '../../store/modules/activities/actions';
 import { IState } from '../../store';
 import { Background, EmptyMessageContainer, EmptyIcon, EmptyMessage } from './styles';
-import { getActivitiesByQuery, getAllActivities, getUserData } from './services';
+import { getUserData } from './services';
 import { IUserData } from '../../store/modules/userData/types';
 import Search from '../../components/Search';
 
@@ -29,7 +28,6 @@ const Home: React.FC = () => {
   
   const userEmail = firebase.auth().currentUser?.email;
   const usersRef = firebase.database().ref('users');
-  const activitiesRef = firebase.database().ref('activities');
 
   const { loading, data } = useSelector((state: IState) => state.activities);
   const { navigate } = useNavigation<HomeScreenProp>();
@@ -42,23 +40,6 @@ const Home: React.FC = () => {
     }
   }
 
-  async function getActivities(shouldClear?: boolean){
-    dispatch(getActivitiesRequest());
-
-    if (searchQuery.length > 0 && !shouldClear){
-      getActivitiesByQuery(searchQuery, onGetActivitiesSuccess, data);
-    } else {
-      getAllActivities(activitiesRef, onGetActivitiesSuccess, onGetActivitiesError);
-    }
-  }
-
-  const onGetActivitiesSuccess = (activities: IActivity[]) => dispatch(getActivitiesSuccess(activities));
-  
-  const onGetActivitiesError = (error: any) => {
-    Alert.alert("Erro ao buscar atividades!", error.message);
-    dispatch(getActivitiesError(error))
-  }
-
   const onGetUserDataSuccess = (userData: IUserData) => dispatch(getUserDataSuccess(userData));
 
   const onGetUserDataError = (error: any) => {
@@ -68,7 +49,7 @@ const Home: React.FC = () => {
 
   useEffect(() => {
     getUser();
-    getActivities();
+    dispatch(getActivitiesRequest());
   }, [userEmail])
 
   const scrollY = useRef(new Animated.Value(0)).current;
@@ -96,7 +77,7 @@ const Home: React.FC = () => {
       <Search
         value={searchQuery}
         onChangeText={(query) => setSearchQuery(query.toLowerCase())}
-        onSubmitEditing={(shouldClear?: boolean) => getActivities(shouldClear)}
+        onSubmitEditing={(shouldClear?: boolean) => {}}
       />
         {
           loading ? (

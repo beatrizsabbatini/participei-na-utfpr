@@ -1,5 +1,3 @@
-import { NumberSchema } from "yup";
-
 export interface IActivity{
   id: string,
   title: string,

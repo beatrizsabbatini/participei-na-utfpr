@@ -12,3 +12,6 @@ export const Types = {
 	GET_ACTIVITIES_SUCCESS: 'activities/ get activities success',
 };
 
+export interface ActivitiesRequestParams{
+  title?: string
+}

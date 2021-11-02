@@ -1,7 +1,9 @@
-import { createStore } from 'redux';
+import { applyMiddleware, createStore } from 'redux';
+import createSagaMiddleware from 'redux-saga';
 import { IActivitiesState } from './modules/activities/types';
 
 import rootReducer from './modules/rootReducer';
+import rootSaga from './modules/rootSaga';
 import { IUserDataState } from './modules/userData/types';
 
 export interface IState{
@@ -9,6 +11,10 @@ export interface IState{
   activities: IActivitiesState
 }
 
-const store = createStore(rootReducer); 
+const sagaMiddleware = createSagaMiddleware();
+
+const store = createStore(rootReducer, applyMiddleware(sagaMiddleware)); 
+
+sagaMiddleware.run(rootSaga);
 
 export default store;
