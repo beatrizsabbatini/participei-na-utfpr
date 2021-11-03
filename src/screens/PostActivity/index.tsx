@@ -2,13 +2,11 @@ import React, { useState } from 'react';
 
 import { Formik } from 'formik';
 import { Alert, View } from 'react-native';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigation } from '@react-navigation/core';
 import { StackNavigationProp } from '@react-navigation/stack';
 import Spinner from 'react-native-loading-spinner-overlay';
-import uuid from 'react-native-uuid';
 import * as Yup from 'yup';
-import firebase from 'firebase';
 
 import Button from '../../components/Button';
 import Dropdown from '../../components/Dropdown';
@@ -17,6 +15,7 @@ import { categories } from '../../mock/activitiesMock';
 import { Container } from './styles';
 import { IState } from '../../store';
 import { HomeStackParamList } from '../../routes/app.routes';
+import { publishActivitieyRequest } from '../../store/modules/publishActivity/actions';
 
 type HomeScreenProp = StackNavigationProp<HomeStackParamList, 'ActivitiesFeed'>;
 interface FormProps{
@@ -30,11 +29,13 @@ interface FormProps{
 
 const PostActivity: React.FC = () => {
   const [category, setCategory] = useState<string>('');
-  const [loading, setLoading] = useState<boolean>(false);
 
   const userData = useSelector((state: IState) => state.userData);
+  const { loading, data, errors } = useSelector((state: IState) => state.publishActivity);
   
   const { navigate } = useNavigation<HomeScreenProp>();
+
+  const dispatch = useDispatch();
 
   const loginFormSchema = Yup.object().shape({
     title: Yup.string().required('Título é obrigatório!'),
@@ -42,35 +43,41 @@ const PostActivity: React.FC = () => {
     categoryId: Yup.string(),
   });
 
-  const postActivity = (values: any, actions: any) => {
-    const categoryData = categories.find(category => category.id === values.categoryId);
+  const postActivity = async (values: any, actions: any) => {
+    const foundCategory = categories.find(category => category.id === values.categoryId);
 
-    firebase
-    .database()
-    .ref(`/activities`)
-    .push({
-      id: uuid.v4(),
+    const categoryData = {
+      id: foundCategory?.id,
+      group: foundCategory?.group,
+      label: foundCategory?.label,
+      points: foundCategory?.points
+    }
+
+    const activity = {
       title: values.title,
       description: values.description,
       category: categoryData,
-      publisherRa: userData.data.ra,
-      publisherName: userData.data.name,
-    })
-    .then(() => {
+      publisherId: "cHmmY2kQrSfol8gpLNDqOTlJq0C2", //userData.data.ra, trocar dps para id (pegar do mongo)
+      publisherName: "Beatriz Schwartz" //userData.data.name,
+    }
+
+    await dispatch(publishActivitieyRequest(activity));
+
+    if (Object.keys(data).length > 0){
       actions.resetForm();
-      setCategory(''); 
-      navigate('ActivitiesFeed');
+        setCategory(''); 
+        navigate('ActivitiesFeed');
+        Alert.alert(
+          'Atividade Criada!',
+          'Agora sua atividade já se encontra no feed de atividades'
+        );
+    }
+
+    if (errors){
       Alert.alert(
-        'Atividade Criada!',
-        'Agora sua atividade já se encontra no feed de atividades'
+        'Erro ao publicar atividade!'
       );
-    })
-    .catch((error) => {
-      Alert.alert(
-        'Erro ao publicar atividade!',
-        error.message
-      );
-    }).then(() => setLoading(false))
+    }
   }
 
   return (

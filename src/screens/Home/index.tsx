@@ -26,19 +26,19 @@ type HomeScreenProp = StackNavigationProp<HomeStackParamList, 'ActivityDetails'>
 const Home: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState<string>('');
   
-  const userEmail = firebase.auth().currentUser?.email;
-  const usersRef = firebase.database().ref('users');
+  /*const userEmail = firebase.auth().currentUser?.email;
+  const usersRef = firebase.database().ref('users');*/
 
   const { loading, data } = useSelector((state: IState) => state.activities);
   const { navigate } = useNavigation<HomeScreenProp>();
   const dispatch = useDispatch();
 
-  async function getUser(){
+  /*async function getUser(){
     if (userEmail){
       dispatch(getUserDataRequest());
       getUserData(usersRef, userEmail, onGetUserDataSuccess, onGetUserDataError);
     }
-  }
+  }*/
 
   const onGetUserDataSuccess = (userData: IUserData) => dispatch(getUserDataSuccess(userData));
 
@@ -48,9 +48,9 @@ const Home: React.FC = () => {
   }
 
   useEffect(() => {
-    getUser();
+    //getUser();
     dispatch(getActivitiesRequest());
-  }, [userEmail])
+  }, []) //useEmail
 
   const scrollY = useRef(new Animated.Value(0)).current;
   const ITEM_SIZE = RFValue(132); // height of the activity card (if its wrong, animation will have issues)
@@ -77,7 +77,7 @@ const Home: React.FC = () => {
       <Search
         value={searchQuery}
         onChangeText={(query) => setSearchQuery(query.toLowerCase())}
-        onSubmitEditing={(shouldClear?: boolean) => {}}
+        onSubmitEditing={() => dispatch(getActivitiesRequest(searchQuery))}
       />
         {
           loading ? (

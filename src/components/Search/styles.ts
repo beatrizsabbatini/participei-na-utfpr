@@ -4,9 +4,9 @@ import * as Animatable from 'react-native-animatable';
 export const Container = styled.View`
   width: 100%;
   background-color: #fff;
-  border-radius: 10;
-  padding-horizontal: 10;
-  padding-vertical: 5;
+  border-radius: 10px;
+  padding-horizontal: 10px;
+  padding-vertical: 5px;
   flex-direction: row;
   align-items: center;
   align-self: flex-start;
@@ -22,8 +22,8 @@ export const Container = styled.View`
 `
 
 export const Input = styled.TextInput`
-  padding-horizontal: 8;
+  padding-horizontal: 8px;
   color: #000;
-  font-size: 18;
+  font-size: 18px;
   width: 88%;
 `

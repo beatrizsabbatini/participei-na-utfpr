@@ -1,14 +1,15 @@
 import { applyMiddleware, createStore } from 'redux';
 import createSagaMiddleware from 'redux-saga';
-import { IActivitiesState } from './modules/activities/types';
-
 import rootReducer from './modules/rootReducer';
 import rootSaga from './modules/rootSaga';
+import { IActivitiesState } from './modules/activities/types';
 import { IUserDataState } from './modules/userData/types';
+import { IPublishActivityState } from './modules/publishActivity/types';
 
 export interface IState{
   userData: IUserDataState;
-  activities: IActivitiesState
+  activities: IActivitiesState;
+  publishActivity: IPublishActivityState;
 }
 
 const sagaMiddleware = createSagaMiddleware();
