@@ -26,8 +26,6 @@ const Home: React.FC = () => {
   
   const userUid = firebase.auth().currentUser?.uid;
 
-  console.log("User uid: ", userUid)
-
   const { loading, data } = useSelector((state: IState) => state.activities);
   const { navigate } = useNavigation<HomeScreenProp>();
   const dispatch = useDispatch();

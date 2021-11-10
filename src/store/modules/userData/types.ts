@@ -1,7 +1,7 @@
 export interface IUserData{
   name: string,
   ra: number,
-  campus: string,
+  campusId: string,
   image: string,
   email: string,
   postedActivities: string[],

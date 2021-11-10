@@ -12,6 +12,8 @@ const ProfileHeader: React.FC = () => {
 
   const userData = useSelector((state: IState) => state.userData);
 
+  console.log("User Data: ", userData.data)
+
   return (
     <Container>
       <ProfileImage>
@@ -23,7 +25,7 @@ const ProfileHeader: React.FC = () => {
         ) : (
           <View>
             <CustomText bigger>{userData.data.name}</CustomText>
-            <CustomText>Câmpus {userData.data.campus}</CustomText>
+            <CustomText>Câmpus {userData.data.campusId}</CustomText>
           </View>
         )}
     </Container>

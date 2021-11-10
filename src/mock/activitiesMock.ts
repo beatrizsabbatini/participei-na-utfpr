@@ -148,14 +148,6 @@ export const groupsData = [
   },
 ]
 
-export const totalPointsData = [
-  {
-    group1: 20,
-    group2: 10,
-    group3: 20,
-    availablePoints: 50
-  }
-]
 
 export const notificationsMock = [
   {

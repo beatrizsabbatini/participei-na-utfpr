@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
 import * as scale from 'd3-scale'
 import { StackedBarChart, XAxis } from 'react-native-svg-charts';
@@ -15,7 +15,8 @@ import {
   GrayRectangle,
   BlueLine
 } from './styles';
-import { groupsData, totalPointsData } from '../../mock/activitiesMock';
+import { useSelector } from 'react-redux';
+import { IState } from '../../store';
 
 interface ChartProps {
   x?: any;
@@ -25,6 +26,65 @@ interface ChartProps {
 }
 
 const Statistics: React.FC = () => {
+
+  const { data } = useSelector((state: IState) => state.userData);
+  const [totalPoints, setTotalPoints] = useState<any>({group1: 0, group2: 0, group3: 0, availablePoints: 100});
+  const [groupsData, setGroupsData] = useState<any[]>([]);
+  const [labels, setLabels] = useState<string[]>([]);
+
+  useEffect(() => {
+    const sum3groups = data.group1Points + data.group2Points + data.group3Points;
+
+    const pointsObject = {
+      group1: data.group1Points,
+      group2: data.group2Points,
+      group3: data.group3Points,
+      availablePoints: 100 - sum3groups
+    }
+
+    setTotalPoints(pointsObject);
+
+    const groupsPoints = [
+      {
+        points: [
+          {
+            pointsAvailable: 30 - data.group1Points,
+            pointsAchieved: data.group1Points,
+          }
+        ],
+        colors: ['#2DB3F0', '#EFEFEF'],
+        height: RFValue(160),
+        minimalValue: 20
+      },
+      {
+        points: [
+          {
+            pointsAvailable: 30 - data.group2Points,
+            pointsAchieved: data.group2Points,
+          }
+        ],
+        colors: ['#63E27F', '#EFEFEF'],
+        height: RFValue(160),
+        minimalValue: 20
+      },
+      {
+        points: [
+          {
+            pointsAvailable: 40 - data.group3Points,
+            pointsAchieved: data.group3Points,
+          }
+        ],
+        colors: ['#FBCF7B', '#EFEFEF'],
+        height: RFValue(203.5),
+        minimalValue: 20
+      },
+    ]
+
+    setGroupsData(groupsPoints);
+
+    const generateLabels = [`1-${data.group1Points} pontos`, `2-${data.group2Points} pontos`, `3-${data.group3Points} pontos` ];
+    setLabels(generateLabels);
+  }, [data])
 
   const HorizontalLine = ({ y, x, minimalValue, horizontalChart }: ChartProps) => {
 
@@ -79,7 +139,7 @@ const Statistics: React.FC = () => {
         }
       </Row>
       <XAxis
-        data={['1-20 pontos', '2-10 pontos', '3-20 pontos']}
+        data={labels}
         scale={scale.scaleBand}
         xAccessor={({item}) => item}
         formatLabel={(item) => item.split('-')[1]}
@@ -103,7 +163,7 @@ const Statistics: React.FC = () => {
         style={{ height: 35, width: '85%', alignSelf: 'center' }}
         keys={['group1', 'group2', 'group3', 'availablePoints']}
         colors={["#2DB3F0", "#63E27F", "#FBCF7B", "#EFEFEF"]}
-        data={totalPointsData}
+        data={[totalPoints]}
       >
         <HorizontalLine minimalValue={70} horizontalChart/>
       </StackedBarChart>
