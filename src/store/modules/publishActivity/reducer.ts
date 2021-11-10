@@ -23,7 +23,7 @@ const activities: Reducer<IPublishActivityState> = (state = INITIAL_STATE, actio
         ...state,
         errors: undefined,
         loading: false,
-        data: action.payload
+        data: action.payload.activity
       };
 
     case Types.PUBLISH_ACTIVITY_ERRORS: 

@@ -5,12 +5,10 @@ interface ActivitiesRequestParams{
   uid?: string
 }
 
-export const fetchUser = ({ uid }: ActivitiesRequestParams) => {
+export const fetchUser = (params: ActivitiesRequestParams) => {
 	return api.request({
 		method: 'GET',
 		url: '/user',
-		params: {
-			uid
-		}
+		params
 	})
 };

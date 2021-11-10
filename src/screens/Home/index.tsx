@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 
-import { Alert, Animated, ListRenderItem, TouchableOpacityBase, View } from 'react-native';
+import { Alert, Animated, ListRenderItem, View } from 'react-native';
 import { useNavigation } from '@react-navigation/core';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { ActivityIndicator, Searchbar } from 'react-native-paper';
@@ -16,41 +16,30 @@ import { IActivity } from '../../types';
 import { getUserDataError, getUserDataRequest, getUserDataSuccess } from '../../store/modules/userData/actions';
 import { getActivitiesRequest } from '../../store/modules/activities/actions';
 import { IState } from '../../store';
-import { Background, EmptyMessageContainer, EmptyIcon, EmptyMessage } from './styles';
-import { getUserData } from './services';
 import { IUserData } from '../../store/modules/userData/types';
-import Search from '../../components/Search';
+import { Background, EmptyMessageContainer, EmptyIcon, EmptyMessage } from './styles';
 
 type HomeScreenProp = StackNavigationProp<HomeStackParamList, 'ActivityDetails'>;
 
 const Home: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState<string>('');
   
-  /*const userEmail = firebase.auth().currentUser?.email;
-  const usersRef = firebase.database().ref('users');*/
+  const userUid = firebase.auth().currentUser?.uid;
+
+  console.log("User uid: ", userUid)
 
   const { loading, data } = useSelector((state: IState) => state.activities);
   const { navigate } = useNavigation<HomeScreenProp>();
   const dispatch = useDispatch();
 
-  /*async function getUser(){
-    if (userEmail){
-      dispatch(getUserDataRequest());
-      getUserData(usersRef, userEmail, onGetUserDataSuccess, onGetUserDataError);
-    }
-  }*/
-
-  const onGetUserDataSuccess = (userData: IUserData) => dispatch(getUserDataSuccess(userData));
-
-  const onGetUserDataError = (error: any) => {
-    Alert.alert("Erro ao buscar seus dados!", error.message);
-    dispatch(getUserDataError(error))
+  const onGetUserDataError = () => {
+    Alert.alert("Erro ao buscar seus dados!");
   }
 
   useEffect(() => {
-    //getUser();
+    if (userUid) dispatch(getUserDataRequest({ uid: userUid, onError: onGetUserDataError }));
     dispatch(getActivitiesRequest());
-  }, []) //useEmail
+  }, [userUid])
 
   const scrollY = useRef(new Animated.Value(0)).current;
   const ITEM_SIZE = RFValue(132); // height of the activity card (if its wrong, animation will have issues)
@@ -74,10 +63,10 @@ const Home: React.FC = () => {
 
   return (
     <Background>
-      <Search
+      <Searchbar
         value={searchQuery}
-        onChangeText={(query) => setSearchQuery(query.toLowerCase())}
-        onSubmitEditing={() => dispatch(getActivitiesRequest(searchQuery))}
+        onChangeText={(query) => setSearchQuery(query)}
+        onSubmitEditing={() => dispatch(getActivitiesRequest({title: searchQuery}))}
       />
         {
           loading ? (

@@ -7,13 +7,16 @@ import { Types } from './types';
 function* publishActivity(action: any): any {
 
 	try {
-		const response = yield call(createActivity, action.payload);
+		const response = yield call(createActivity, action.payload.activity);
 		yield put(publishActivitySuccess(response.data));
 
+		action.payload.onSuccess();
+
 	} catch (err: any) {
-		console.log("Error: ", err)
 
 		yield put(publishActivityError(err));
+
+		action.payload.onError();
 	}
 }
 

@@ -16,6 +16,8 @@ import { Container } from './styles';
 import { IState } from '../../store';
 import { HomeStackParamList } from '../../routes/app.routes';
 import { publishActivitieyRequest } from '../../store/modules/publishActivity/actions';
+import { IActivity, ICategory } from '../../types';
+import { getActivitiesRequest, getActivitiesSuccess } from '../../store/modules/activities/actions';
 
 type HomeScreenProp = StackNavigationProp<HomeStackParamList, 'ActivitiesFeed'>;
 interface FormProps{
@@ -32,7 +34,7 @@ const PostActivity: React.FC = () => {
 
   const userData = useSelector((state: IState) => state.userData);
   const { loading, data, errors } = useSelector((state: IState) => state.publishActivity);
-  
+
   const { navigate } = useNavigation<HomeScreenProp>();
 
   const dispatch = useDispatch();
@@ -53,17 +55,8 @@ const PostActivity: React.FC = () => {
       points: foundCategory?.points
     }
 
-    const activity = {
-      title: values.title,
-      description: values.description,
-      category: categoryData,
-      publisherId: "cHmmY2kQrSfol8gpLNDqOTlJq0C2", //userData.data.ra, trocar dps para id (pegar do mongo)
-      publisherName: "Beatriz Schwartz" //userData.data.name,
-    }
-
-    await dispatch(publishActivitieyRequest(activity));
-
-    if (Object.keys(data).length > 0){
+    const onSuccess = () => {
+      dispatch(getActivitiesRequest());
       actions.resetForm();
         setCategory(''); 
         navigate('ActivitiesFeed');
@@ -73,11 +66,22 @@ const PostActivity: React.FC = () => {
         );
     }
 
-    if (errors){
+    const onError = () => {
       Alert.alert(
         'Erro ao publicar atividade!'
       );
     }
+
+    const activity: Omit<IActivity, "id"> = {
+      title: values.title,
+      description: values.description,
+      category: categoryData,
+      publisherId: "cHmmY2kQrSfol8gpLNDqOTlJq0C2", //userData.data.ra, trocar dps para id (pegar do mongo)
+      publisherName: "Beatriz Schwartz" //userData.data.name,
+    }
+
+    await dispatch(publishActivitieyRequest({activity, onSuccess, onError}));
+
   }
 
   return (

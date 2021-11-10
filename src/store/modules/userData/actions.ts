@@ -1,8 +1,11 @@
 import { IUserData, Types } from "./types";
 
-export function getUserDataRequest(){
+export function getUserDataRequest(params: any){
+
+  console.log("Entrou")
   return {
     type: Types.GET_USER_DATA_REQUEST,
+    payload: params
   }
 }
 

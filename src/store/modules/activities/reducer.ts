@@ -14,6 +14,7 @@ const activities: Reducer<IActivitiesState> = (state = INITIAL_STATE, action) =>
         ...state,
         loading: true,
         errors: undefined,
+        data: action.payload
       };
 
     case Types.GET_ACTIVITIES_SUCCESS: 
@@ -29,6 +30,7 @@ const activities: Reducer<IActivitiesState> = (state = INITIAL_STATE, action) =>
         ...state,
         errors: action.payload,
         loading: false,
+        data: []
       };
 
     default:

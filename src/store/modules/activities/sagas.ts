@@ -3,12 +3,12 @@ import { fetchActivities } from '../../../services/activitiesService';
 import { getActivitiesError, getActivitiesSuccess } from './actions';
 import { Types } from './types';
 
-function* getActivities({title}: any): any {
+function* getActivities(action: any): any {
 
 	try {
-		const response = yield call(fetchActivities, title);
+		const response = yield call(fetchActivities, action.payload);
 
-		yield put(getActivitiesSuccess(response.data));
+		yield put(getActivitiesSuccess(response.data.activities.reverse()));
 
 	} catch (err: any) {
 		yield put(getActivitiesError(err));

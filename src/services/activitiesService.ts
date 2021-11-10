@@ -1,13 +1,11 @@
 import api from './api';
 
-export const fetchActivities = (title: any) => {
+export const fetchActivities = (params: any) => {
 
 	return api.request({
 		method: 'GET',
 		url: '/activities',
-		params: {
-			title
-		}
+		params: params
 	})
 };
 

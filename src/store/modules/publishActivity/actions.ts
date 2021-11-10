@@ -1,10 +1,16 @@
 import { IActivity } from "../../../types";
 import { Types } from "./types";
 
-export function publishActivitieyRequest(activity: IActivity){
+interface PublishActivityPayload {
+  activity: Omit<IActivity, "id">, 
+  onSuccess: () => void,
+  onError: () => void
+}
+
+export function publishActivitieyRequest(payload: PublishActivityPayload){
   return {
     type: Types.PUBLISH_ACTIVITY_REQUEST,
-    payload: activity
+    payload
   }
 }
 
