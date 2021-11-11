@@ -57,7 +57,7 @@ const Home: React.FC = () => {
     
     return (
       <Animated.View style={{transform: [{scale}]}}>
-        <Activity data={item} onPress={() => navigate('ActivityDetails', { data: item })}/>  
+        <Activity userPublished={item.publisherId === userUid} data={item} onPress={() => navigate('ActivityDetails', { data: item })}/>  
       </Animated.View>
     )
   };

@@ -11,7 +11,7 @@ import {
   Category,
   CardBottom,
   SeeMoreContainer,
-  SeeMoreText
+  SeeMoreText,
 } from './styles';
 import theme from '../../global/styles/theme';
 import Badge from '../Badge';

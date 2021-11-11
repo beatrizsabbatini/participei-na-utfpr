@@ -3,8 +3,10 @@ import { RFValue } from 'react-native-responsive-fontsize';
 
 export const Container = styled.TouchableOpacity`
   background-color: #fff;
+  position: relative;
   height: ${RFValue(122)}px;
   align-self: stretch;
+  justify-content: space-between;
   border-width: ${RFValue(1)}px;
   border-color: ${({theme}) => theme.colors.border};
   border-radius: ${RFValue(10)}px;
@@ -42,12 +44,12 @@ export const CardBottom = styled.View`
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  margin-top: ${RFValue(20)}px;
 `
 
 export const SeeMoreContainer = styled.TouchableOpacity`
   flex-direction: row;
   align-items: center;
+  align-self: flex-end;
 `
 
 export const SeeMoreText = styled.Text`
