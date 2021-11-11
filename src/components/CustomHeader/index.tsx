@@ -10,6 +10,7 @@ import { LEFT_ICON_TYPES, RIGHT_ICON_TYPES } from '../../types';
 import { LinearGradientBox, HeaderTitle, Shadow, ClockImage } from './styles';
 import FilterIcon from '../FilterIcon';
 import ClockIcon from '../../../assets/clock.png';
+import { useGroupSelect } from '../../hooks/GroupsSelect';
 
 interface CustomHeaderProps{
   title: string;
@@ -20,6 +21,8 @@ interface CustomHeaderProps{
 const CustomHeader: React.FC<CustomHeaderProps> = ({title, leftIconType, rightIconType }) => {
   const navigation = useNavigation();
 
+  const { setModalVisible } = useGroupSelect();
+
   const generateRightIcon = () => {
     switch (rightIconType) {
       case RIGHT_ICON_TYPES.NONE:
@@ -27,7 +30,7 @@ const CustomHeader: React.FC<CustomHeaderProps> = ({title, leftIconType, rightIc
 
       case RIGHT_ICON_TYPES.FILTER:
         return (
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => setModalVisible(true)}>
             <FilterIcon/>
           </TouchableOpacity>
         )

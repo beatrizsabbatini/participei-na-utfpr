@@ -3,16 +3,17 @@ import React from 'react';
 import { MaterialCommunityIcons } from '@expo/vector-icons'; 
 
 import { Container, FilterNumberBadge, FiltersNumber } from './styles';
-import { useFilters } from '../../hooks/Filters';
+import { useGroupSelect } from '../../hooks/GroupsSelect';
 
 const FilterIcon: React.FC = () => {
 
-  const { numberOfFilters } = useFilters();
+  const { groups } = useGroupSelect();
+
   return (
     <Container>
       <MaterialCommunityIcons name="filter" size={24} color="white"/>
       <FilterNumberBadge>
-        <FiltersNumber>{numberOfFilters}</FiltersNumber>
+        <FiltersNumber>{groups.length}</FiltersNumber>
       </FilterNumberBadge>
     </Container>
   )

@@ -6,6 +6,7 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { ActivityIndicator, Searchbar } from 'react-native-paper';
 import { RFValue } from 'react-native-responsive-fontsize';
 import { useDispatch, useSelector } from 'react-redux';
+import Modal from "react-native-modal";
 import firebase from 'firebase';
 
 import Activity from '../../components/Activity';
@@ -13,11 +14,12 @@ import theme from '../../global/styles/theme';
 import EmptyList from '../../../assets/empty.png';
 import { HomeStackParamList } from '../../routes/app.routes';
 import { IActivity } from '../../types';
-import { getUserDataError, getUserDataRequest, getUserDataSuccess } from '../../store/modules/userData/actions';
+import { getUserDataRequest } from '../../store/modules/userData/actions';
 import { getActivitiesRequest } from '../../store/modules/activities/actions';
 import { IState } from '../../store';
-import { IUserData } from '../../store/modules/userData/types';
 import { Background, EmptyMessageContainer, EmptyIcon, EmptyMessage } from './styles';
+import GroupSelect from '../../components/GroupSelect';
+import { useGroupSelect } from '../../hooks/GroupsSelect';
 
 type HomeScreenProp = StackNavigationProp<HomeStackParamList, 'ActivityDetails'>;
 
@@ -26,6 +28,7 @@ const Home: React.FC = () => {
   
   const userUid = firebase.auth().currentUser?.uid;
 
+  const { modalVisible, setModalVisible, groups } = useGroupSelect();
   const { loading, data } = useSelector((state: IState) => state.activities);
   const { navigate } = useNavigation<HomeScreenProp>();
   const dispatch = useDispatch();
@@ -64,7 +67,7 @@ const Home: React.FC = () => {
       <Searchbar
         value={searchQuery}
         onChangeText={(query) => setSearchQuery(query)}
-        onSubmitEditing={() => dispatch(getActivitiesRequest({title: searchQuery}))}
+        onSubmitEditing={() => dispatch(getActivitiesRequest({title: searchQuery, groups}))}
       />
         {
           loading ? (
@@ -101,6 +104,14 @@ const Home: React.FC = () => {
             </>
           )
         }
+        <Modal
+          animationIn="fadeIn"
+          animationOut="fadeOut"
+          isVisible={modalVisible}
+          onBackdropPress={() => setModalVisible(false)}
+        >
+          <GroupSelect searchQuery={searchQuery}/>
+        </Modal>
     </Background>
   )
 }

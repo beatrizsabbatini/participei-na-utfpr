@@ -4,7 +4,7 @@ import theme from '../../global/styles/theme';
 import { PrimaryButton } from './styles';
 
 interface ButtonComponentProps{
-  type: 'primary' | 'light' | 'dark';
+  type: 'primary' | 'light' | 'dark' | 'white';
   onPress: () => void;
   loading?: boolean;
   width?: string;
@@ -25,7 +25,7 @@ const Button: React.FC<ButtonComponentProps> = ({type, children, onPress, width,
 
       case 'dark':
         setButtonColor(theme.colors.primary_dark);
-      break;
+      break
     }
   }
 

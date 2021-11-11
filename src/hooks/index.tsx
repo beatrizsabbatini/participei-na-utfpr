@@ -2,15 +2,15 @@ import React from 'react';
 
 import { AuthProvider } from './Auth';
 import { StepsProvider } from './Steps';
-import { FiltersProvider } from './Filters';
+import { GroupSelectProvider } from './GroupsSelect';
 
 const AppProvider: React.FC = ({ children }) => {
   return (
     <>
       <AuthProvider>
-        <FiltersProvider>
+        <GroupSelectProvider>
           <StepsProvider>{children}</StepsProvider>
-        </FiltersProvider>
+        </GroupSelectProvider>
       </AuthProvider>
     </>
   );
