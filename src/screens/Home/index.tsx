@@ -11,7 +11,6 @@ import firebase from 'firebase';
 
 import Activity from '../../components/Activity';
 import theme from '../../global/styles/theme';
-import EmptyList from '../../../assets/empty.png';
 import { HomeStackParamList } from '../../routes/app.routes';
 import { IActivity } from '../../types';
 import { getActivitiesRequest } from '../../store/modules/Activities/getActivities/actions';

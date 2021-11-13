@@ -14,7 +14,7 @@ export function publishActivitieyRequest(payload: PublishActivityPayload){
   }
 }
 
-export function publishActivitySuccess(activities: IActivity[]){
+export function publishActivitySuccess(activities: IActivity[] | null){
   return {
     type: Types.PUBLISH_ACTIVITY_SUCCESS,
     payload: activities

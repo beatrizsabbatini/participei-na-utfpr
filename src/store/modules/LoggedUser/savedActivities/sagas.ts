@@ -8,7 +8,7 @@ function* getSavedActivities(action: any): any {
 	try {
 		const response = yield call(fetchActivitiesByIds, {ids: action.payload.ids || []});
 
-		yield put(getUserSavedActivitiesSuccess(response.data));
+		yield put(getUserSavedActivitiesSuccess(response.data.reverse()));
 
 	} catch (err: any) {
 

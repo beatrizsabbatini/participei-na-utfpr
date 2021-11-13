@@ -19,8 +19,6 @@ export const createActivity = (body: any) => {
 };
 
 export const fetchActivitiesByIds = (body: any) => {
-
-  console.log("PAYLOAD ON REQUEST: ", body);
   
 	return api.request({
 		method: 'POST',

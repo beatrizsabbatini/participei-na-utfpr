@@ -16,10 +16,11 @@ import { Container } from './styles';
 import { IState } from '../../store';
 import { HomeStackParamList } from '../../routes/app.routes';
 import { IActivity } from '../../types';
-import { getActivitiesRequest } from '../../store/modules/Activities/getActivities/actions';
-import { publishActivitieyRequest } from '../../store/modules/Activities/publishActivity/actions';
-import { editUserRequest } from '../../store/modules/LoggedUser/editUser/actions';
 import firebase from 'firebase';
+import { getActivitiesRequest } from '../../store/modules/Activities/getActivities/actions';
+import { editUserRequest } from '../../store/modules/LoggedUser/editUser/actions';
+import { publishActivitieyRequest } from '../../store/modules/Activities/publishActivity/actions';
+import { getUserDataRequest } from '../../store/modules/LoggedUser/userData/actions';
 
 type PostActivityScreenProp = StackNavigationProp<HomeStackParamList, 'ActivitiesFeed'>;
 interface FormProps{
@@ -35,8 +36,8 @@ const PostActivity: React.FC = () => {
   const [category, setCategory] = useState<string>('');
   const userUid = firebase.auth().currentUser?.uid;
 
-  const { loading, data } = useSelector((state: IState) => state.publishActivity);
-  const { data: userData } = useSelector((state: IState) => state.userData);
+  const { loading, data, errors } = useSelector((state: IState) => state.publishActivity);
+  const { data: userData, loading: loadingUserData } = useSelector((state: IState) => state.userData);
   const userDataPublishedActivitiesIds = userData.publishedActivitiesIds;
 
   const { navigate } = useNavigation<PostActivityScreenProp>();
@@ -49,25 +50,37 @@ const PostActivity: React.FC = () => {
     categoryId: Yup.string(),
   });
 
+  useEffect(() => {
+    dispatch(getUserDataRequest({uid: userUid, onError}));
+    if (!loadingUserData && data && userUid){
+      if (data.id){
+        if (!userDataPublishedActivitiesIds.includes(data.id)){
+          dispatch(
+            editUserRequest(
+              userUid, 
+              { publishedActivitiesIds: [...userDataPublishedActivitiesIds, data.id] },
+              onError 
+            )
+          );
+        }
+      }
+    }
+  }, [data])
+
+  const onError = () => {
+    errors?.forEach(error => {
+      Alert.alert(
+        'Erro ao buscar seus dados',
+        error
+      );
+    })
+  }
+
   const postActivity = async (values: any, actions: any) => {
     const foundCategory = categories.find(category => category.id === values.categoryId);
 
-    const categoryData = {
-      id: foundCategory?.id,
-      group: foundCategory?.group,
-      label: foundCategory?.label,
-      points: foundCategory?.points
-    }
-
     const onSuccess = () => {
       dispatch(getActivitiesRequest());
-      if (userUid) dispatch(
-        editUserRequest(
-          userUid, 
-          { publishedActivitiesIds: [...userDataPublishedActivitiesIds, data.id] },
-          onErrorEditUser 
-        )
-      );
       actions.resetForm();
         setCategory(''); 
         navigate('ActivitiesFeed');
@@ -77,16 +90,11 @@ const PostActivity: React.FC = () => {
         );
     }
 
-    const onError = () => {
-      Alert.alert(
-        'Erro ao publicar atividade!'
-      );
-    }
-
-    const onErrorEditUser = () => {
-      Alert.alert(
-        'Erro ao editar usuário!'
-      );
+    const categoryData = {
+      id: foundCategory?.id,
+      group: foundCategory?.group,
+      label: foundCategory?.label,
+      points: foundCategory?.points
     }
 
     const activity: Omit<IActivity, "id"> = {
@@ -113,7 +121,7 @@ const PostActivity: React.FC = () => {
         validateOnChange={false}
         validateOnBlur={false}
         initialValues={{
-          title: 'Furiosos Cheerleaders 2021-2',
+          title: 'Volei',
           description: 'Descrição Teste',
           categoryId: '2',
         }}

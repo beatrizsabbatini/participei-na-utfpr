@@ -14,6 +14,7 @@ export const fetchUser = (params: ActivitiesRequestParams) => {
 };
 
 export const updateUser = (payload: any) => {
+
 	return api.request({
 		method: 'PATCH',
     params: {id: payload.id},
