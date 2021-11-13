@@ -1,4 +1,4 @@
-import { IActivity, ICategory } from "../../../types";
+import { IActivity } from "../../../../types";
 
 export interface IActivitiesState{
   data: IActivity[],

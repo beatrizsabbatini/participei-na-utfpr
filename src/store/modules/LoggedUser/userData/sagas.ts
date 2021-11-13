@@ -1,7 +1,7 @@
 import { takeLatest, put, call, all } from 'redux-saga/effects';
-import { fetchUser } from '../../../services/userService';
-import { getUserDataSuccess, getUserDataError } from './actions';
 import { Types } from './types';
+import { getUserDataSuccess, getUserDataError } from './actions';
+import { fetchUser } from '../../../../services/userService';
 
 function* getUser(action: any): any {
 
@@ -20,9 +20,10 @@ function* getUser(action: any): any {
 	}
 }
 
+
 export default function* root() {
 	yield all([
-    takeLatest(Types.GET_USER_DATA_REQUEST, getUser)
+    takeLatest(Types.GET_USER_DATA_REQUEST, getUser),
   ])
 }
 

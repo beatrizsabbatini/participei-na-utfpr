@@ -1,4 +1,4 @@
-import { IActivity } from "../../../types";
+import { IActivity } from "../../../../types";
 
 export interface IPublishActivityState{
   data: IActivity,

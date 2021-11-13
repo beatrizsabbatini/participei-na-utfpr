@@ -6,3 +6,9 @@ export const Container = styled.View`
   background-color: ${({theme}) => theme.colors.background};
   padding-horizontal: ${RFValue(15)}px;
 `;
+
+export const LoadingContainer = styled.View`
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+`

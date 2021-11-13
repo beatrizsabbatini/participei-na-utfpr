@@ -1,4 +1,4 @@
-import { IUserData } from "../../store/modules/userData/types";
+import { IUserData } from "../../store/modules/LoggedUser/userData/types";
 import { IActivity } from "../../types";
 
 export async function getActivitiesByQuery(

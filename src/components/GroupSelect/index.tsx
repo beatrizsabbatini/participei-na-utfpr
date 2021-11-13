@@ -8,7 +8,7 @@ import CheckBox from '@react-native-community/checkbox';
 import Button from '../Button';
 import theme from '../../global/styles/theme';
 import { useGroupSelect } from '../../hooks/GroupsSelect';
-import { getActivitiesRequest } from '../../store/modules/activities/actions';
+import { getActivitiesRequest } from '../../store/modules/Activities/getActivities/actions';
 import { ModalBox, CheckboxContainer, ModalTitle, CheckboxLabel, ButtonsContainer, CancelText } from './styles';
 
 interface GroupSelectProps{

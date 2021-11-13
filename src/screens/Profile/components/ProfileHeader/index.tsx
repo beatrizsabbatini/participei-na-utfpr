@@ -12,8 +12,6 @@ const ProfileHeader: React.FC = () => {
 
   const userData = useSelector((state: IState) => state.userData);
 
-  console.log("User Data: ", userData.data)
-
   return (
     <Container>
       <ProfileImage>

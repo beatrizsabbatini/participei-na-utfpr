@@ -1,4 +1,4 @@
-import { IActivity } from "../../../types";
+import { IActivity } from "../../../../types";
 import { Types } from "./types";
 
 interface PublishActivityPayload {

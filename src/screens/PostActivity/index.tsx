@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import { Formik } from 'formik';
 import { Alert, View } from 'react-native';
@@ -15,11 +15,13 @@ import { categories } from '../../mock/activitiesMock';
 import { Container } from './styles';
 import { IState } from '../../store';
 import { HomeStackParamList } from '../../routes/app.routes';
-import { publishActivitieyRequest } from '../../store/modules/publishActivity/actions';
-import { IActivity, ICategory } from '../../types';
-import { getActivitiesRequest, getActivitiesSuccess } from '../../store/modules/activities/actions';
+import { IActivity } from '../../types';
+import { getActivitiesRequest } from '../../store/modules/Activities/getActivities/actions';
+import { publishActivitieyRequest } from '../../store/modules/Activities/publishActivity/actions';
+import { editUserRequest } from '../../store/modules/LoggedUser/editUser/actions';
+import firebase from 'firebase';
 
-type HomeScreenProp = StackNavigationProp<HomeStackParamList, 'ActivitiesFeed'>;
+type PostActivityScreenProp = StackNavigationProp<HomeStackParamList, 'ActivitiesFeed'>;
 interface FormProps{
   values: any,
   handleChange: (text: string) => void,
@@ -31,11 +33,13 @@ interface FormProps{
 
 const PostActivity: React.FC = () => {
   const [category, setCategory] = useState<string>('');
+  const userUid = firebase.auth().currentUser?.uid;
 
-  const userData = useSelector((state: IState) => state.userData);
-  const { loading, data, errors } = useSelector((state: IState) => state.publishActivity);
+  const { loading, data } = useSelector((state: IState) => state.publishActivity);
+  const { data: userData } = useSelector((state: IState) => state.userData);
+  const userDataPublishedActivitiesIds = userData.publishedActivitiesIds;
 
-  const { navigate } = useNavigation<HomeScreenProp>();
+  const { navigate } = useNavigation<PostActivityScreenProp>();
 
   const dispatch = useDispatch();
 
@@ -57,6 +61,13 @@ const PostActivity: React.FC = () => {
 
     const onSuccess = () => {
       dispatch(getActivitiesRequest());
+      if (userUid) dispatch(
+        editUserRequest(
+          userUid, 
+          { publishedActivitiesIds: [...userDataPublishedActivitiesIds, data.id] },
+          onErrorEditUser 
+        )
+      );
       actions.resetForm();
         setCategory(''); 
         navigate('ActivitiesFeed');
@@ -69,6 +80,12 @@ const PostActivity: React.FC = () => {
     const onError = () => {
       Alert.alert(
         'Erro ao publicar atividade!'
+      );
+    }
+
+    const onErrorEditUser = () => {
+      Alert.alert(
+        'Erro ao editar usuário!'
       );
     }
 

@@ -1,6 +1,6 @@
 import { Reducer } from "redux";
 
-import { IActivity } from "../../../types";
+import { IActivity } from "../../../../types";
 import { IPublishActivityState, Types } from "./types";
 
 const INITIAL_STATE: IPublishActivityState = {

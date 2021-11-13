@@ -20,3 +20,9 @@ export const Row = styled.View`
   margin-horizontal: ${RFValue(5)}px;
   margin-top: ${RFValue(15)}px;
 `
+
+export const LoadingContainer = styled.View`
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+`

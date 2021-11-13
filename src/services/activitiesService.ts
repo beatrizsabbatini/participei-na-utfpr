@@ -17,3 +17,14 @@ export const createActivity = (body: any) => {
 		data: body 
 	})
 };
+
+export const fetchActivitiesByIds = (body: any) => {
+
+  console.log("PAYLOAD ON REQUEST: ", body);
+  
+	return api.request({
+		method: 'POST',
+		url: `/activities`,
+		data: body
+	})
+};

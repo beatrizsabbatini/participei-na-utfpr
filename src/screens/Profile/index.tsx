@@ -1,17 +1,30 @@
 import React, { useEffect, useState } from 'react';
 
-import { useWindowDimensions } from 'react-native';
+import { Alert, useWindowDimensions } from 'react-native';
 import { TabView, SceneMap, TabBar } from 'react-native-tab-view';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import theme from '../../global/styles/theme';
 import { IState } from '../../store';
+import { getUserPublishedActivitiesRequest } from '../../store/modules/LoggedUser/publishedActivities/actions';
+import { getUserSavedActivitiesRequest } from '../../store/modules/LoggedUser/savedActivities/actions';
 import ProfileHeader from './components/ProfileHeader';
 import PublishedActivities from './components/PublishedActivities';
 import SavedActivities from './components/SavedActivities';
 import { TabLabel } from './styles';
 
 const Profile: React.FC = () => {
+  const { data } = useSelector((state: IState) => state.userData);
+  const dispatch = useDispatch();
+
+  const onError = () => {
+    Alert.alert("Erro ao buscar atividades publicadas!");
+  }
+
+  useEffect(() => {
+    dispatch(getUserPublishedActivitiesRequest({ids: data.publishedActivitiesIds, onError}))
+    dispatch(getUserSavedActivitiesRequest({ids: data.savedActivitiesIds, onError}))
+  }, [data])
 
   const renderScene = SceneMap({
     first: PublishedActivities,

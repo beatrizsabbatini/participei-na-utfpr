@@ -14,12 +14,13 @@ import theme from '../../global/styles/theme';
 import EmptyList from '../../../assets/empty.png';
 import { HomeStackParamList } from '../../routes/app.routes';
 import { IActivity } from '../../types';
-import { getUserDataRequest } from '../../store/modules/userData/actions';
-import { getActivitiesRequest } from '../../store/modules/activities/actions';
+import { getActivitiesRequest } from '../../store/modules/Activities/getActivities/actions';
+import { getUserDataRequest } from '../../store/modules/LoggedUser/userData/actions';
 import { IState } from '../../store';
-import { Background, EmptyMessageContainer, EmptyIcon, EmptyMessage } from './styles';
+import { Background } from './styles';
 import GroupSelect from '../../components/GroupSelect';
 import { useGroupSelect } from '../../hooks/GroupsSelect';
+import EmptyMessage from '../../components/EmptyMessage';
 
 type HomeScreenProp = StackNavigationProp<HomeStackParamList, 'ActivityDetails'>;
 
@@ -95,10 +96,7 @@ const Home: React.FC = () => {
                   contentContainerStyle={{paddingBottom: 30}}
                 />
                 ) : (
-                  <EmptyMessageContainer>
-                    <EmptyIcon source={EmptyList}/>
-                    <EmptyMessage>Oops, ainda não foram publicadas atividades!</EmptyMessage>
-                  </EmptyMessageContainer>
+                 <EmptyMessage/>
                 )
               }
             </>

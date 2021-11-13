@@ -1,5 +1,5 @@
 import { takeLatest, put, call, all } from 'redux-saga/effects';
-import { createActivity } from '../../../services/activitiesService';
+import { createActivity } from '../../../../services/activitiesService';
 import { publishActivityError, publishActivitySuccess } from './actions';
 import { Types } from './types';
 
