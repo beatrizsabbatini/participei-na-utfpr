@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 
-import { Alert, Animated, ListRenderItem, View } from 'react-native';
+import { Alert, Animated, ListRenderItem, View, RefreshControl } from 'react-native';
 import { useNavigation } from '@react-navigation/core';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { ActivityIndicator, Searchbar } from 'react-native-paper';
@@ -25,6 +25,7 @@ type HomeScreenProp = StackNavigationProp<HomeStackParamList, 'ActivityDetails'>
 
 const Home: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState<string>('');
+  const [refreshing, setRefreshing] = React.useState(false);
   
   const userUid = firebase.auth().currentUser?.uid;
 
@@ -36,6 +37,12 @@ const Home: React.FC = () => {
   const onGetUserDataError = () => {
     Alert.alert("Erro ao buscar seus dados!");
   }
+
+  const onRefresh = React.useCallback(() => {
+    setRefreshing(true);
+    dispatch(getActivitiesRequest());
+    setRefreshing(false);
+  }, []);
 
   useEffect(() => {
     if (userUid) dispatch(getUserDataRequest({ uid: userUid, onError: onGetUserDataError }));
@@ -93,6 +100,12 @@ const Home: React.FC = () => {
                   )}
                   style={{width: '100%', paddingTop: RFValue(25)}}
                   contentContainerStyle={{paddingBottom: 30}}
+                  refreshControl={
+                    <RefreshControl
+                      refreshing={refreshing}
+                      onRefresh={onRefresh}
+                    />
+                  }
                 />
                 ) : (
                  <EmptyMessage/>

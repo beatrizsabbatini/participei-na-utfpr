@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { ActivityIndicator, ListRenderItem, View, Text } from 'react-native';
+import { ActivityIndicator, ListRenderItem, View } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { FlatList } from 'react-native-gesture-handler';
 import { RFValue } from 'react-native-responsive-fontsize';
@@ -19,7 +19,6 @@ type HomeScreenProp = StackNavigationProp<HomeStackParamList, 'ActivityDetails'>
 
 const PublishedActivities: React.FC = () => {
   const { loading, data } = useSelector((state: IState) => state.loggedUserPublishedActivities);
-
   const { navigate } = useNavigation<HomeScreenProp>();
 
   const renderActivities: ListRenderItem<IActivity> = ({ item }) => (
