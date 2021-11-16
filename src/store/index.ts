@@ -8,6 +8,8 @@ import { ISavedActivitiesState } from './modules/LoggedUser/savedActivities/type
 import { IEditUserState } from './modules/LoggedUser/editUser/types';
 import { IActivitiesState } from './modules/Activities/getActivities/types';
 import { IPublishActivityState } from './modules/Activities/publishActivity/types';
+import { IEditActivityState } from './modules/Activities/editActivity/types';
+import { ICreateUserState } from './modules/SignUp/createUser/types';
 
 export interface IState{
   userData: IUserDataState;
@@ -16,6 +18,8 @@ export interface IState{
   loggedUserPublishedActivities: IPublishedActivitiesState;
   loggedUserSavedActivities: ISavedActivitiesState;
   editUser: IEditUserState
+  editActivity: IEditActivityState
+  createUser: ICreateUserState
 }
 
 const sagaMiddleware = createSagaMiddleware();

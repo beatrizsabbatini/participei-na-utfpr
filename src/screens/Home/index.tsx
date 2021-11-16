@@ -29,6 +29,10 @@ const Home: React.FC = () => {
   
   const userUid = firebase.auth().currentUser?.uid;
 
+  useEffect(() => {
+    console.log("UID: ", userUid)
+  }, [userUid])
+
   const { modalVisible, setModalVisible, groups } = useGroupSelect();
   const { loading, data } = useSelector((state: IState) => state.activities);
   const { navigate } = useNavigation<HomeScreenProp>();
@@ -45,7 +49,7 @@ const Home: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    if (userUid) dispatch(getUserDataRequest({ uid: userUid, onError: onGetUserDataError }));
+    if (userUid) dispatch(getUserDataRequest({ id: userUid, onError: onGetUserDataError }));
     dispatch(getActivitiesRequest());
   }, [userUid])
 

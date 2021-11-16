@@ -21,6 +21,8 @@ import { Background, ButtonsContainer, customStepsStyles } from './styles';
 import { signUp } from './services';
 import { getMessageByErrorCode, getStepFieldsToValidate } from './utils';
 import firebase from 'firebase';
+import { useDispatch } from 'react-redux';
+import { createUserRequest } from '../../store/modules/SignUp/createUser/actions';
 
 type SignUpScreenProp = StackNavigationProp<AuthStackParamList, 'SignIn'>;
 
@@ -42,6 +44,7 @@ export interface Step{
 const SignUp: React.FC = () => {
 
   const navigation = useNavigation<SignUpScreenProp>();
+  const dispatch = useDispatch();
 
   const { currentStep, setCurrentStep } = useSteps();
   const { setIsAuthenticated } = useAuth();
@@ -118,27 +121,65 @@ const SignUp: React.FC = () => {
     else signUp(values, onCreationSuccess, onCreationError);
   } 
 
-  const onCreationSuccess = () => {
-    Alert.alert(
-      'Usuário criado!',
-      'Deseja realizar o login com este usuário?',
-      [
-        {
-          text: 'Sim',
-          onPress: () => {
-            setIsAuthenticated(true);
-            setLoading(false);
+  const loginService = async (values: any) => {
+    setLoading(true);
+
+    return await firebase
+      .auth()
+      .signInWithEmailAndPassword(values.email, values.password)
+      .then(() => {
+        setLoading(false);
+        setIsAuthenticated(true);
+      })
+      .catch((error) => {
+        setLoading(false);
+        Alert.alert('Erro!', getMessageByErrorCode(error.code));
+      });
+  }
+
+  const onCreationSuccess = (userUid?: string, values?: any) => {
+
+    const user = {
+      id: userUid,
+      campusId: values.campusId,
+      name: values.name,
+      ra: values.ra,
+      group1Points: 0,
+      group2Points: 0,
+      group3Points: 0,
+      publishedActivitiesIds: [],
+      savedActivitiesIds: []
+    }
+
+    const onError = () => {
+      Alert.alert('Error creating user!');
+    }
+
+    const onSuccess = () => {
+      Alert.alert(
+        'Usuário criado!',
+        'Deseja realizar o login com este usuário?',
+        [
+          {
+            text: 'Sim',
+            onPress: async () => {
+              await loginService(values)
+              setIsAuthenticated(true);
+              setLoading(false);
+            },
           },
-        },
-        {
-          text: 'Não',
-          onPress: () => {
-            navigation.goBack();
-            setLoading(false);
+          {
+            text: 'Não',
+            onPress: () => {
+              navigation.goBack();
+              setLoading(false);
+            },
           },
-        },
-      ]
-    );
+        ]
+      );
+    }
+
+    dispatch(createUserRequest({body: user, onSuccess, onError}));
   }
 
   const onCreationError = (error: any) => {

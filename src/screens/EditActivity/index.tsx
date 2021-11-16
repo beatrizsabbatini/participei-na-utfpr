@@ -1,46 +1,40 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 
 import { Formik } from 'formik';
 import { Alert, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigation } from '@react-navigation/core';
+import { RouteProp, useNavigation, useRoute } from '@react-navigation/core';
 import { StackNavigationProp } from '@react-navigation/stack';
 import Spinner from 'react-native-loading-spinner-overlay';
 import * as Yup from 'yup';
-import firebase from 'firebase';
 
 import Button from '../../components/Button';
-import Dropdown from '../../components/Dropdown';
 import Input from '../../components/Input';
-import { categories } from '../../mock/activitiesMock';
 import { Container } from './styles';
 import { IState } from '../../store';
 import { HomeStackParamList } from '../../routes/app.routes';
 import { IActivity } from '../../types';
 import { getActivitiesRequest } from '../../store/modules/Activities/getActivities/actions';
-import { editUserRequest } from '../../store/modules/LoggedUser/editUser/actions';
-import { publishActivitieyRequest } from '../../store/modules/Activities/publishActivity/actions';
-import { getUserDataRequest } from '../../store/modules/LoggedUser/userData/actions';
+import { editActivityRequest } from '../../store/modules/Activities/editActivity/actions';
+import { getUserPublishedActivitiesError, getUserPublishedActivitiesRequest } from '../../store/modules/LoggedUser/publishedActivities/actions';
 
-type PostActivityScreenProp = StackNavigationProp<HomeStackParamList, 'ActivitiesFeed'>;
+type EditActivityScreenProp = StackNavigationProp<HomeStackParamList, 'ActivitiesFeed'>;
 interface FormProps{
   values: any,
   handleChange: (text: string) => void,
-  handleSubmit: (values: any) => void,
+  handleSubmit: (values: any) => void, 
   errors: any,
   setFieldValue: any,
   resetForm: () => void
 }
 
-const PostActivity: React.FC = () => {
-  const [category, setCategory] = useState<string>('');
-  const userUid = firebase.auth().currentUser?.uid;
+const EditActivity: React.FC = () => {
+  const { loading, errors } = useSelector((state: IState) => state.editActivity);
+  const { data: userData } = useSelector((state: IState) => state.userData);
 
-  const { loading, data, errors } = useSelector((state: IState) => state.publishActivity);
-  const { data: userData, loading: loadingUserData } = useSelector((state: IState) => state.userData);
-  const userDataPublishedActivitiesIds = userData.publishedActivitiesIds;
-
-  const { navigate } = useNavigation<PostActivityScreenProp>();
+  const route = useRoute<RouteProp<HomeStackParamList, 'ActivityDetails'>>();
+  const { navigate } = useNavigation<EditActivityScreenProp>();
+  const { data } = route.params;
 
   const dispatch = useDispatch();
 
@@ -50,24 +44,16 @@ const PostActivity: React.FC = () => {
     categoryId: Yup.string(),
   });
 
-  useEffect(() => {
-    dispatch(getUserDataRequest({id: userUid, onError}));
-    if (!loadingUserData && data && userUid){
-      if (data.id){
-        if (!userDataPublishedActivitiesIds.includes(data.id)){
-          dispatch(
-            editUserRequest(
-              userUid, 
-              { publishedActivitiesIds: [...userDataPublishedActivitiesIds, data.id] },
-              onError 
-            )
-          );
-        }
-      }
-    }
-  }, [data])
-
   const onError = () => {
+    errors?.forEach(error => {
+      Alert.alert(
+        'Erro ao editar atividade',
+        error
+      );
+    })
+  }
+
+  const onErrorUser = () => {
     errors?.forEach(error => {
       Alert.alert(
         'Erro ao buscar seus dados',
@@ -77,35 +63,24 @@ const PostActivity: React.FC = () => {
   }
 
   const postActivity = async (values: any, actions: any) => {
-    const foundCategory = categories.find(category => category.id === values.categoryId);
 
     const onSuccess = () => {
       dispatch(getActivitiesRequest());
+      dispatch(getUserPublishedActivitiesRequest({ids: userData.publishedActivitiesIds, onErrorUser}));
       actions.resetForm();
-        setCategory(''); 
         navigate('ActivitiesFeed');
         Alert.alert(
-          'Atividade Criada!',
-          'Agora sua atividade já se encontra no feed de atividades'
+          'Atividade Atualizada!',
+          'Sua atividade já está atualizada no feed de atividades'
         );
     }
 
-    const categoryData = {
-      id: foundCategory?.id,
-      group: foundCategory?.group,
-      label: foundCategory?.label,
-      points: foundCategory?.points
-    }
-
-    const activity: Omit<IActivity, "id"> = {
+    const activity: Omit<IActivity, "id" | "publisherId" | "publisherName" | "category"> = {
       title: values.title,
       description: values.description,
-      category: categoryData,
-      publisherId: userUid || '', 
-      publisherName: userData.name
     }
 
-    await dispatch(publishActivitieyRequest({activity, onSuccess, onError}));
+    await dispatch(editActivityRequest({id: data.id, activity, onSuccess, onError}));
 
   }
 
@@ -113,7 +88,7 @@ const PostActivity: React.FC = () => {
     <Container>
       <Spinner
         visible={loading}
-        textContent='Publicando...'
+        textContent='Atualizando...'
         textStyle={{ color: "#fff" }}
       />
       <Formik
@@ -121,13 +96,12 @@ const PostActivity: React.FC = () => {
         validateOnChange={false}
         validateOnBlur={false}
         initialValues={{
-          title: '',
-          description: '',
-          categoryId: '',
+          title: data.title,
+          description: data.description
         }}
         onSubmit={(values, actions) => postActivity(values, actions)}
       >
-        {({ values, setFieldValue, handleSubmit, errors }: FormProps) => (
+        {({ values, setFieldValue, handleSubmit }: FormProps) => (
           <>
             <View>
               <Input 
@@ -142,15 +116,15 @@ const PostActivity: React.FC = () => {
                 multiline 
                 numberOfLines={5}
               />
-              <Dropdown 
+              {/* <Dropdown 
                 placeholder="Selecione uma categoria" 
                 value={category}
                 onValueChange={(value: string) => setFieldValue('categoryId', value)} 
                 list={categories} 
                 setValue={setCategory}
-              />
+              /> */}
             </View>
-            <Button onPress={() => handleSubmit(values)} type="primary">Publicar</Button>
+            <Button onPress={() => handleSubmit(values)} type="primary">Atualizar</Button>
           </>
         )}
       </Formik>
@@ -158,4 +132,4 @@ const PostActivity: React.FC = () => {
   )
 }
 
-export default PostActivity;
+export default EditActivity;

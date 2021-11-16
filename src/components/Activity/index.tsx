@@ -25,11 +25,16 @@ interface ActivityProps{
   userPublished?: boolean;
 }
 
-
 type HomeScreenProp = StackNavigationProp<HomeStackParamList, 'ActivityDetails'>;
 
 const Activity: React.FC<ActivityProps> = ({data, onPress, userPublished}) => {
   const { navigate } = useNavigation<HomeScreenProp>();
+
+  const handlePress = () => {
+    if (userPublished){
+      navigate('EditActivity', { data } )
+    }
+  }
 
   return (
     <Container onPress={onPress}>
@@ -48,7 +53,7 @@ const Activity: React.FC<ActivityProps> = ({data, onPress, userPublished}) => {
           <MaterialIcons name="add" size={14} color={theme.colors.primary_light} />
           <SeeMoreText>Toque para ver mais</SeeMoreText>
         </SeeMoreContainer>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={handlePress}>
           {userPublished ? (
             <MaterialIcons name="edit" size={24} color={theme.colors.secondary} />
           ) : (

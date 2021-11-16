@@ -59,7 +59,8 @@ const SignIn: React.FC = () => {
       return await firebase
         .auth()
         .signInWithEmailAndPassword(values.email, values.password)
-        .then(() => {
+        .then((res) => {
+          console.log(res.user)
           setLoading(false);
           setIsAuthenticated(true);
         })
@@ -102,8 +103,8 @@ const SignIn: React.FC = () => {
         validateOnChange={false}
         validateOnBlur={false}
         initialValues={{
-          email: 'bea@teste.com', 
-          password: '123456',
+          email: '', 
+          password: '',
         }}
         onSubmit={(values) => loginService(values)}
       >

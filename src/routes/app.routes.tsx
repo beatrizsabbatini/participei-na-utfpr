@@ -17,10 +17,12 @@ import theme from '../global/styles/theme';
 import { createStackNavigator } from '@react-navigation/stack';
 import ActivityDetails from '../screens/ActivityDetails';
 import CustomDrawer from '../components/CustomDrawer';
+import EditActivity from '../screens/EditActivity';
 
 export type HomeStackParamList = {
   ActivitiesFeed: undefined;
   ActivityDetails: { data: IActivity };
+  EditActivity: { data: IActivity };
 };
 
 const AppRoutes = () => {
@@ -143,6 +145,18 @@ const HomeStack = () => {
           />
         )}}
       />
+      <Screen
+        name="EditActivity"
+        component={EditActivity}
+        options={{
+          header: () => (
+            <CustomHeader 
+              title="Editar atividade" 
+              leftIconType={LEFT_ICON_TYPES.BACK} 
+              rightIconType={RIGHT_ICON_TYPES.CLOCK_ICON}
+          />
+        )}}
+      />
     </Navigator>
   )
 }
@@ -171,6 +185,18 @@ const ProfileStack = () => {
           header: () => (
             <CustomHeader 
               title="Detalhes da atividade" 
+              leftIconType={LEFT_ICON_TYPES.BACK} 
+              rightIconType={RIGHT_ICON_TYPES.CLOCK_ICON}
+          />
+        )}}
+      />
+      <Screen
+        name="EditActivity"
+        component={EditActivity}
+        options={{
+          header: () => (
+            <CustomHeader 
+              title="Editar atividade" 
               leftIconType={LEFT_ICON_TYPES.BACK} 
               rightIconType={RIGHT_ICON_TYPES.CLOCK_ICON}
           />

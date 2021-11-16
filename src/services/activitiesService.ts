@@ -18,6 +18,18 @@ export const createActivity = (body: any) => {
 	})
 };
 
+export const editActivity = (payload: any) => {
+
+  console.log("PAYLOAD NA REQUEST: ", payload)
+
+	return api.request({
+		method: 'PATCH',
+		url: '/activities',
+    params: { id: payload.id },
+		data: payload.activity 
+	})
+};
+
 export const fetchActivitiesByIds = (body: any) => {
   
 	return api.request({

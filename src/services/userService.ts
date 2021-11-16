@@ -1,15 +1,13 @@
 
 import api from './api';
 
-interface ActivitiesRequestParams{
-  uid?: string
-}
 
-export const fetchUser = (params: ActivitiesRequestParams) => {
+export const fetchUser = (id: string) => {
+
 	return api.request({
 		method: 'GET',
 		url: '/user',
-		params
+		params: { id }
 	})
 };
 
@@ -20,5 +18,14 @@ export const updateUser = (payload: any) => {
     params: {id: payload.id},
 		url: '/users',
 		data: payload.data
+	})
+};
+
+export const createUser = (payload: any) => {
+
+	return api.request({
+		method: 'POST',
+		url: '/user',
+		data: payload.body
 	})
 };

@@ -6,13 +6,11 @@ import { fetchUser } from '../../../../services/userService';
 function* getUser(action: any): any {
 
 	try {
-		const response = yield call(fetchUser, action.payload.uid);
+		const response = yield call(fetchUser, action.payload.id);
 
 		yield put(getUserDataSuccess(response.data));
 
 	} catch (err: any) {
-
-		console.log("error ", err);
 
 		yield put(getUserDataError(err));
 

@@ -8,7 +8,7 @@ const INITIAL_STATE: IUserDataState = {
     campusId: '',
     image: '',
     email: '',
-    postedActivitiesIds: [],
+    publishedActivitiesIds: [],
     savedActivitiesIds: [],
     group1Points: 0,
     group2Points: 0,
