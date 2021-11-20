@@ -20,8 +20,6 @@ export const createActivity = (body: any) => {
 
 export const editActivity = (payload: any) => {
 
-  console.log("PAYLOAD NA REQUEST: ", payload)
-
 	return api.request({
 		method: 'PATCH',
 		url: '/activities',

@@ -6,18 +6,15 @@ import { Types } from './types';
 
 function* editUser(action: any): any {
 
-  console.log("no editUser antes do try: ", action.payload)
 	try {
 	  yield call(updateUser, action.payload);
-
-    console.log("no editUser: ", action.payload)
 
 		yield put(editUserSuccess());
     yield put(publishActivitySuccess(null));
 
-	} catch (err: any) {
+    if (action.payload.onSuccess) action.payload.onSuccess();
 
-		console.log("error ", err);
+	} catch (err: any) {
 
 		yield put(editUserError(err));
 

@@ -16,7 +16,7 @@ import { HomeStackParamList } from '../../routes/app.routes';
 import { IActivity } from '../../types';
 import { getActivitiesRequest } from '../../store/modules/Activities/getActivities/actions';
 import { editActivityRequest } from '../../store/modules/Activities/editActivity/actions';
-import { getUserPublishedActivitiesError, getUserPublishedActivitiesRequest } from '../../store/modules/LoggedUser/publishedActivities/actions';
+import { getUserPublishedActivitiesRequest } from '../../store/modules/LoggedUser/publishedActivities/actions';
 
 type EditActivityScreenProp = StackNavigationProp<HomeStackParamList, 'ActivitiesFeed'>;
 interface FormProps{

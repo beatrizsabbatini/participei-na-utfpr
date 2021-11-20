@@ -1,4 +1,3 @@
-import { IActivity } from "../../../../types";
 import { Types } from "./types";
 
 export function getUserSavedActivitiesRequest(params: any){

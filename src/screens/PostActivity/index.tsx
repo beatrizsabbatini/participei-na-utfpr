@@ -52,12 +52,12 @@ const PostActivity: React.FC = () => {
 
   useEffect(() => {
     dispatch(getUserDataRequest({id: userUid, onError}));
-    if (!loadingUserData && data && userUid){
+    if (!loadingUserData && data && userData._id){
       if (data.id){
         if (!userDataPublishedActivitiesIds.includes(data.id)){
           dispatch(
             editUserRequest(
-              userUid, 
+              userData._id, 
               { publishedActivitiesIds: [...userDataPublishedActivitiesIds, data.id] },
               onError 
             )

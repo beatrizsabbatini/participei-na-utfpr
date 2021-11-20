@@ -9,6 +9,8 @@ export interface IUserData{
   group1Points: number,
   group2Points: number,
   group3Points: number,
+  uid: string,
+  _id: string
 }
 
 export interface IUserDataState{

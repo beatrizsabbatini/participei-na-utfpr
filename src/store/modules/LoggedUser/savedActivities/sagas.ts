@@ -5,6 +5,8 @@ import { fetchActivitiesByIds } from '../../../../services/activitiesService';
 
 function* getSavedActivities(action: any): any {
 
+  console.log("PAYLOAD ATIVIDADES SALVAS: ", action.payload);
+
 	try {
 		const response = yield call(fetchActivitiesByIds, {ids: action.payload.ids || []});
 

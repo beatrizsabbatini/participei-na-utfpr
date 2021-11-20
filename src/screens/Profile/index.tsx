@@ -18,7 +18,7 @@ const Profile: React.FC = () => {
   const dispatch = useDispatch();
 
   const onError = () => {
-    Alert.alert("Erro ao buscar atividades publicadas!");
+    Alert.alert("Erro ao buscar suas atividades!");
   }
 
   useEffect(() => {

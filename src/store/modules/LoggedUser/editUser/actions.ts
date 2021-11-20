@@ -1,10 +1,10 @@
 import { Types } from "./types";
 
-export function editUserRequest(id: string, data: any, onError: () => void){
+export function editUserRequest(_id: string, data: any, onError: () => void, onSuccess?: () => void){
 
   return {
     type: Types.EDIT_USER_REQUEST,
-    payload: { id, data, onError }
+    payload: { _id, data, onError, onSuccess }
   }
 }
 

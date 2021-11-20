@@ -6,7 +6,8 @@ export interface IActivity{
   publisherName: string,
   publisherId: string,
   images?: string[],
-  certificate?: any
+  certificate?: any,
+  saved?: boolean
 }
 
 export interface ICategory{

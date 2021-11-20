@@ -7,6 +7,7 @@ import { ActivityIndicator, Searchbar } from 'react-native-paper';
 import { RFValue } from 'react-native-responsive-fontsize';
 import { useDispatch, useSelector } from 'react-redux';
 import Modal from "react-native-modal";
+import Spinner from 'react-native-loading-spinner-overlay';
 import firebase from 'firebase';
 
 import Activity from '../../components/Activity';
@@ -20,22 +21,27 @@ import { Background } from './styles';
 import GroupSelect from '../../components/GroupSelect';
 import { useGroupSelect } from '../../hooks/GroupsSelect';
 import EmptyMessage from '../../components/EmptyMessage';
+import ConfirmationModalContent from '../../components/ConfirmationModalContent';
+import { editUserRequest } from '../../store/modules/LoggedUser/editUser/actions';
+import { useConfirmationModal } from '../../hooks/ConfirmationModal';
 
 type HomeScreenProp = StackNavigationProp<HomeStackParamList, 'ActivityDetails'>;
 
 const Home: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState<string>('');
-  const [refreshing, setRefreshing] = React.useState(false);
-  
+  const [refreshing, setRefreshing] = useState(false);
   const userUid = firebase.auth().currentUser?.uid;
-
-  useEffect(() => {
-    console.log("UID: ", userUid)
-  }, [userUid])
+  
+  const { navigate } = useNavigation<HomeScreenProp>();
 
   const { modalVisible, setModalVisible, groups } = useGroupSelect();
+
+  const { pressedActivity, modalVisible: confirmationModalVisible, setModalVisible: setConfirmationModalVisible } = useConfirmationModal();
   const { loading, data } = useSelector((state: IState) => state.activities);
-  const { navigate } = useNavigation<HomeScreenProp>();
+  const { data: userData, loading: loadingUserData } = useSelector((state: IState) => state.userData);
+  const { errors, loading: loadingEditUser } = useSelector((state: IState) => state.editUser);
+
+  const userDataSavedActivitiesIds = userData.savedActivitiesIds;
   const dispatch = useDispatch();
 
   const onGetUserDataError = () => {
@@ -68,10 +74,39 @@ const Home: React.FC = () => {
     
     return (
       <Animated.View style={{transform: [{scale}]}}>
-        <Activity userPublished={item.publisherId === userUid} data={item} onPress={() => navigate('ActivityDetails', { data: item })}/>  
+        <Activity userPublished={item.publisherId === userData.uid} data={item} onPress={() => navigate('ActivityDetails', { data: item })}/>  
       </Animated.View>
     )
   };
+
+  const onError = () => {
+    setConfirmationModalVisible(false);
+    errors?.forEach(error => {
+      Alert.alert(
+        'Erro ao salvar atividade!',
+        error
+      );
+    })
+  }
+
+  const onSuccess = () => {
+   setConfirmationModalVisible(false);
+   dispatch(getUserDataRequest({ id: userUid, onError: onGetUserDataError }))
+   Alert.alert("Atividade salva com sucesso!")
+  }
+
+  const handleSaveActivity = () => {
+    if (userData._id){
+      dispatch(
+        editUserRequest(
+          userData._id, 
+          { savedActivitiesIds: [...userDataSavedActivitiesIds, pressedActivity.id] },
+          onError,
+          onSuccess
+        )
+      );
+    }
+  }
 
   return (
     <Background>
@@ -126,6 +161,22 @@ const Home: React.FC = () => {
         >
           <GroupSelect searchQuery={searchQuery}/>
         </Modal>
+        <Modal
+          animationIn="fadeIn"
+          animationOut="fadeOut"
+          isVisible={confirmationModalVisible}
+          onBackdropPress={() => setConfirmationModalVisible(false)}
+        >
+          <ConfirmationModalContent 
+            title={`Deseja salvar a atividade ${pressedActivity.title}?`}
+            onYes={handleSaveActivity}
+          />
+      </Modal>
+      <Spinner
+        visible={loadingEditUser || loadingUserData}
+        textContent='Carregando...'
+        textStyle={{ color: "#fff" }}
+      />
     </Background>
   )
 }
