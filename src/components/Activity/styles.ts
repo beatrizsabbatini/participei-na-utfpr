@@ -56,3 +56,11 @@ export const SeeMoreText = styled.Text`
   color: ${({ theme }) => theme.colors.primary_light};
   font-size: ${RFValue(12)}px;
 `
+
+export const Row = styled.View<{userPublished?: boolean}>`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: ${RFValue(50)}px;
+  justify-content: ${({userPublished}) => userPublished ? 'space-between' : 'flex-end'};
+`
