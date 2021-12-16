@@ -1,12 +1,12 @@
 import React from 'react';
 
 import { ActivityIndicator, View } from 'react-native';
-import { MaterialIcons } from '@expo/vector-icons'; 
 
-import { Container, ProfileImage, CustomText } from './styles';
+import { Container,  CustomText } from './styles';
 import theme from '../../../../global/styles/theme';
 import { useSelector } from 'react-redux';
 import { IState } from '../../../../store';
+import Avatar from '../../../../components/Avatar';
 
 const ProfileHeader: React.FC = () => {
 
@@ -14,9 +14,7 @@ const ProfileHeader: React.FC = () => {
 
   return (
     <Container>
-      <ProfileImage>
-        <MaterialIcons name="person" size={24} color={theme.colors.primary} />
-      </ProfileImage>
+      <Avatar/>
      
         {userData.loading ? (
           <ActivityIndicator color={theme.colors.primary} size="large"/>

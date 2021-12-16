@@ -18,12 +18,15 @@ import { createStackNavigator } from '@react-navigation/stack';
 import ActivityDetails from '../screens/ActivityDetails';
 import CustomDrawer from '../components/CustomDrawer';
 import EditActivity from '../screens/EditActivity';
+import EditProfile from '../screens/EditProfile';
 
 export type HomeStackParamList = {
   ActivitiesFeed: undefined;
   ActivityDetails: { data: IActivity };
   EditActivity: { data: IActivity };
+  EditProfile: undefined
 };
+
 
 const AppRoutes = () => {
   const Drawer = createDrawerNavigator();
@@ -197,6 +200,18 @@ const ProfileStack = () => {
           header: () => (
             <CustomHeader 
               title="Editar atividade" 
+              leftIconType={LEFT_ICON_TYPES.BACK} 
+              rightIconType={RIGHT_ICON_TYPES.CLOCK_ICON}
+          />
+        )}}
+      />
+       <Screen
+        name="EditProfile"
+        component={EditProfile}
+        options={{
+          header: () => (
+            <CustomHeader 
+              title="Editar perfil" 
               leftIconType={LEFT_ICON_TYPES.BACK} 
               rightIconType={RIGHT_ICON_TYPES.CLOCK_ICON}
           />

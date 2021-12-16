@@ -61,8 +61,8 @@ export const SeeMoreText = styled.Text`
 `
 
 export const CertificateContainer = styled.TouchableOpacity<CertificateContainerProps>`
-  left: 0.5;
-  right: 0.3;
+  left: ${RFValue(0.4)}px;
+  right: ${RFValue(0.4)}px;
   bottom: ${RFValue(1)}px;
   border-bottom-left-radius: ${RFValue(7)}px;
   border-bottom-right-radius: ${RFValue(7)}px;

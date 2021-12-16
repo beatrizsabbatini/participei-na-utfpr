@@ -11,6 +11,8 @@ import { LinearGradientBox, HeaderTitle, Shadow, ClockImage } from './styles';
 import FilterIcon from '../FilterIcon';
 import ClockIcon from '../../../assets/clock.png';
 import { useGroupSelect } from '../../hooks/GroupsSelect';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { HomeStackParamList } from '../../routes/app.routes';
 
 interface CustomHeaderProps{
   title: string;
@@ -18,8 +20,10 @@ interface CustomHeaderProps{
   rightIconType: RIGHT_ICON_TYPES;
 }
 
+type ProfileScreenProp = StackNavigationProp<HomeStackParamList, 'EditProfile'>;
+
 const CustomHeader: React.FC<CustomHeaderProps> = ({title, leftIconType, rightIconType }) => {
-  const navigation = useNavigation();
+  const navigation = useNavigation<ProfileScreenProp>();
 
   const { setModalVisible } = useGroupSelect();
 
@@ -47,7 +51,7 @@ const CustomHeader: React.FC<CustomHeaderProps> = ({title, leftIconType, rightIc
 
       case RIGHT_ICON_TYPES.EDIT_PROFILE:
         return (
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => navigation.navigate('EditProfile')}>
             <MaterialIcons name="edit" size={24} color="white" />
           </TouchableOpacity>
         )
