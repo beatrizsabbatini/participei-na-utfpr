@@ -6,6 +6,8 @@ interface ConfirmationModalProps{
   setModalVisible: (value: boolean) => void;
   pressedActivity: IActivity;
   setPressedActivity: (data: IActivity) => void;
+  isSaved: boolean;
+  setIsSaved: (isSaved: boolean) => void;
 }
 
 interface ConfirmationModalProviderProps{
@@ -17,6 +19,7 @@ const ConfirmationModalContext = createContext({} as ConfirmationModalProps);
 function ConfirmationModalProvider({children, }: ConfirmationModalProviderProps){
   const [modalVisible, setModalVisible] = useState<boolean>(false);
   const [pressedActivity, setPressedActivity] = useState<IActivity>({} as IActivity);
+  const [isSaved, setIsSaved] = useState<boolean>(false);
 
   return(
     <ConfirmationModalContext.Provider 
@@ -24,7 +27,9 @@ function ConfirmationModalProvider({children, }: ConfirmationModalProviderProps)
         modalVisible,
         setModalVisible,
         pressedActivity,
-        setPressedActivity
+        setPressedActivity,
+        isSaved,
+        setIsSaved
       }}
     >
       { children }

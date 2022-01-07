@@ -3,7 +3,6 @@ import { createActivity } from '../../../../services/activitiesService';
 import { publishActivityError, publishActivitySuccess } from './actions';
 import { Types } from './types';
 
-
 function* publishActivity(action: any): any {
 
 	try {

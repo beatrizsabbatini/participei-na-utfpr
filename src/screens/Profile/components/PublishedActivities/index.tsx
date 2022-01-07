@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { ActivityIndicator, ListRenderItem, View } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
@@ -7,13 +7,13 @@ import { RFValue } from 'react-native-responsive-fontsize';
 import { useSelector } from 'react-redux';
 import { useNavigation } from '@react-navigation/core';
 
-import Activity from '../../../../components/Activity';
 import theme from '../../../../global/styles/theme';
 import { HomeStackParamList } from '../../../../routes/app.routes';
 import { IActivity } from '../../../../types';
 import { IState } from '../../../../store';
 import { Container, LoadingContainer } from './styles';
 import EmptyMessage from '../../../../components/EmptyMessage';
+import Activity from '../../../../components/Activity';
 
 type HomeScreenProp = StackNavigationProp<HomeStackParamList, 'ActivityDetails'>;
 
