@@ -36,7 +36,7 @@ const Home: React.FC = () => {
 
   const { modalVisible, setModalVisible, groups } = useGroupSelect();
 
-  const { pressedActivity, modalVisible: confirmationModalVisible, setModalVisible: setConfirmationModalVisible } = useConfirmationModal();
+  const { pressedActivity, modalVisible: confirmationModalVisible, setModalVisible: setConfirmationModalVisible, isSaved } = useConfirmationModal();
   const { loading, data } = useSelector((state: IState) => state.activities);
   const { data: userData, loading: loadingUserData } = useSelector((state: IState) => state.userData);
   const { errors, loading: loadingEditUser } = useSelector((state: IState) => state.editUser);
@@ -83,7 +83,7 @@ const Home: React.FC = () => {
     setConfirmationModalVisible(false);
     errors?.forEach(error => {
       Alert.alert(
-        'Erro ao salvar atividade!',
+        isSaved ? 'Erro ao remover atividade!' : 'Erro ao salvar atividade!',
         error
       );
     })
@@ -92,7 +92,8 @@ const Home: React.FC = () => {
   const onSuccess = () => {
    setConfirmationModalVisible(false);
    dispatch(getUserDataRequest({ id: userUid, onError: onGetUserDataError }))
-   Alert.alert("Atividade salva com sucesso!")
+   dispatch(getActivitiesRequest());
+   Alert.alert(isSaved ? 'Atividade removida com sucesso!' : 'Atividade salva com sucesso!',)
   }
 
   const handleSaveActivity = () => {
@@ -101,6 +102,20 @@ const Home: React.FC = () => {
         editUserRequest(
           userData._id, 
           { savedActivitiesIds: [...userDataSavedActivitiesIds, pressedActivity.id] },
+          onError,
+          onSuccess
+        )
+      );
+    }
+  }
+
+  const handleUnsaveActivity = () => {
+    if (userData._id){
+      const filteredActivities = userDataSavedActivitiesIds.filter(item => item !== pressedActivity.id)
+      dispatch(
+        editUserRequest(
+          userData._id, 
+          { savedActivitiesIds: [...filteredActivities] },
           onError,
           onSuccess
         )
@@ -168,8 +183,12 @@ const Home: React.FC = () => {
           onBackdropPress={() => setConfirmationModalVisible(false)}
         >
           <ConfirmationModalContent 
-            title={`Deseja salvar a atividade ${pressedActivity.title}?`}
-            onYes={handleSaveActivity}
+            title={
+              isSaved ? 
+              `Deseja remover a atividade "${pressedActivity.title}" dos seu itens salvos?`
+              : `Deseja salvar a atividade "${pressedActivity.title}"?`
+            }
+            onYes={() => isSaved ? handleUnsaveActivity() : handleSaveActivity()}
           />
       </Modal>
       <Spinner

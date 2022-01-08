@@ -33,17 +33,16 @@ type HomeScreenProp = StackNavigationProp<HomeStackParamList, 'ActivityDetails'>
 const Activity: React.FC<ActivityProps> = ({data, onPress, userPublished}) => {
   const { navigate } = useNavigation<HomeScreenProp>();
 
-  const { setPressedActivity, setModalVisible } = useConfirmationModal();
+  const { setPressedActivity, setModalVisible, setIsSaved } = useConfirmationModal();
 
   const handleEditActivity = () => {
     navigate('EditActivity', { data } )
   }
 
   const handlePressedFolder = () => {
-    if (!data.saved){
-      setPressedActivity(data);
-      setModalVisible(true);
-    }
+    setIsSaved(data.saved || false);
+    setPressedActivity(data);
+    setModalVisible(true);
   }
 
   return (
@@ -67,7 +66,7 @@ const Activity: React.FC<ActivityProps> = ({data, onPress, userPublished}) => {
           <Row userPublished={userPublished}>
             {userPublished && (
               <TouchableOpacity onPress={handleEditActivity}>
-                <MaterialIcons name="edit" size={24} color={theme.colors.secondary} />
+                <MaterialIcons name="edit" size={22} color={theme.colors.primary_light} />
               </TouchableOpacity>
             )}
             <TouchableOpacity onPress={handlePressedFolder}>
