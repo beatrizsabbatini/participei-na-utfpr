@@ -8,6 +8,7 @@ import activities from './Activities/getActivities/reducer';
 import publishActivity from './Activities/publishActivity/reducer';
 import editActivity from './Activities/editActivity/reducer';
 import createUser from './SignUp/createUser/reducer';
+import campuses from './Campuses/getCampuses/reducer';
 
 const appReducer = combineReducers({
   userData,
@@ -18,6 +19,7 @@ const appReducer = combineReducers({
   editActivity,
   loggedUserPublishedActivities,
   loggedUserSavedActivities,
+  campuses
 });
 
 const rootReducer = (state: any, action: any) => {

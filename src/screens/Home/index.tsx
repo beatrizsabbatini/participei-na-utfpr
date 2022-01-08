@@ -24,6 +24,7 @@ import EmptyMessage from '../../components/EmptyMessage';
 import ConfirmationModalContent from '../../components/ConfirmationModalContent';
 import { editUserRequest } from '../../store/modules/LoggedUser/editUser/actions';
 import { useConfirmationModal } from '../../hooks/ConfirmationModal';
+import { getCampusesRequest } from '../../store/modules/Campuses/getCampuses/actions';
 
 type HomeScreenProp = StackNavigationProp<HomeStackParamList, 'ActivityDetails'>;
 
@@ -58,6 +59,10 @@ const Home: React.FC = () => {
     if (userUid) dispatch(getUserDataRequest({ id: userUid, onError: onGetUserDataError }));
     dispatch(getActivitiesRequest());
   }, [userUid])
+
+  useEffect(() => {
+    dispatch(getCampusesRequest());
+  }, [])
 
   const scrollY = useRef(new Animated.Value(0)).current;
   const ITEM_SIZE = RFValue(132); // height of the activity card (if its wrong, animation will have issues)

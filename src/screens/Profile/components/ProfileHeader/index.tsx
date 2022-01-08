@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { ActivityIndicator, View } from 'react-native';
 
@@ -7,10 +7,20 @@ import theme from '../../../../global/styles/theme';
 import { useSelector } from 'react-redux';
 import { IState } from '../../../../store';
 import Avatar from '../../../../components/Avatar';
+import { ICampus } from '../../../../types';
 
 const ProfileHeader: React.FC = () => {
+  const [userCampus, setUserCampus] = useState<ICampus>({} as ICampus);
 
   const userData = useSelector((state: IState) => state.userData);
+  const campuses = useSelector((state: IState) => state.campuses);
+
+  useEffect(() => {
+    if (campuses){
+      const campusFound = campuses.data?.find(item => item.id === userData.data.campusId)
+      setUserCampus(campusFound || {} as ICampus);
+    }
+  }, [campuses])
 
   return (
     <Container>
@@ -21,7 +31,7 @@ const ProfileHeader: React.FC = () => {
         ) : (
           <View>
             <CustomText bigger>{userData.data.name}</CustomText>
-            <CustomText>Câmpus {userData.data.campusId}</CustomText>
+            <CustomText>Câmpus {userCampus.city || 'não encontrado'}</CustomText>
           </View>
         )}
     </Container>

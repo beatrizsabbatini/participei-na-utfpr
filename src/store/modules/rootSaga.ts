@@ -8,6 +8,7 @@ import editUserSagas from './LoggedUser/editUser/sagas';
 import createUserSagas from './SignUp/createUser/sagas';
 import loggedUserPublishedActivitiesSagas from './LoggedUser/publishedActivities/sagas';
 import loggedUserSavedActivitiesSagas from './LoggedUser/savedActivities/sagas';
+import campusesSagas from './Campuses/getCampuses/sagas';
 
 export default function* rootSaga() {
 	yield all([
@@ -18,6 +19,7 @@ export default function* rootSaga() {
 		userDataSagas(),
     editUserSagas(),
     loggedUserPublishedActivitiesSagas(),
-    loggedUserSavedActivitiesSagas()
+    loggedUserSavedActivitiesSagas(),
+    campusesSagas()
 	]);
 }

@@ -2,7 +2,7 @@ export interface IUserData{
   name: string,
   ra: number,
   campusId: string,
-  image: string,
+  image?: string,
   email: string,
   publishedActivitiesIds: string[],
   savedActivitiesIds: string[],

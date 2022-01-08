@@ -60,7 +60,6 @@ const SignIn: React.FC = () => {
         .auth()
         .signInWithEmailAndPassword(values.email, values.password)
         .then((res) => {
-          console.log(res.user)
           setLoading(false);
           setIsAuthenticated(true);
         })

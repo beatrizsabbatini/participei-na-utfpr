@@ -5,8 +5,6 @@ import { fetchActivitiesByIds } from '../../../../services/activitiesService';
 
 function* getSavedActivities(action: any): any {
 
-  console.log("PAYLOAD ATIVIDADES SALVAS: ", action.payload);
-
 	try {
 		const response = yield call(fetchActivitiesByIds, {ids: action.payload.ids || []});
 
@@ -14,7 +12,6 @@ function* getSavedActivities(action: any): any {
 
 	} catch (err: any) {
 
-    console.log("Erro ao buscar atividades salvas!");
     console.log(err)
 
 		yield put(getUserSavedActivitiesError(err));

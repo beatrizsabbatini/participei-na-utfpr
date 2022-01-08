@@ -2,7 +2,7 @@ import { IUserData } from "../../LoggedUser/userData/types";
 import { Types } from "./types";
 
 interface CreateUserPayload {
-  body: Omit<IUserData, "image" | "email">,
+  body: Omit<IUserData, "image" | "email" | "uid" | "_id">,
   onSuccess: () => void,
   onError: () => void
 }

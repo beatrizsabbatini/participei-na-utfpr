@@ -10,6 +10,11 @@ export interface IActivity{
   saved?: boolean
 }
 
+export interface ICampus{
+  id: string,
+  city: string
+}
+
 export interface ICategory{
   id: string | undefined,
   group: number | undefined,
