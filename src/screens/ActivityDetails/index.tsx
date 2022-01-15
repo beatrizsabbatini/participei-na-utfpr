@@ -22,8 +22,9 @@ import {
   SaveOrReport
 } from './styles';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { IState } from '../../store';
+import { getOtherUsersDataRequest } from '../../store/modules/OtherUsers/otherUsersData/actions';
 
 type HomeScreenProp = StackNavigationProp<HomeStackParamList, 'OtherUsersProfile'>;
 
@@ -33,12 +34,13 @@ const ActivityDetails: React.FC = () => {
 
   const route = useRoute<RouteProp<HomeStackParamList, 'ActivityDetails'>>();
   const userData = useSelector((state: IState) => state.userData);
+  const dispatch = useDispatch();
 
   const { data } = route.params;
   //const renderImages: ListRenderItem<IActivity> = ({ item, index }) => <CustomImage source={item} />;
 
   useEffect(() => {
-    //dispatch get activity publisher data
+    if (data.publisherId) dispatch(getOtherUsersDataRequest({ id: data.publisherId }));
   }, [data])
   
   return (

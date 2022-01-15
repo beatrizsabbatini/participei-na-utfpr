@@ -20,6 +20,7 @@ export interface IState{
   publishActivity: IPublishActivityState;
   loggedUserPublishedActivities: IPublishedActivitiesState;
   loggedUserSavedActivities: ISavedActivitiesState;
+  otherUsersPublishedActivities: IPublishedActivitiesState;
   editUser: IEditUserState;
   editActivity: IEditActivityState;
   createUser: ICreateUserState;
