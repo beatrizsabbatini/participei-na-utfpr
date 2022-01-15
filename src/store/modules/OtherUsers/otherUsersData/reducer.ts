@@ -20,16 +20,16 @@ const INITIAL_STATE: IUserDataState = {
   errors: undefined
  
 }
-const userData: Reducer<IUserDataState> = (state = INITIAL_STATE, action) => {
+const otherUsersData: Reducer<IUserDataState> = (state = INITIAL_STATE, action) => {
   switch (action.type) {
-    case Types.GET_USER_DATA_REQUEST: 
+    case Types.GET_OTHER_USERS_DATA_REQUEST: 
       return {
         ...state,
         loading: true,
         errors: undefined,
       };
 
-    case Types.GET_USER_DATA_SUCCESS: 
+    case Types.GET_OTHER_USERS_DATA_SUCCESS: 
       return {
         ...state,
         errors: undefined,
@@ -37,7 +37,7 @@ const userData: Reducer<IUserDataState> = (state = INITIAL_STATE, action) => {
         data: action.payload
       };
 
-    case Types.GET_USER_DATA_ERRORS: 
+    case Types.GET_OTHER_USERS_DATA_ERRORS: 
       return {
         ...state,
         errors: action.payload,
@@ -49,4 +49,4 @@ const userData: Reducer<IUserDataState> = (state = INITIAL_STATE, action) => {
   }
 }
 
-export default userData;
+export default otherUsersData;

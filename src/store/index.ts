@@ -15,6 +15,7 @@ import { IGetCampusesState } from './modules/Campuses/getCampuses/types';
 
 export interface IState{
   userData: IUserDataState;
+  otherUsersData: IUserDataState;
   activities: IActivitiesState;
   publishActivity: IPublishActivityState;
   loggedUserPublishedActivities: IPublishedActivitiesState;

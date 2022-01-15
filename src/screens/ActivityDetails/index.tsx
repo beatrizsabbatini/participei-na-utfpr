@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import { View } from 'react-native';
 import { useRoute, RouteProp } from '@react-navigation/native';
 import { MaterialIcons } from '@expo/vector-icons'; 
+import { useNavigation } from '@react-navigation/native';
 
 import Badge from '../../components/Badge';
 import theme from '../../global/styles/theme';
@@ -20,18 +21,37 @@ import {
   DarkBlueText,
   SaveOrReport
 } from './styles';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { useSelector } from 'react-redux';
+import { IState } from '../../store';
+
+type HomeScreenProp = StackNavigationProp<HomeStackParamList, 'OtherUsersProfile'>;
 
 const ActivityDetails: React.FC = () => {
 
+  const { navigate } = useNavigation<HomeScreenProp>();
+
   const route = useRoute<RouteProp<HomeStackParamList, 'ActivityDetails'>>();
+  const userData = useSelector((state: IState) => state.userData);
 
   const { data } = route.params;
   //const renderImages: ListRenderItem<IActivity> = ({ item, index }) => <CustomImage source={item} />;
+
+  useEffect(() => {
+    //dispatch get activity publisher data
+  }, [data])
   
   return (
     <Container>
       <View>
-        <Row>
+        <Row onPress={() => {
+          if (data.publisherId === userData.data.uid){
+            //navigate('Profile', { activityData: data })
+          } else {
+            navigate('OtherUsersProfile', { activityData: data })
+          }
+          }}
+        >
           <PersonIcon name="person" size={18}/>
           <UserName>{data?.publisherName || 'Not found'}</UserName>
         </Row>

@@ -19,12 +19,15 @@ import ActivityDetails from '../screens/ActivityDetails';
 import CustomDrawer from '../components/CustomDrawer';
 import EditActivity from '../screens/EditActivity';
 import EditProfile from '../screens/EditProfile';
+import OtherUsersProfile from '../screens/OtherUsersProfile';
+import { IUserData } from '../store/modules/LoggedUser/userData/types';
 
 export type HomeStackParamList = {
   ActivitiesFeed: undefined;
   ActivityDetails: { data: IActivity };
   EditActivity: { data: IActivity };
-  EditProfile: undefined
+  EditProfile: undefined;
+  OtherUsersProfile: { activityData: IActivity };
 };
 
 
@@ -155,6 +158,18 @@ const HomeStack = () => {
           header: () => (
             <CustomHeader 
               title="Editar atividade" 
+              leftIconType={LEFT_ICON_TYPES.BACK} 
+              rightIconType={RIGHT_ICON_TYPES.CLOCK_ICON}
+          />
+        )}}
+      />
+      <Screen
+        name="OtherUsersProfile"
+        component={OtherUsersProfile}
+        options={{
+          header: () => (
+            <CustomHeader 
+              title="" 
               leftIconType={LEFT_ICON_TYPES.BACK} 
               rightIconType={RIGHT_ICON_TYPES.CLOCK_ICON}
           />

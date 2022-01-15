@@ -1,8 +1,7 @@
 import React from 'react';
 
-import { View, TouchableOpacity, Alert } from 'react-native';
+import { View, TouchableOpacity } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons'; 
-import firebase from 'firebase';
 
 import theme from '../../global/styles/theme';
 import Badge from '../Badge';
