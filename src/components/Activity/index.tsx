@@ -30,7 +30,7 @@ interface ActivityProps{
 type HomeScreenProp = StackNavigationProp<HomeStackParamList, 'ActivityDetails'>;
 
 const Activity: React.FC<ActivityProps> = ({data, onPress, userPublished}) => {
-  const { navigate } = useNavigation<HomeScreenProp>();
+  const { navigate, push } = useNavigation<HomeScreenProp>();
 
   const { setPressedActivity, setModalVisible, setIsSaved } = useConfirmationModal();
 
@@ -58,7 +58,7 @@ const Activity: React.FC<ActivityProps> = ({data, onPress, userPublished}) => {
           </View>
         </CardTop>
         <CardBottom>
-          <SeeMoreContainer onPress={() => navigate('ActivityDetails', { data })}>
+          <SeeMoreContainer onPress={() => push('ActivityDetails', { data })}>
             <MaterialIcons name="add" size={14} color={theme.colors.primary_light} />
             <SeeMoreText>Toque para ver mais</SeeMoreText>
           </SeeMoreContainer>

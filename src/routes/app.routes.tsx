@@ -20,11 +20,10 @@ import CustomDrawer from '../components/CustomDrawer';
 import EditActivity from '../screens/EditActivity';
 import EditProfile from '../screens/EditProfile';
 import OtherUsersProfile from '../screens/OtherUsersProfile';
-import { IUserData } from '../store/modules/LoggedUser/userData/types';
 
 export type HomeStackParamList = {
   ActivitiesFeed: undefined;
-  ActivityDetails: { data: IActivity };
+  ActivityDetails: { data: IActivity, cameFromUserProfile?: boolean };
   EditActivity: { data: IActivity };
   EditProfile: undefined;
   OtherUsersProfile: { activityData: IActivity };

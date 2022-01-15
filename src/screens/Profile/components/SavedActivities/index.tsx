@@ -34,7 +34,7 @@ const SavedActivities: React.FC = () => {
           <Row>
             <MaterialIcons name="info" size={24} color={theme.colors.primary} />
             <InstructionsText>
-                Suas atividades salvas serão contabilizadas (aba de estatísticas) assim que você 
+                Suas atividades salvas serão mostradas na aba de estatísticas assim que você 
                 anexar um certificado/comprovante de participação.
             </InstructionsText>
           </Row>

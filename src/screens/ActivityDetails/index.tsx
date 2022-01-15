@@ -36,7 +36,7 @@ const ActivityDetails: React.FC = () => {
   const userData = useSelector((state: IState) => state.userData);
   const dispatch = useDispatch();
 
-  const { data } = route.params;
+  const { data, cameFromUserProfile } = route.params;
   //const renderImages: ListRenderItem<IActivity> = ({ item, index }) => <CustomImage source={item} />;
 
   useEffect(() => {
@@ -46,17 +46,19 @@ const ActivityDetails: React.FC = () => {
   return (
     <Container>
       <View>
-        <Row onPress={() => {
-          if (data.publisherId === userData.data.uid){
-            //navigate('Profile', { activityData: data })
-          } else {
-            navigate('OtherUsersProfile', { activityData: data })
-          }
-          }}
-        >
-          <PersonIcon name="person" size={18}/>
-          <UserName>{data?.publisherName || 'Not found'}</UserName>
-        </Row>
+        {!cameFromUserProfile && (
+          <Row onPress={() => {
+            if (data.publisherId === userData.data.uid){
+              //navigate('Profile', { activityData: data })
+            } else {
+              navigate('OtherUsersProfile', { activityData: data })
+            }
+            }}
+          >
+            <PersonIcon name="person" size={18}/>
+            <UserName>{data?.publisherName || 'Not found'}</UserName>
+          </Row>
+        )}
         <BadgesRow>
           <Badge group={data?.category.group}/>
           <Badge points={data?.category.points} marginHorizontal/>

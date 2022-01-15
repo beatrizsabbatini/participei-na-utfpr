@@ -23,6 +23,7 @@ export const LogoutText = styled.Text`
 export const Row = styled.TouchableOpacity`
   flex-direction: row;
   align-items: center;
+  padding-bottom: ${RFValue(20)}px;
 `
 
 export const Logo = styled.Image`

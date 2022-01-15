@@ -37,7 +37,7 @@ const OtherUsersProfile: React.FC = () => {
   }, [userData])
 
   const renderActivities: ListRenderItem<IActivity> = ({ item }) => (
-    <Activity userPublished data={item} onPress={() => navigate('ActivityDetails', { data: item })}/>
+    <Activity userPublished data={item} onPress={() => navigate('ActivityDetails', { data: item, cameFromUserProfile: true })}/>
   );
 
   return (
