@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 import { useNavigation } from '@react-navigation/native';
-import { Alert } from 'react-native';
+import { Alert, TouchableOpacity } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import * as ImagePicker from 'expo-image-picker';
 
@@ -19,22 +19,34 @@ const EditProfile: React.FC = () => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
   
-  const [image, setImage] = useState<string>('');
+  const [formData, setFormData] = useState<any>();
+  const [imageLocalUrl, setImageLocalUrl] = useState<string>('');
   const [profileName, setProfileName] = useState<string>(data.name);
 
   const pickImage = async () => {
-    // No permissions request is necessary for launching the image library
-    let result = await ImagePicker.launchImageLibraryAsync({
+
+    const image: any = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
       allowsEditing: true,
-      aspect: [4, 3],
-      quality: 1,
+      aspect: [2, 2],
+      quality: 0.2,
     });
 
-    console.log(result);
+    const localUri = image.uri;
+    const filename = localUri.split('/').pop();
+    setImageLocalUrl(image.uri);
 
-    if (!result.cancelled) {
-      setImage(result.uri);
+    // Infer the type of the image
+    const match = /\.(\w+)$/.exec(filename);
+    const type = match ? `image/${match[1]}` : `image`;
+
+    const formData: any = new FormData();
+    formData.append('file', { type:type, uri: localUri, name: filename});
+    formData.append('name', profileName);
+
+
+    if (!image.cancelled) {
+      setFormData(formData);
     }
   };
 
@@ -57,10 +69,13 @@ const EditProfile: React.FC = () => {
 
   const handleFinishEditing = () => {
     if (data._id){
+
+      const editUserData = formData ? formData : { name: profileName }
+
       dispatch(
         editUserRequest(
-          data._id, 
-          { name: profileName },
+          { _id: data._id }, 
+          editUserData,
           onError,
           onSuccess
         )
@@ -71,7 +86,9 @@ const EditProfile: React.FC = () => {
   return (
     <Container>
       <DataContainer>
-        <Avatar size='big'/>
+        <TouchableOpacity onPress={pickImage}>
+          <Avatar size='big' url={imageLocalUrl ? imageLocalUrl : data.image?.url}/>
+        </TouchableOpacity>
         <Input placeholder='Nome' value={profileName} onChangeText={(text: string) => setProfileName(text)} />
       </DataContainer>
       <Button type='primary' onPress={handleFinishEditing}>Salvar Alterações</Button>

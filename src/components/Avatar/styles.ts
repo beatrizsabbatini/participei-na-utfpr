@@ -21,13 +21,35 @@ const getCircleSize = (size?: string) => {
   }
 }
 
+const getMarginRight = (size?: string) => {
+  switch (size) {
+    case 'normal':
+      return RFValue(20);
+
+    case 'big':
+      return RFValue(0);
+
+    case 'small':
+      return RFValue(10);
+  
+    default:
+      return RFValue(20);
+  }
+}
+
 export const ProfileImage = styled.View<ProfileImageProps>`
-  display: flex;
   align-items: center;
   justify-content: center;
   height: ${({ size }) => getCircleSize(size)}px;
   width: ${({ size }) => getCircleSize(size)}px;
-  margin-right: ${RFValue(20)}px;
+  margin-right: ${({ size }) => getMarginRight(size)}px;
   background-color: #F0F0F0;
   border-radius: ${RFValue(100)}px;
+`
+
+export const ImageAvatar = styled.Image<ProfileImageProps>`
+  height: ${({ size }) => getCircleSize(size)}px;
+  width: ${({ size }) => getCircleSize(size)}px;
+  border-radius: ${RFValue(100)}px;
+  margin-right: ${({ size }) => getMarginRight(size)}px;
 `

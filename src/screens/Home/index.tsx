@@ -42,7 +42,7 @@ const Home: React.FC = () => {
   const { data: userData, loading: loadingUserData } = useSelector((state: IState) => state.userData);
   const { errors, loading: loadingEditUser } = useSelector((state: IState) => state.editUser);
 
-  const userDataSavedActivitiesIds = userData.savedActivitiesIds;
+  const userDataSavedActivities = userData.savedActivities || [];
   const dispatch = useDispatch();
 
   const onGetUserDataError = () => {
@@ -51,18 +51,22 @@ const Home: React.FC = () => {
 
   const onRefresh = React.useCallback(() => {
     setRefreshing(true);
-    dispatch(getActivitiesRequest());
+    if (userData) dispatch(getActivitiesRequest());
     setRefreshing(false);
   }, []);
 
   useEffect(() => {
     if (userUid) dispatch(getUserDataRequest({ id: userUid, onError: onGetUserDataError }));
-    dispatch(getActivitiesRequest());
   }, [userUid])
 
   useEffect(() => {
     dispatch(getCampusesRequest());
   }, [])
+
+  useEffect(() => {
+    if (userData) dispatch(getActivitiesRequest());
+  }, [userData]);
+  
 
   const scrollY = useRef(new Animated.Value(0)).current;
   const ITEM_SIZE = RFValue(132); // height of the activity card (if its wrong, animation will have issues)
@@ -105,8 +109,8 @@ const Home: React.FC = () => {
     if (userData._id){
       dispatch(
         editUserRequest(
-          userData._id, 
-          { savedActivitiesIds: [...userDataSavedActivitiesIds, pressedActivity.id] },
+          { _id: userData._id }, 
+          { savedActivities: [...userDataSavedActivities, { id: pressedActivity.id }] },
           onError,
           onSuccess
         )
@@ -116,11 +120,11 @@ const Home: React.FC = () => {
 
   const handleUnsaveActivity = () => {
     if (userData._id){
-      const filteredActivities = userDataSavedActivitiesIds.filter(item => item !== pressedActivity.id)
+      const filteredActivities = userDataSavedActivities.filter((item) => item.id !== pressedActivity.id);
       dispatch(
         editUserRequest(
-          userData._id, 
-          { savedActivitiesIds: [...filteredActivities] },
+          { _id: userData._id }, 
+          { savedActivities: [...filteredActivities] },
           onError,
           onSuccess
         )

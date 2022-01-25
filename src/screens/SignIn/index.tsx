@@ -133,19 +133,7 @@ const SignIn: React.FC = () => {
               <Button onPress={() => handleSubmit(values)} type="light">Entrar</Button>
               <Button onPress={() => navigate('SignUp')} type="dark">Cadastrar</Button>
             </View>
-            <ThirdPartyLoginContainer>
-              <Row>
-                <Trace/>
-                <GreyText>Ou entrar com:</GreyText>
-                <Trace/>
-              </Row>
-              <Row>
-                <View style={{marginRight: 20}}>
-                  <GoogleLogo />
-                </View>
-                <FacebookLogo/>
-              </Row>
-            </ThirdPartyLoginContainer>
+            <View/>
           </>
         )}
       </Formik>

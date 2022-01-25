@@ -13,7 +13,6 @@ import {
   Container, 
   UserName, 
   Row, 
-  PersonIcon,
   BadgesRow,
   CategoryTitle,
   ActivityTitle,
@@ -25,6 +24,7 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { useDispatch, useSelector } from 'react-redux';
 import { IState } from '../../store';
 import { getOtherUsersDataRequest } from '../../store/modules/OtherUsers/otherUsersData/actions';
+import Avatar from '../../components/Avatar';
 
 type HomeScreenProp = StackNavigationProp<HomeStackParamList, 'OtherUsersProfile'>;
 
@@ -55,7 +55,7 @@ const ActivityDetails: React.FC = () => {
             }
             }}
           >
-            <PersonIcon name="person" size={18}/>
+            <Avatar size='small' url={userData.data.image?.url}/>
             <UserName>{data?.publisherName || 'Not found'}</UserName>
           </Row>
         )}

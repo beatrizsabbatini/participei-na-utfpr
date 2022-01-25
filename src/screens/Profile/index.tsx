@@ -15,6 +15,8 @@ import { TabLabel } from './styles';
 
 const Profile: React.FC = () => {
   const { data } = useSelector((state: IState) => state.userData);
+  const savedActivities = data.savedActivities || [];
+  const userDataSavedActivitiesIds = savedActivities?.map(item => item.id);
   const dispatch = useDispatch();
 
   const onError = () => {
@@ -23,7 +25,7 @@ const Profile: React.FC = () => {
 
   useEffect(() => {
     dispatch(getUserPublishedActivitiesRequest({ids: data.publishedActivitiesIds, onError}))
-    dispatch(getUserSavedActivitiesRequest({ids: data.savedActivitiesIds, onError}))
+    dispatch(getUserSavedActivitiesRequest({ids: userDataSavedActivitiesIds, onError}))
   }, [data])
 
   const renderScene = SceneMap({

@@ -2,14 +2,16 @@ import React, { useEffect, useState } from 'react';
 
 import { MaterialIcons } from '@expo/vector-icons'; 
 
-import { ProfileImage } from './styles';
+import { ProfileImage, ImageAvatar } from './styles';
 import theme from '../../global/styles/theme';
+import { Image, ImageSourcePropType } from 'react-native';
 
 interface AvatarProps{
-  size?: 'normal' | 'big' | 'small'
+  size?: 'normal' | 'big' | 'small',
+  url?: string
 }
 
-const Avatar: React.FC<AvatarProps> = ({ size }) => {
+const Avatar: React.FC<AvatarProps> = ({ size, url }) => {
   const [iconSize, setIconSize] = useState<number>(24);
 
   const getIconSize = () => {
@@ -39,9 +41,19 @@ const Avatar: React.FC<AvatarProps> = ({ size }) => {
   }, [])
 
   return (
-    <ProfileImage size={size}>
-      <MaterialIcons name="person" size={iconSize} color={theme.colors.primary} />
-    </ProfileImage>
+    <>
+      {url ? (
+        <ImageAvatar
+          size={size} 
+          source={{uri: url }} 
+          resizeMode="cover"
+        />
+      ) : (
+        <ProfileImage size={size}>
+          <MaterialIcons name="person" size={iconSize} color={theme.colors.primary} />
+        </ProfileImage>
+      )}
+    </>
   )
 }
 

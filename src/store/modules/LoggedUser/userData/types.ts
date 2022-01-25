@@ -1,16 +1,35 @@
+import { ImageSourcePropType } from "react-native";
+
 export interface IUserData{
   name: string,
   ra: number,
   campusId: string,
-  image?: string,
+  image?: Image,
   email: string,
+  certificate?: Image,
   publishedActivitiesIds: string[],
-  savedActivitiesIds: string[],
+  savedActivities: SavedActivity[],
   group1Points: number,
   group2Points: number,
   group3Points: number,
   uid: string,
   _id: string
+}
+
+export interface Certificate{
+  name?: string,
+  key?: string,
+  url: string
+}
+
+export interface SavedActivity{
+  id: string,
+  certificate?: Certificate
+}
+
+export interface Image{
+  key: string,
+  url: string
 }
 
 export interface IUserDataState{

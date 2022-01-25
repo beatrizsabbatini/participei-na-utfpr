@@ -11,6 +11,7 @@ export const Container = styled.View`
 `
 
 export const DataContainer = styled.View`
+  flex: 1;
   justify-content: center;
   align-items: center;
 `

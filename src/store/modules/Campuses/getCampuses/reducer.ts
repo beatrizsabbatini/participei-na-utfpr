@@ -16,8 +16,7 @@ const campuses: Reducer<IGetCampusesState> = (state = INITIAL_STATE, action) => 
       };
 
     case Types.GET_CAMPUSES_SUCCESS: 
-      console.log("Action Payload", action.payload);
-      
+
       return {
         ...state,
         errors: undefined,

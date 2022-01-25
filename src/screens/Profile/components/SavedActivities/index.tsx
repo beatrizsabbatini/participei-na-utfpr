@@ -20,12 +20,19 @@ type HomeScreenProp = StackNavigationProp<HomeStackParamList, 'ActivityDetails'>
 
 const SavedActivities: React.FC = () => {
   const { loading, data } = useSelector((state: IState) => state.loggedUserSavedActivities);
+  const { data: userData } =  useSelector((state: IState) => state.userData);
 
   const { navigate } = useNavigation<HomeScreenProp>();
 
-  const renderActivities: ListRenderItem<IActivity> = ({ item }) => (
-    <SavedActivity data={item} onPress={() => navigate('ActivityDetails', { data: item })}/>
-  );
+  const renderActivities: ListRenderItem<IActivity> = ({ item }) => {
+    const savedActivities = userData.savedActivities || [];
+    const activityFound = savedActivities?.find(activity => activity.id === item.id && activity.certificate);
+    let dataUpdated = item;
+
+    if (activityFound) dataUpdated = {...item, certificate: activityFound.certificate};
+    return (
+    <SavedActivity data={dataUpdated} onPress={() => navigate('ActivityDetails', { data: item })}/>
+  );}
 
   return (
     <Container>

@@ -5,7 +5,6 @@ export interface IUserData{
   image?: string,
   email: string,
   publishedActivitiesIds: string[],
-  savedActivitiesIds: string[],
   group1Points: number,
   group2Points: number,
   group3Points: number,

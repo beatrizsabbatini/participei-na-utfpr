@@ -1,15 +1,16 @@
 import { Reducer } from "redux";
-import { IUserDataState, Types } from "./types";
+import { IUserDataState, Types, Image } from "./types";
 
 const INITIAL_STATE: IUserDataState = {
   data: {
     name: '',
     ra: 0,
     campusId: '',
-    image: '',
+    image: {} as Image,
+    certificate: {} as Image,
     email: '',
     publishedActivitiesIds: [],
-    savedActivitiesIds: [],
+    savedActivities: [],
     group1Points: 0,
     group2Points: 0,
     group3Points: 0,

@@ -1,7 +1,8 @@
-import { takeLatest, put, call, select } from 'redux-saga/effects';
+import { takeLatest, put, call, select, takeEvery } from 'redux-saga/effects';
 import { IState } from '../../..';
 import { fetchActivities } from '../../../../services/activitiesService';
 import { IActivity } from '../../../../types';
+import { SavedActivity } from '../../LoggedUser/userData/types';
 import { getActivitiesError, getActivitiesSuccess } from './actions';
 import { Types } from './types';
 
@@ -13,10 +14,12 @@ function* getActivities(action: any): any {
 		const response = yield call(fetchActivities, action.payload);
 
     const userData = yield select(getUserData);
-    const savedActivities = userData.data.savedActivitiesIds;
+
+    const savedActivities = userData.data.savedActivities || [];
+    const savedActivitiesIds = savedActivities?.map((item: SavedActivity) => item.id);
 
     const activitiesFormatted = response.data.activities.map((item: IActivity) => {
-      if (savedActivities.includes(item.id)){
+      if (savedActivitiesIds?.includes(item.id)){
         return {
           ...item,
           saved: true

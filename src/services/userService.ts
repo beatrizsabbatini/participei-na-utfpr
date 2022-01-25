@@ -12,11 +12,18 @@ export const fetchUser = (id: string) => {
 
 export const updateUser = (payload: any) => {
 
+  const formDataContentType = { 'content-type': 'multipart/form-data' }
+  const jsonContentType = { 'content-type': 'application/json' }
+
+  console.log("Form data: ", payload.data)
+  console.log("payload.isFormData: ",payload.isFormData)
+
 	return api.request({
 		method: 'PATCH',
-    params: {_id: payload._id},
+    params: payload.params,
 		url: '/users',
-		data: payload.data
+		data: payload.data,
+    headers: payload.isFormData ? formDataContentType : jsonContentType
 	})
 };
 

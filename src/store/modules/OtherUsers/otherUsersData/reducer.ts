@@ -9,7 +9,6 @@ const INITIAL_STATE: IUserDataState = {
     image: '',
     email: '',
     publishedActivitiesIds: [],
-    savedActivitiesIds: [],
     group1Points: 0,
     group2Points: 0,
     group3Points: 0,
