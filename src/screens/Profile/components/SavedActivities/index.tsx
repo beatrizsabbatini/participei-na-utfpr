@@ -29,7 +29,12 @@ const SavedActivities: React.FC = () => {
     const activityFound = savedActivities?.find(activity => activity.id === item.id && activity.certificate);
     let dataUpdated = item;
 
-    if (activityFound) dataUpdated = {...item, certificate: activityFound.certificate};
+    if (activityFound) {
+      dataUpdated = {
+        ...item, 
+        certificate: activityFound.certificate,
+      };
+    }
     return (
     <SavedActivity data={dataUpdated} onPress={() => navigate('ActivityDetails', { data: item })}/>
   );}

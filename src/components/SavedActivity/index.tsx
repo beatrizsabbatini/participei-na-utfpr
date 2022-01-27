@@ -70,9 +70,7 @@ const SavedActivity: React.FC<SavedActivityProps> = ({ data, onPress }) => {
   const uploadCertificate = async() => {
     const image: any = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
-      allowsEditing: true,
-      aspect: [2, 2],
-      quality: 0.2,
+      allowsEditing: false,
     });
 
     const localUri = image.uri;
@@ -88,10 +86,32 @@ const SavedActivity: React.FC<SavedActivityProps> = ({ data, onPress }) => {
  
     if (!image.cancelled) {
         if (userData._id){
+
+          const groupPreviousPoints = () => {
+            switch (data.category.group) {
+              case 1:
+                return userData.group1Points;
+
+              case 2:
+              return userData.group2Points;
+
+              case 3:
+              return userData.group3Points
+            
+              default:
+                break;
+            }
+          }
     
           dispatch(
             editUserRequest(
-              { _id: userData._id, activityId: data.id}, 
+              { 
+                _id: userData._id, 
+                activityId: data.id, 
+                group: data.category.group, 
+                points: data.category.points,
+                previousGroupPoints: groupPreviousPoints()
+              }, 
               formData,
               onError,
               onSuccess,

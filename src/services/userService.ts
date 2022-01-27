@@ -15,9 +15,6 @@ export const updateUser = (payload: any) => {
   const formDataContentType = { 'content-type': 'multipart/form-data' }
   const jsonContentType = { 'content-type': 'application/json' }
 
-  console.log("Form data: ", payload.data)
-  console.log("payload.isFormData: ",payload.isFormData)
-
 	return api.request({
 		method: 'PATCH',
     params: payload.params,
