@@ -118,7 +118,10 @@ const SignUp: React.FC = () => {
 
   const handleNext = (values: any) => {
     if (currentStep < 4) setCurrentStep(currentStep + 1);
-    else signUp(values, onCreationSuccess, onCreationError);
+    else {
+      setLoading(true);
+      signUp(values, onCreationSuccess, onCreationError);
+    }
   } 
 
   const loginService = async (values: any) => {
@@ -140,7 +143,7 @@ const SignUp: React.FC = () => {
   const onCreationSuccess = (userUid?: string, values?: any) => {
 
     const user = {
-      id: userUid,
+      uid: userUid,
       campusId: values.campusId,
       name: values.name,
       ra: values.ra,
@@ -152,10 +155,12 @@ const SignUp: React.FC = () => {
     }
 
     const onError = () => {
+      setLoading(false);
       Alert.alert('Error creating user!');
     }
 
     const onSuccess = () => {
+      setLoading(false);
       Alert.alert(
         'Usuário criado!',
         'Deseja realizar o login com este usuário?',
@@ -165,14 +170,12 @@ const SignUp: React.FC = () => {
             onPress: async () => {
               await loginService(values)
               setIsAuthenticated(true);
-              setLoading(false);
             },
           },
           {
             text: 'Não',
             onPress: () => {
               navigation.goBack();
-              setLoading(false);
             },
           },
         ]

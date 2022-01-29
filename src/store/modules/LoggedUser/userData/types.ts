@@ -1,6 +1,7 @@
 import { ImageSourcePropType } from "react-native";
 
 export interface IUserData{
+  admin?: boolean,
   name: string,
   ra: number,
   campusId: string,

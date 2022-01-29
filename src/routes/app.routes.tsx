@@ -95,7 +95,7 @@ const Tabs = () => {
             )
           }}
         />
-        <Tab.Screen 
+        {/* <Tab.Screen 
           name="Notifications" 
           component={Notifications} 
           options={{
@@ -108,7 +108,7 @@ const Tabs = () => {
               />
             )
           }}
-        />
+        /> */}
         <Tab.Screen 
           name="ProfileStack" 
           component={ProfileStack} 

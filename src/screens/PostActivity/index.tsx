@@ -21,6 +21,7 @@ import { getActivitiesRequest } from '../../store/modules/Activities/getActiviti
 import { editUserRequest } from '../../store/modules/LoggedUser/editUser/actions';
 import { publishActivitieyRequest } from '../../store/modules/Activities/publishActivity/actions';
 import { getUserDataRequest } from '../../store/modules/LoggedUser/userData/actions';
+import AdminPostCategory from './AdminPostCategory';
 
 type PostActivityScreenProp = StackNavigationProp<HomeStackParamList, 'ActivitiesFeed'>;
 interface FormProps{
@@ -111,49 +112,55 @@ const PostActivity: React.FC = () => {
 
   return (
     <Container>
-      <Spinner
-        visible={loading}
-        textContent='Publicando...'
-        textStyle={{ color: "#fff" }}
-      />
-      <Formik
-        validationSchema={loginFormSchema}
-        validateOnChange={false}
-        validateOnBlur={false}
-        initialValues={{
-          title: '',
-          description: '',
-          categoryId: '',
-        }}
-        onSubmit={(values, actions) => postActivity(values, actions)}
-      >
-        {({ values, setFieldValue, handleSubmit, errors }: FormProps) => (
-          <>
-            <View>
-              <Input 
-                placeholder="Digite um título" 
-                value={values.title}
-                onChangeText={(text: string) => setFieldValue('title', text)}
-              />
-              <Input 
-                placeholder="Digite uma descrição (opcional)" 
-                value={values.description}
-                onChangeText={(text: string) => setFieldValue('description', text)}
-                multiline 
-                numberOfLines={5}
-              />
-              <Dropdown 
-                placeholder="Selecione uma categoria" 
-                value={category}
-                onValueChange={(value: string) => setFieldValue('categoryId', value)} 
-                list={categories} 
-                setValue={setCategory}
-              />
-            </View>
-            <Button onPress={() => handleSubmit(values)} type="primary">Publicar</Button>
-          </>
-        )}
-      </Formik>
+      {userData.admin ? (
+        <AdminPostCategory/>
+      ) : (
+        <>
+          <Spinner
+            visible={loading}
+            textContent='Publicando...'
+            textStyle={{ color: "#fff" }}
+          />
+          <Formik
+            validationSchema={loginFormSchema}
+            validateOnChange={false}
+            validateOnBlur={false}
+            initialValues={{
+              title: '',
+              description: '',
+              categoryId: '',
+            }}
+            onSubmit={(values, actions) => postActivity(values, actions)}
+          >
+          {({ values, setFieldValue, handleSubmit, errors }: FormProps) => (
+            <>
+              <View>
+                <Input 
+                  placeholder="Digite um título" 
+                  value={values.title}
+                  onChangeText={(text: string) => setFieldValue('title', text)}
+                />
+                <Input 
+                  placeholder="Digite uma descrição (opcional)" 
+                  value={values.description}
+                  onChangeText={(text: string) => setFieldValue('description', text)}
+                  multiline 
+                  numberOfLines={5}
+                />
+                <Dropdown 
+                  placeholder="Selecione uma categoria" 
+                  value={category}
+                  onValueChange={(value: string) => setFieldValue('categoryId', value)} 
+                  list={categories} 
+                  setValue={setCategory}
+                />
+              </View>
+              <Button onPress={() => handleSubmit(values)} type="primary">Publicar</Button>
+            </>
+          )}
+          </Formik>
+        </>
+      )}
     </Container>
   )
 }
