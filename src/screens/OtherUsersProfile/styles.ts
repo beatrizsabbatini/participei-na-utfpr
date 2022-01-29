@@ -19,3 +19,20 @@ export const Title = styled.Text`
   font-weight: bold;
   font-size: ${RFValue(16)}px;
 `
+
+export const ShadowDivider = styled.View`
+  background-color: ${({theme}) => theme.colors.primary};
+  position: relative;
+  width: 100%;
+  height: 1px;
+  align-self: stretch;
+  justify-content: space-between;
+  shadow-color: #000;
+  shadow-offset: {
+    width: 0;
+    height: 5;
+  };
+  shadow-opacity: 0.25;
+  shadow-radius: 3.84px;
+  elevation: 5;
+`

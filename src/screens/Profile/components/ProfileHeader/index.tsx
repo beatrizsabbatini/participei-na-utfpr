@@ -12,7 +12,8 @@ import Avatar from '../../../../components/Avatar';
 
 interface ProfileHeaderProps {
   activityData?: IActivity,
-  isVisitingOtherProfile?: boolean
+  isVisitingOtherProfile?: boolean,
+  isOtherUsersProfile?: boolean,
 }
 
 const ProfileHeader: React.FC<ProfileHeaderProps> = ({ activityData, isVisitingOtherProfile }) => {
@@ -48,7 +49,7 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = ({ activityData, isVisitingO
 
   return (
     <Container>
-      <Avatar url={userData.data.image?.url}/>
+      <Avatar url={isVisitingOtherProfile ? otherUsersData.data.image?.url : userData.data.image?.url}/>
      
         {userData.loading ? (
           <ActivityIndicator color={theme.colors.primary} size="large"/>

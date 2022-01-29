@@ -15,6 +15,7 @@ import { useSelector } from 'react-redux';
 import { IState } from '../../../../store';
 import { Container, InstructionsText, Row, LoadingContainer } from './styles';
 import EmptyMessage from '../../../../components/EmptyMessage';
+import { ShadowDivider } from '../../styles';
 
 type HomeScreenProp = StackNavigationProp<HomeStackParamList, 'ActivityDetails'>;
 
@@ -50,6 +51,7 @@ const SavedActivities: React.FC = () => {
                 anexar um certificado/comprovante de participação.
             </InstructionsText>
           </Row>
+          <ShadowDivider/>
           <>
           {data.length === 0 ? 
             <EmptyMessage text="Oops, você ainda não salvou nenhuma atividade"/> : 

@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { HomeStackParamList } from '../../routes/app.routes';
 import { RFValue } from 'react-native-responsive-fontsize';
-import { Container, LoadingContainer, Title } from './styles';
+import { Container, LoadingContainer, Title, ShadowDivider } from './styles';
 import { IState } from '../../store';
 import { IActivity } from '../../types';
 import { getOtherUsersPublishedActivitiesRequest } from '../../store/modules/OtherUsers/publishedActivities/actions';
@@ -45,6 +45,7 @@ const OtherUsersProfile: React.FC = () => {
       <ProfileHeader activityData={activityData} isVisitingOtherProfile/>
       <Container>
       <Title>Atividades publicadas:</Title>
+      <ShadowDivider/>
       {!loading && !loadingUser && data ? (
         <>
           {data.length === 0 ? 

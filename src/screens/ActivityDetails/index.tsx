@@ -34,6 +34,7 @@ const ActivityDetails: React.FC = () => {
 
   const route = useRoute<RouteProp<HomeStackParamList, 'ActivityDetails'>>();
   const userData = useSelector((state: IState) => state.userData);
+  const otherUsersData = useSelector((state: IState) => state.otherUsersData);
   const dispatch = useDispatch();
 
   const { data, cameFromUserProfile } = route.params;
@@ -42,21 +43,31 @@ const ActivityDetails: React.FC = () => {
   useEffect(() => {
     if (data.publisherId) dispatch(getOtherUsersDataRequest({ id: data.publisherId }));
   }, [data])
+
+  const handlePressName = () => {
+    if (data.publisherId === userData.data.uid){
+      //navigate('Profile', { activityData: data })
+    } else {
+      navigate('OtherUsersProfile', { activityData: data })
+    }
+  }
   
   return (
     <Container>
       <View>
         {!cameFromUserProfile && (
-          <Row onPress={() => {
-            if (data.publisherId === userData.data.uid){
-              //navigate('Profile', { activityData: data })
-            } else {
-              navigate('OtherUsersProfile', { activityData: data })
-            }
-            }}
-          >
-            <Avatar size='small' url={userData.data.image?.url}/>
-            <UserName>{data?.publisherName || 'Not found'}</UserName>
+          <Row onPress={handlePressName}>
+            {data.publisherId === userData.data.uid ? (
+            <>
+              <Avatar size='small' url={userData.data.image?.url}/>
+              <UserName>{data?.publisherName || '-'}</UserName>
+            </>
+          ) : (
+            <>
+              <Avatar size='small' url={otherUsersData.data.image?.url}/>
+              <UserName>{otherUsersData.data?.name || '-'}</UserName>
+            </>
+          )}
           </Row>
         )}
         <BadgesRow>
