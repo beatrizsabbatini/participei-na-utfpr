@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 
-import { View } from 'react-native';
+import { TouchableOpacity, View } from 'react-native';
 import { useRoute, RouteProp } from '@react-navigation/native';
 import { MaterialIcons } from '@expo/vector-icons'; 
 import { useNavigation } from '@react-navigation/native';
@@ -25,12 +25,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import { IState } from '../../store';
 import { getOtherUsersDataRequest } from '../../store/modules/OtherUsers/otherUsersData/actions';
 import Avatar from '../../components/Avatar';
+import { useConfirmationModal } from '../../hooks/ConfirmationModal';
 
 type HomeScreenProp = StackNavigationProp<HomeStackParamList, 'OtherUsersProfile'>;
 
 const ActivityDetails: React.FC = () => {
 
   const { navigate } = useNavigation<HomeScreenProp>();
+  const { setPressedActivity, setModalVisible, setIsSaved } = useConfirmationModal();
 
   const route = useRoute<RouteProp<HomeStackParamList, 'ActivityDetails'>>();
   const userData = useSelector((state: IState) => state.userData);
@@ -46,10 +48,16 @@ const ActivityDetails: React.FC = () => {
 
   const handlePressName = () => {
     if (data.publisherId === userData.data.uid){
-      //navigate('Profile', { activityData: data })
+      navigate('ProfileStack');
     } else {
       navigate('OtherUsersProfile', { activityData: data })
     }
+  }
+
+  const handlePressedFolder = () => {
+    setIsSaved(data.saved || false);
+    setPressedActivity(data);
+    setModalVisible(true);
   }
   
   return (
@@ -86,7 +94,9 @@ const ActivityDetails: React.FC = () => {
           <MaterialIcons name="report-problem" size={24} color={theme.colors.primary} />
           <DarkBlueText>Reportar</DarkBlueText>
         </Row>
-        <MaterialIcons name="folder-open" size={24} color={theme.colors.primary} />
+        <TouchableOpacity onPress={handlePressedFolder}>
+          <MaterialIcons name={data.saved ? 'folder' : 'folder-open'} size={24} color={theme.colors.primary_light} />
+        </TouchableOpacity>
       </SaveOrReport>
     </Container>
   )

@@ -27,6 +27,7 @@ export type HomeStackParamList = {
   EditActivity: { data: IActivity };
   EditProfile: undefined;
   OtherUsersProfile: { activityData: IActivity };
+  ProfileStack: undefined;
 };
 
 
