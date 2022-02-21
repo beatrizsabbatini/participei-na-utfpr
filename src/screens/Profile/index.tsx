@@ -44,26 +44,26 @@ const Profile: React.FC = () => {
   
   return (
     <>
-      {data.admin ? (
-        <AdminProfile/>
-      ) : (
+      <ProfileHeader/>
+        {data.admin ? (
+          <AdminProfile/>
+        ) : (
         <>
-        <ProfileHeader/>
-        <TabView
-          navigationState={{ index, routes }}
-          renderScene={renderScene}
-          onIndexChange={setIndex}
-          initialLayout={{ width: layout.width }}
-          renderTabBar={props => (
-            <TabBar 
-              {...props} 
-              style={{backgroundColor: theme.colors.background}} 
-              labelStyle={{color: theme.colors.primary, }} 
-              indicatorStyle={{backgroundColor: theme.colors.primary}}
-              renderLabel={({route, focused}) => <TabLabel focused={focused}>{route.title}</TabLabel>}
-            />
-          )}
-        />
+          <TabView
+            navigationState={{ index, routes }}
+            renderScene={renderScene}
+            onIndexChange={setIndex}
+            initialLayout={{ width: layout.width }}
+            renderTabBar={props => (
+              <TabBar 
+                {...props} 
+                style={{backgroundColor: theme.colors.background}} 
+                labelStyle={{color: theme.colors.primary, }} 
+                indicatorStyle={{backgroundColor: theme.colors.primary}}
+                renderLabel={({route, focused}) => <TabLabel focused={focused}>{route.title}</TabLabel>}
+              />
+            )}
+          />
         </>
       )}
     </>

@@ -12,6 +12,10 @@ import { IPublishActivityState } from './modules/Activities/publishActivity/type
 import { IEditActivityState } from './modules/Activities/editActivity/types';
 import { ICreateUserState } from './modules/SignUp/createUser/types';
 import { IGetCampusesState } from './modules/Campuses/getCampuses/types';
+import { ICreateCategoryState } from './modules/Categories/createCategory/types';
+import { IGetCategoriesState } from './modules/Categories/getCategories/types';
+import { IUpdateCategoryState } from './modules/Categories/updateCategory/types';
+import { IDeleteCategoryState } from './modules/Categories/deleteCategory/types';
 
 export interface IState{
   userData: IUserDataState;
@@ -25,6 +29,10 @@ export interface IState{
   editActivity: IEditActivityState;
   createUser: ICreateUserState;
   campuses: IGetCampusesState;
+  createCategory: ICreateCategoryState;
+  getCategories: IGetCategoriesState;
+  updateCategory: IUpdateCategoryState;
+  deleteCategory: IDeleteCategoryState
 }
 
 const sagaMiddleware = createSagaMiddleware();

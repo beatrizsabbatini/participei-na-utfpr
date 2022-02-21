@@ -10,6 +10,7 @@ const Step1: React.FC<Step> = ({formProps}) => {
   return (
     <View>
       <Input 
+        autoCorrect={false}
         placeholder={formProps.errors.email || "Digite um e-mail"} 
         error={formProps.errors.email}
         value={formProps.values.email} 

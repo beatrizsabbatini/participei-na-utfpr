@@ -5,19 +5,14 @@ import { fetchUser } from '../../../../services/userService';
 
 function* getUser(action: any): any {
 
-  console.log("ACTION.PAYLOAD: ",  action.payload);
-
 	try {
 		const response = yield call(fetchUser, action.payload.id);
-
-    console.log("response fetching user: ",  response.data);
 
 		yield put(getUserDataSuccess(response.data));
 
 	} catch (err: any) {
 
 		yield put(getUserDataError(err));
-    console.log("ERROR FETCHING USER: ", err);
 
 		action.payload.onError();
 	}

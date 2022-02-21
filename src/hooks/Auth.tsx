@@ -3,6 +3,8 @@ import React, { createContext, ReactNode, useContext, useState } from "react";
 interface AuthProps{
   isAuthenticated: boolean;
   setIsAuthenticated: (value: boolean) => void;
+  isAdmin: boolean;
+  setIsAdmin: (value: boolean) => void;
 }
 
 interface AuthProviderProps{
@@ -13,12 +15,15 @@ const AuthContext = createContext({} as AuthProps);
 
 function AuthProvider({children, }: AuthProviderProps){
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
+  const [isAdmin, setIsAdmin] = useState<boolean>(false);
 
   return(
     <AuthContext.Provider 
       value={{
         isAuthenticated,
-        setIsAuthenticated
+        setIsAuthenticated,
+        isAdmin,
+        setIsAdmin
       }}
     >
       { children }

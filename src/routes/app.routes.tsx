@@ -12,7 +12,7 @@ import Statistics from '../screens/Statistics';
 import Notifications from '../screens/Notifications';
 import PostActivity from '../screens/PostActivity';
 import CustomHeader from '../components/CustomHeader';
-import { IActivity, LEFT_ICON_TYPES, RIGHT_ICON_TYPES } from '../types';
+import { IActivity, ICategory, LEFT_ICON_TYPES, RIGHT_ICON_TYPES } from '../types';
 import theme from '../global/styles/theme';
 import { createStackNavigator } from '@react-navigation/stack';
 import ActivityDetails from '../screens/ActivityDetails';
@@ -20,6 +20,9 @@ import CustomDrawer from '../components/CustomDrawer';
 import EditActivity from '../screens/EditActivity';
 import EditProfile from '../screens/EditProfile';
 import OtherUsersProfile from '../screens/OtherUsersProfile';
+import { IState } from '../store';
+import { useSelector } from 'react-redux';
+import EditCategory from '../screens/EditCategory';
 
 export type HomeStackParamList = {
   ActivitiesFeed: undefined;
@@ -30,6 +33,9 @@ export type HomeStackParamList = {
   ProfileStack: undefined;
 };
 
+export type ProfileStackParamList = {
+  EditCategory: { data: any }
+}
 
 const AppRoutes = () => {
   const Drawer = createDrawerNavigator();
@@ -49,6 +55,7 @@ export default AppRoutes;
 
 const Tabs = () => {
   const Tab = createBottomTabNavigator();
+  const { data } = useSelector((state: IState) => state.userData);
 
   return (
     <Tab.Navigator 
@@ -88,7 +95,7 @@ const Tabs = () => {
             tabBarIcon: ({focused}) => <Feather name="plus" size={34} color={focused ? '#fff' : '#74AEE5'} />,
             header: () => (
               <CustomHeader 
-                title="Publicar atividade" 
+                title={data?.admin ? "Adicionar Categoria" : "Publicar atividade"} 
                 leftIconType={LEFT_ICON_TYPES.MENU} 
                 rightIconType={RIGHT_ICON_TYPES.NONE}
               />
@@ -227,6 +234,18 @@ const ProfileStack = () => {
           header: () => (
             <CustomHeader 
               title="Editar perfil" 
+              leftIconType={LEFT_ICON_TYPES.BACK} 
+              rightIconType={RIGHT_ICON_TYPES.CLOCK_ICON}
+          />
+        )}}
+      />
+       <Screen
+        name="EditCategory"
+        component={EditCategory}
+        options={{
+          header: () => (
+            <CustomHeader 
+              title="Editar Categoria" 
               leftIconType={LEFT_ICON_TYPES.BACK} 
               rightIconType={RIGHT_ICON_TYPES.CLOCK_ICON}
           />

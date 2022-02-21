@@ -11,6 +11,11 @@ import createUser from './SignUp/createUser/reducer';
 import campuses from './Campuses/getCampuses/reducer';
 import otherUsersData from './OtherUsers/otherUsersData/reducer';
 import otherUsersPublishedActivities from './OtherUsers/publishedActivities/reducer';
+import createCategory from './Categories/createCategory/reducer';
+import getCategories from './Categories/getCategories/reducer';
+import listCategories from './Categories/getCategories/reducer';
+import updateCategory from './Categories/updateCategory/reducer';
+import deleteCategory from './Categories/deleteCategory/reducer';
 
 const appReducer = combineReducers({
   userData,
@@ -23,7 +28,12 @@ const appReducer = combineReducers({
   loggedUserSavedActivities,
   campuses,
   otherUsersData,
-  otherUsersPublishedActivities
+  otherUsersPublishedActivities,
+  createCategory,
+  getCategories,
+  listCategories,
+  updateCategory,
+  deleteCategory
 });
 
 const rootReducer = (state: any, action: any) => {

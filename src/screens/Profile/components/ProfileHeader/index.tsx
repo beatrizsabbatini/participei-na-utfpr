@@ -62,7 +62,7 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = ({ activityData, isVisitingO
                   : userData.data.name
               }
             </CustomText>
-            <CustomText>Câmpus {userCampus.city || ' não encontrado'}</CustomText>
+            <CustomText>{userCampus.city ? `Câmpus ${userCampus.city}`  : ''}</CustomText>
           </View>
         )}
     </Container>

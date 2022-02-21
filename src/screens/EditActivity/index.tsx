@@ -116,13 +116,6 @@ const EditActivity: React.FC = () => {
                 multiline 
                 numberOfLines={5}
               />
-              {/* <Dropdown 
-                placeholder="Selecione uma categoria" 
-                value={category}
-                onValueChange={(value: string) => setFieldValue('categoryId', value)} 
-                list={categories} 
-                setValue={setCategory}
-              /> */}
             </View>
             <Button onPress={() => handleSubmit(values)} type="primary">Atualizar</Button>
           </>

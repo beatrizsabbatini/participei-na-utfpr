@@ -7,7 +7,7 @@ interface PublishActivityPayload {
   onError: () => void
 }
 
-export function publishActivitieyRequest(payload: PublishActivityPayload){
+export function publishActivityRequest(payload: PublishActivityPayload){
   return {
     type: Types.PUBLISH_ACTIVITY_REQUEST,
     payload

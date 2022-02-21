@@ -19,9 +19,9 @@ import { HomeStackParamList } from '../../routes/app.routes';
 import { IActivity } from '../../types';
 import { getActivitiesRequest } from '../../store/modules/Activities/getActivities/actions';
 import { editUserRequest } from '../../store/modules/LoggedUser/editUser/actions';
-import { publishActivitieyRequest } from '../../store/modules/Activities/publishActivity/actions';
+import { publishActivityRequest } from '../../store/modules/Activities/publishActivity/actions';
 import { getUserDataRequest } from '../../store/modules/LoggedUser/userData/actions';
-import AdminPostCategory from './AdminPostCategory';
+import PostCategory from '../PostCategory';
 
 type PostActivityScreenProp = StackNavigationProp<HomeStackParamList, 'ActivitiesFeed'>;
 interface FormProps{
@@ -106,14 +106,14 @@ const PostActivity: React.FC = () => {
       publisherName: userData.name
     }
 
-    await dispatch(publishActivitieyRequest({activity, onSuccess, onError}));
+    await dispatch(publishActivityRequest({activity, onSuccess, onError}));
 
   }
 
   return (
     <Container>
       {userData.admin ? (
-        <AdminPostCategory/>
+        <PostCategory/>
       ) : (
         <>
           <Spinner

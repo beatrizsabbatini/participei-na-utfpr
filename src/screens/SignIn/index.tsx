@@ -111,6 +111,7 @@ const SignIn: React.FC = () => {
           <>
             <View>
               <Input 
+                autoCorrect={false}
                 disabled={loading}
                 error={errors.email}
                 placeholder={errors.email || "E-mail ou RA"}

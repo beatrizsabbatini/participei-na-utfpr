@@ -11,6 +11,10 @@ import loggedUserSavedActivitiesSagas from './LoggedUser/savedActivities/sagas';
 import campusesSagas from './Campuses/getCampuses/sagas';
 import otherUsersDataSagas from './OtherUsers/otherUsersData/sagas';
 import otherUsersPublishedActivitiesSagas from './OtherUsers/publishedActivities/sagas';
+import createCategoriesSagas from './Categories/createCategory/sagas';
+import getCategoriesSagas from './Categories/getCategories/sagas';
+import updateCategorySagas from './Categories/updateCategory/sagas';
+import deleteCategorySagas from './Categories/deleteCategory/sagas';
 
 export default function* rootSaga() {
 	yield all([
@@ -24,6 +28,10 @@ export default function* rootSaga() {
     loggedUserSavedActivitiesSagas(),
     campusesSagas(),
     otherUsersDataSagas(),
-    otherUsersPublishedActivitiesSagas()
+    otherUsersPublishedActivitiesSagas(),
+    createCategoriesSagas(),
+    getCategoriesSagas(),
+    updateCategorySagas(),
+    deleteCategorySagas()
 	]);
 }

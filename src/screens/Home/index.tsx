@@ -25,6 +25,7 @@ import ConfirmationModalContent from '../../components/ConfirmationModalContent'
 import { editUserRequest } from '../../store/modules/LoggedUser/editUser/actions';
 import { useConfirmationModal } from '../../hooks/ConfirmationModal';
 import { getCampusesRequest } from '../../store/modules/Campuses/getCampuses/actions';
+import { useAuth } from '../../hooks/Auth';
 
 type HomeScreenProp = StackNavigationProp<HomeStackParamList, 'ActivityDetails'>;
 
@@ -64,7 +65,9 @@ const Home: React.FC = () => {
   }, [])
 
   useEffect(() => {
-    if (userData) dispatch(getActivitiesRequest());
+    if (userData) {
+      dispatch(getActivitiesRequest());
+    }
   }, [userData]);
   
 
