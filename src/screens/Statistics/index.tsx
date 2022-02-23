@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { View, Text } from 'react-native';
 
 import * as scale from 'd3-scale'
 import { StackedBarChart, XAxis } from 'react-native-svg-charts';
@@ -17,6 +18,8 @@ import {
 } from './styles';
 import { useSelector } from 'react-redux';
 import { IState } from '../../store';
+import AdminStatistics from '../AdminStatistics';
+
 
 interface ChartProps {
   x?: any;
@@ -118,60 +121,74 @@ const Statistics: React.FC = () => {
       showsVerticalScrollIndicator={false} 
       contentContainerStyle={{flex: 1, justifyContent: 'space-between'}}
     >
-      <Row>
-        <Badge group={1}/>
-        <Badge group={2}/>
-        <Badge group={3}/>
-      </Row>
-      <Row>
-        {
-          groupsData.map(bar => (
-            <StackedBarChart
-              style={{ height: bar.height, width: RFValue(60), marginHorizontal: RFValue(10) }}
-              keys={['pointsAchieved', 'pointsAvailable']}
-              colors={bar.colors}
-              data={bar.points}
-              contentInset={{ top: 30 }}
-            >
-              <HorizontalLine minimalValue={bar.minimalValue}/>
-            </StackedBarChart>
-          ))
-        }
-      </Row>
-      <XAxis
-        data={labels}
-        scale={scale.scaleBand}
-        xAccessor={({item}) => item}
-        formatLabel={(item) => item.split('-')[1]}
-        style={{ marginTop: 20 }}
-        svg={{ fontSize: 12, fontWeight: 'bold', fill: '#ABABAB'}}
-      />
+      {data.admin ? (
+        <AdminStatistics/>
+      ) : (
+        <>
+          <Row>
+            <Badge group={1}/>
+            <Badge group={2}/>
+            <Badge group={3}/>
+          </Row>
+          <Row>
+            {
+              groupsData.map(bar => (
+                <View style={{display: 'flex', flexDirection: 'row'}}>
+                  <View style={{justifyContent: 'space-between'}}>
+                    <Text>20</Text>
+                    <Text>0</Text>
+                  </View>
+                  <View>
+                    <StackedBarChart
+                      style={{ height: bar.height, width: RFValue(50), marginHorizontal: RFValue(0) }}
+                      keys={['pointsAchieved', 'pointsAvailable']}
+                      colors={bar.colors}
+                      data={bar.points}
+                      contentInset={{ top: 10 }}
+                    >
+                      <HorizontalLine minimalValue={bar.minimalValue}/>
+                    </StackedBarChart>
+                  </View>
+                </View>
+              ))
+            }
+          </Row>
+          <XAxis
+            data={labels}
+            scale={scale.scaleBand}
+            xAccessor={({item}) => item}
+            formatLabel={(item) => item.split('-')[1]}
+            style={{ marginTop: 20 }}
+            svg={{ fontSize: 12, fontWeight: 'bold', fill: '#ABABAB'}}
+          />
 
-      <InstructionsContainer>
-        <Row alignItems="center">
-          <RedLine/>
-          <Instructions>Mínimo de pontos que se deve atingir em cada grupo (20 pontos).</Instructions>
-        </Row>
-        <Row alignItems="center" paddingTop>
-          <GrayRectangle/>
-          <Instructions>Espaço faltante de pontos para atingir o máximo permitido em cada grupo.</Instructions>
-        </Row>
-      </InstructionsContainer>
+          <InstructionsContainer>
+            <Row alignItems="center">
+              <RedLine/>
+              <Instructions>Mínimo de pontos que se deve atingir em cada grupo (20 pontos).</Instructions>
+            </Row>
+            <Row alignItems="center" paddingTop>
+              <GrayRectangle/>
+              <Instructions>Espaço faltante de pontos para atingir o máximo permitido em cada grupo.</Instructions>
+            </Row>
+          </InstructionsContainer>
 
-      <StackedBarChart
-        horizontal
-        style={{ height: 35, width: '85%', alignSelf: 'center' }}
-        keys={['group1', 'group2', 'group3', 'availablePoints']}
-        colors={["#2DB3F0", "#63E27F", "#FBCF7B", "#EFEFEF"]}
-        data={[totalPoints]}
-      >
-        <HorizontalLine minimalValue={70} horizontalChart/>
-      </StackedBarChart>
+          <StackedBarChart
+            horizontal
+            style={{ height: 35, width: '85%', alignSelf: 'center' }}
+            keys={['group1', 'group2', 'group3', 'availablePoints']}
+            colors={["#2DB3F0", "#63E27F", "#FBCF7B", "#EFEFEF"]}
+            data={[totalPoints]}
+          >
+            <HorizontalLine minimalValue={70} horizontalChart/>
+          </StackedBarChart>
 
-      <Row alignItems="center" paddingTop>
-        <BlueLine/>
-        <Instructions>Mínimo de pontos que os alunos devem atingir para poderem se formar (70 pontos).</Instructions>
-      </Row>
+          <Row alignItems="center" paddingTop>
+            <BlueLine/>
+            <Instructions>Mínimo de pontos que os alunos devem atingir para poderem se formar (70 pontos).</Instructions>
+          </Row>
+        </>
+      )}
 
     </Background>
   )

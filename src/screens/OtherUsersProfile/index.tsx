@@ -24,7 +24,7 @@ const OtherUsersProfile: React.FC = () => {
   const { activityData } = route.params;
   const { loading: loadingUser, data: userData } = useSelector((state: IState) => state.otherUsersData);
   const { loading, data } = useSelector((state: IState) => state.otherUsersPublishedActivities);
-  const { navigate } = useNavigation<HomeScreenProp>();
+  const { navigate, push } = useNavigation<HomeScreenProp>();
 
   const onError = () => {
     Alert.alert(`Erro ao buscar as atividades de ${activityData.publisherName}!`);
@@ -37,7 +37,7 @@ const OtherUsersProfile: React.FC = () => {
   }, [userData])
 
   const renderActivities: ListRenderItem<IActivity> = ({ item }) => (
-    <Activity userPublished data={item} onPress={() => navigate('ActivityDetails', { data: item, cameFromUserProfile: true })}/>
+    <Activity userPublished data={item} onPress={() => push('ActivityDetails', { data: item, cameFromUserProfile: true })}/>
   );
 
   return (

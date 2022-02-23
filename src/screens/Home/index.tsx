@@ -25,7 +25,6 @@ import ConfirmationModalContent from '../../components/ConfirmationModalContent'
 import { editUserRequest } from '../../store/modules/LoggedUser/editUser/actions';
 import { useConfirmationModal } from '../../hooks/ConfirmationModal';
 import { getCampusesRequest } from '../../store/modules/Campuses/getCampuses/actions';
-import { useAuth } from '../../hooks/Auth';
 
 type HomeScreenProp = StackNavigationProp<HomeStackParamList, 'ActivityDetails'>;
 
@@ -34,7 +33,7 @@ const Home: React.FC = () => {
   const [refreshing, setRefreshing] = useState(false);
   const userUid = firebase.auth().currentUser?.uid;
   
-  const { navigate } = useNavigation<HomeScreenProp>();
+  const { navigate, push } = useNavigation<HomeScreenProp>();
 
   const { modalVisible, setModalVisible, groups } = useGroupSelect();
 
@@ -86,7 +85,7 @@ const Home: React.FC = () => {
     
     return (
       <Animated.View style={{transform: [{scale}]}}>
-        <Activity userPublished={item.publisherId === userData.uid} data={item} onPress={() => navigate('ActivityDetails', { data: item })}/>  
+        <Activity userPublished={item.publisherId === userData.uid} data={item} onPress={() => push('ActivityDetails', { data: item })}/>  
       </Animated.View>
     )
   };

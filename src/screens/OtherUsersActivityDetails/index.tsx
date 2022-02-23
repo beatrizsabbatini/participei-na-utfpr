@@ -31,7 +31,7 @@ type HomeScreenProp = StackNavigationProp<HomeStackParamList, 'OtherUsersProfile
 
 const ActivityDetails: React.FC = () => {
 
-  const { navigate, push } = useNavigation<HomeScreenProp>();
+  const { navigate } = useNavigation<HomeScreenProp>();
   const { setPressedActivity, setModalVisible, setIsSaved } = useConfirmationModal();
 
   const route = useRoute<RouteProp<HomeStackParamList, 'ActivityDetails'>>();
@@ -50,7 +50,7 @@ const ActivityDetails: React.FC = () => {
     if (data.publisherId === userData.data.uid){
       navigate('ProfileStack');
     } else {
-      push('OtherUsersProfile', { activityData: data })
+      navigate('OtherUsersProfile', { activityData: data })
     }
   }
 

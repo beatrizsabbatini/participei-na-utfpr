@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import { View } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
@@ -24,6 +24,11 @@ type ProfileScreenProp = StackNavigationProp<HomeStackParamList, 'EditProfile'>;
 
 const CustomHeader: React.FC<CustomHeaderProps> = ({title, leftIconType, rightIconType }) => {
   const navigation = useNavigation<ProfileScreenProp>();
+
+  useEffect(() => {
+    console.log("NAVIGATION: ", navigation);
+  }, [navigation])
+  
 
   const { setModalVisible } = useGroupSelect();
 
@@ -69,7 +74,7 @@ const CustomHeader: React.FC<CustomHeaderProps> = ({title, leftIconType, rightIc
         colors={['#55c4f8', '#1b79d1']}
       >
         {leftIconType === LEFT_ICON_TYPES.BACK ? (
-          <TouchableOpacity onPress={() => navigation.goBack()}>
+          <TouchableOpacity onPress={() => navigation.pop()}>
             <MaterialIcons name="arrow-back" size={32} color="white" />
           </TouchableOpacity> 
         ) : (

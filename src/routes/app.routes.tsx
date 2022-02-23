@@ -81,9 +81,9 @@ const Tabs = () => {
             tabBarIcon: ({focused}) => <FontAwesome name="bar-chart-o" size={24} color={focused ? '#fff' : '#74AEE5'} />,
             header: () => (
               <CustomHeader 
-                title="Suas estatísticas" 
+                title={data?.admin ? "Estatísticas" : "Suas estatísticas"}
                 leftIconType={LEFT_ICON_TYPES.MENU} 
-                rightIconType={RIGHT_ICON_TYPES.HELP}
+                rightIconType={data?.admin ? RIGHT_ICON_TYPES.CLOCK_ICON : RIGHT_ICON_TYPES.HELP}
               />
             )
           }}
@@ -132,7 +132,7 @@ const HomeStack = () => {
   const { Navigator, Screen } = createStackNavigator();
 
   return(
-    <Navigator >
+    <Navigator>
       <Screen
        name="ActivitiesFeed" 
        component={Home} 
