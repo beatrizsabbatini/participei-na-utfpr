@@ -14,8 +14,6 @@ interface AvatarProps{
 const Avatar: React.FC<AvatarProps> = ({ size, url }) => {
   const [iconSize, setIconSize] = useState<number>(24);
 
-  console.log("URL: ", url)
-
   const getIconSize = () => {
     switch (size) {
       case 'normal':

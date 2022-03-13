@@ -1,0 +1,3 @@
+export const adminHelpText =  'Com esses dados você pode analisar quais são os grupos predominantes nas atividades publicadas. Podendo assim ajudar a universidade a proporcionar mais atividades para o/os grupos em menor abundância no n° de atividades.'
+
+export const helpText = 'As atividades complementares se dividem em 3 grupos. O gráfico mostra quantos pontos você já atingiu por grupo. 20 pontos é o mínimo que você precisa atingir em cada um dos grupos. E o máximo, é 30 nos grupos 1 e 2, e 40 no grupo 3. Você precisa totalizar 70 pontos no total para poder se formar.';

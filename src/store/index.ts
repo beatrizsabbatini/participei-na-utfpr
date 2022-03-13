@@ -16,6 +16,7 @@ import { ICreateCategoryState } from './modules/Categories/createCategory/types'
 import { IGetCategoriesState } from './modules/Categories/getCategories/types';
 import { IUpdateCategoryState } from './modules/Categories/updateCategory/types';
 import { IDeleteCategoryState } from './modules/Categories/deleteCategory/types';
+import { IUsersState } from './modules/OtherUsers/getUsers/types';
 
 export interface IState{
   userData: IUserDataState;
@@ -32,7 +33,8 @@ export interface IState{
   createCategory: ICreateCategoryState;
   getCategories: IGetCategoriesState;
   updateCategory: IUpdateCategoryState;
-  deleteCategory: IDeleteCategoryState
+  deleteCategory: IDeleteCategoryState;
+  getUsers: IUsersState;
 }
 
 const sagaMiddleware = createSagaMiddleware();

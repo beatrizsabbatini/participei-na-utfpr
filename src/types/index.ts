@@ -5,21 +5,25 @@ export interface IActivity{
   description?: string
   publisherName: string,
   publisherId: string,
-  images?: string[],
+  image?: string,
   certificate?: any,
   saved?: boolean
 }
 
 export interface ICampus{
   id: string,
-  city: string
+  city: string,
+  departments: any[]
 }
 
 export interface ICategory{
-  id: string | undefined,
+  _id?: string | undefined,
+  id?: string,
   group: number | undefined,
   label: string | undefined,
   points: number | undefined,
+  placeholder?: boolean,
+  value?: string
 }
 
 export interface INotification{

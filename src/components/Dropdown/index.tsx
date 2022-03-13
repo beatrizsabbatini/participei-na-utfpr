@@ -8,9 +8,10 @@ import { CustomPicker, PickerContainer } from './styles';
 interface DropDownProps {
   placeholder: string,
   value: any,
-  setValue: (value: any) => void,
+  setValue: any,
   list: any[],
   onValueChange: (value: any) => void;
+  enabled: boolean;
 }
 
 const Dropdown: React.FC<DropDownProps> = (props) => {  
@@ -18,6 +19,7 @@ const Dropdown: React.FC<DropDownProps> = (props) => {
   return (
     <PickerContainer>
       <CustomPicker
+        enabled={props.enabled}
         selectedValue={props.value}
         onValueChange={(itemValue) => {
           props.setValue(itemValue);

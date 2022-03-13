@@ -11,6 +11,7 @@ import { createCategoryRequest } from '../../store/modules/Categories/createCate
 import { ICategory } from '../../types';
 import Spinner from 'react-native-loading-spinner-overlay';
 import { IState } from '../../store';
+import { getCategoriesRequest } from '../../store/modules/Categories/getCategories/actions';
 
 interface FormProps{
   values: any,
@@ -37,6 +38,7 @@ const AdminPostCategory: React.FC = () => {
     const onSuccess = () => {
       setGroup(undefined);
       actions.resetForm();
+      dispatch(getCategoriesRequest());
         Alert.alert(
           'Categoria Criada!',
         );
@@ -60,11 +62,6 @@ const AdminPostCategory: React.FC = () => {
     await dispatch(createCategoryRequest({category, onSuccess, onError}));
 
   }
-
-  useEffect(() => {
-    console.log("LOADING: ", loading)
-  }, [loading])
-  
 
   const groups = [
     {
@@ -124,6 +121,7 @@ const AdminPostCategory: React.FC = () => {
                 autoCorrect={false}
               />
                <Dropdown 
+                enabled
                 placeholder="Selecione um grupo para essa categoria" 
                 value={group}
                 onValueChange={(value: number) => setFieldValue('group', value)} 

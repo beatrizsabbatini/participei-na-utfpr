@@ -14,11 +14,17 @@ import {
   RedLine, 
   Row,
   GrayRectangle,
-  BlueLine
+  BlueLine,
+  ModalTitle,
+  ModalText,
+  ModalBox
 } from './styles';
 import { useSelector } from 'react-redux';
 import { IState } from '../../store';
 import AdminStatistics from '../AdminStatistics';
+import Modal from "react-native-modal";
+import { useStatisticsModal } from '../../hooks/StatisticsModal';
+import { adminHelpText, helpText } from '../../constants/statistics';
 
 
 interface ChartProps {
@@ -34,6 +40,8 @@ const Statistics: React.FC = () => {
   const [totalPoints, setTotalPoints] = useState<any>({group1: 0, group2: 0, group3: 0, availablePoints: 100});
   const [groupsData, setGroupsData] = useState<any[]>([]);
   const [labels, setLabels] = useState<string[]>([]);
+
+  const { modalVisible, setModalVisible } = useStatisticsModal();
 
   useEffect(() => {
     const sum3groups = data.group1Points + data.group2Points + data.group3Points;
@@ -57,7 +65,8 @@ const Statistics: React.FC = () => {
         ],
         colors: ['#2DB3F0', '#EFEFEF'],
         height: RFValue(160),
-        minimalValue: 20
+        minimalValue: 20,
+        maximumValue: 30,
       },
       {
         points: [
@@ -68,7 +77,8 @@ const Statistics: React.FC = () => {
         ],
         colors: ['#63E27F', '#EFEFEF'],
         height: RFValue(160),
-        minimalValue: 20
+        minimalValue: 20,
+        maximumValue: 30,
       },
       {
         points: [
@@ -79,7 +89,8 @@ const Statistics: React.FC = () => {
         ],
         colors: ['#FBCF7B', '#EFEFEF'],
         height: RFValue(203.5),
-        minimalValue: 20
+        minimalValue: 20,
+        maximumValue: 40,
       },
     ]
 
@@ -133,9 +144,9 @@ const Statistics: React.FC = () => {
           <Row>
             {
               groupsData.map(bar => (
-                <View style={{display: 'flex', flexDirection: 'row'}}>
+                <View style={{display: 'flex', flexDirection: 'row', marginTop: 20}}>
                   <View style={{justifyContent: 'space-between'}}>
-                    <Text>20</Text>
+                    <Text>{bar.maximumValue}</Text>
                     <Text>0</Text>
                   </View>
                   <View>
@@ -158,7 +169,7 @@ const Statistics: React.FC = () => {
             scale={scale.scaleBand}
             xAccessor={({item}) => item}
             formatLabel={(item) => item.split('-')[1]}
-            style={{ marginTop: 20 }}
+            style={{ marginTop: 20, marginLeft: 18 }}
             svg={{ fontSize: 12, fontWeight: 'bold', fill: '#ABABAB'}}
           />
 
@@ -187,6 +198,18 @@ const Statistics: React.FC = () => {
             <BlueLine/>
             <Instructions>Mínimo de pontos que os alunos devem atingir para poderem se formar (70 pontos).</Instructions>
           </Row>
+
+          <Modal
+            animationIn="fadeIn"
+            animationOut="fadeOut"
+            isVisible={modalVisible}
+            onBackdropPress={() => setModalVisible(false)}
+          >
+            <ModalBox>
+              <ModalTitle>Sobre os dados mostrados: </ModalTitle>
+              <ModalText>{helpText}</ModalText>
+            </ModalBox>
+          </Modal>
         </>
       )}
 

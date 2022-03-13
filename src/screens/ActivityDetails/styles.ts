@@ -71,3 +71,10 @@ export const DarkBlueText = styled.Text`
   font-weight: bold;
   margin-left: ${RFValue(10)}px;
 `
+
+export const ActivityImage = styled.Image`
+  width: 100%;
+  height: ${RFValue(220)}px;
+  resize-mode: cover;
+  margin-top: ${RFValue(20)}px;
+`

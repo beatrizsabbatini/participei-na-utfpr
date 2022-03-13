@@ -26,7 +26,7 @@ const GroupSelect: React.FC<GroupSelectProps> = ({ searchQuery }) => {
 
   const handleApply = () => {
     toggleGroup(1, group1Local);
-    toggleGroup(2, group3Local);
+    toggleGroup(2, group2Local);
     toggleGroup(3, group3Local);
 
     const groupsArray: number[] = [];

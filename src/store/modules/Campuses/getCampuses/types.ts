@@ -8,7 +8,7 @@ export interface IGetCampusesState{
 
 export const Types = {
 	GET_CAMPUSES_REQUEST: 'campus/get campuses request',
-	GET_CAMPUSES_SUCCESS: 'campus/get campuses errors ',
-	GET_CAMPUSES_ERRORS: 'campus/get campuses success',
+	GET_CAMPUSES_SUCCESS: 'campus/get campuses success ',
+	GET_CAMPUSES_ERRORS: 'campus/get campuses errors',
 };
 

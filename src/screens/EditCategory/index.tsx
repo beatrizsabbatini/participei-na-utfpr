@@ -133,6 +133,7 @@ const EditCategory: React.FC = () => {
                 autoCorrect={false}
               />
                <Dropdown 
+                enabled
                 placeholder="Selecione um grupo para essa categoria" 
                 value={group}
                 onValueChange={(value: number) => setFieldValue('group', value)} 

@@ -29,8 +29,6 @@ const AdminProfile: React.FC = () => {
   useEffect(() => {
     if (categories.length === 0){
       dispatch(getCategoriesRequest());
-    } else {
-      console.log(categories);
     }
   }, [categories])
 

@@ -7,9 +7,28 @@ import { Types } from './types';
 function* getCampuses(action: any): any {
 
 	try {
+
     const response = yield call(fetchCampuses);
 
-    yield put(getCampusesSuccess(response.data));
+    const responseWithLabel = response.data.map((item: any) => (
+      {
+        ...item, 
+        label: item.city,
+        value: item.id
+      }
+      ))
+
+    const formattedResponse = [
+      {
+        id: 0,
+        label: '',
+        placeholder: true,
+        value: '',
+      },
+      ...responseWithLabel
+    ]
+
+    yield put(getCampusesSuccess(formattedResponse));
 
 	} catch (err: any) {
 

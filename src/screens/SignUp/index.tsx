@@ -21,8 +21,12 @@ import { Background, ButtonsContainer, customStepsStyles } from './styles';
 import { signUp } from './services';
 import { getMessageByErrorCode, getStepFieldsToValidate } from './utils';
 import firebase from 'firebase';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { createUserRequest } from '../../store/modules/SignUp/createUser/actions';
+import { getCampusesRequest } from '../../store/modules/Campuses/getCampuses/actions';
+import { getUsersRequest } from '../../store/modules/OtherUsers/getUsers/actions';
+import { IState } from '../../store';
+import { IUser } from '../../store/modules/OtherUsers/getUsers/types';
 
 type SignUpScreenProp = StackNavigationProp<AuthStackParamList, 'SignIn'>;
 
@@ -39,11 +43,17 @@ export interface FormProps{
 export interface Step{
   formProps: FormProps;
   setPasswordCopy?: (text: string) => void;
+  showErrors?: boolean;
+  campusValue?: any
+  setCampusValue?: (value: any) => void;
+  departmentValue?: any
+  setDepartmentValue?: (value: any) => void;
 }
 
 const SignUp: React.FC = () => {
 
   const navigation = useNavigation<SignUpScreenProp>();
+  const { data } = useSelector((state: IState) => state.getUsers);
   const dispatch = useDispatch();
 
   const { currentStep, setCurrentStep } = useSteps();
@@ -51,12 +61,26 @@ const SignUp: React.FC = () => {
 
   const [loading, setLoading] = useState<boolean>(false);
   const [passwordCopy, setPasswordCopy] = useState<string>();
+  const [campusValue, setCampusValue] = useState<any>();
+  const [departmentValue, setDepartmentValue] = useState<any>();
 
   useEffect(() => {
     return () => {
       setCurrentStep(0);
     };
   }, []);
+
+  useEffect(() => {
+    dispatch(getCampusesRequest());
+    dispatch(getUsersRequest());
+  }, [])
+
+  const userAlreadyExists = (ra: number) => {
+    const foundUser = data.find((user: IUser) => user.ra === Number(ra));
+    if (foundUser) return true;
+    else return false;
+  }
+  
 
   const labels = ["Nome", "E-mail", "Senha", "RA", "Campus"];
   const signUpFormSchema = Yup.object().shape({
@@ -74,7 +98,9 @@ const SignUp: React.FC = () => {
     ra: Yup.string()
       .required('RA é obrigatório!'), 
     campusId: Yup.string()
-      .required('Campus é obrigatório!')
+      .required('Campus é obrigatório!'),
+    departmentId: Yup.string()
+    .required('Departamento é obrigatório!')
   });
 
   const renderStep = (param: number, formProps: FormProps) => {
@@ -91,13 +117,22 @@ const SignUp: React.FC = () => {
         return <Step3 formProps={formProps}/>;
  
       case 4:
-      return <Step4 formProps={formProps}/>;
+      return (
+        <Step4 
+          formProps={formProps} 
+          campusValue={campusValue} 
+          setCampusValue={setCampusValue}
+          departmentValue={departmentValue}
+          setDepartmentValue={setDepartmentValue}
+        />
+      )
       default:
         break;
     }
   }
 
   const handleValidate = async (formProps: FormProps) => {
+
     const errors: any[] = [];
     const currentStepFields: string[] = getStepFieldsToValidate(currentStep);
 
@@ -111,16 +146,25 @@ const SignUp: React.FC = () => {
         }
       }).then(() => {
         if (errors.length > 0) console.log(errors);
-        else handleNext(formProps.values);
+        else handleNext(formProps.values, formProps);
       })
     })
   } 
 
-  const handleNext = (values: any) => {
+  const handleNext = (values: any, formProps?: any) => {
+    if (currentStep === 3){
+      const raInUse = userAlreadyExists(formProps.values.ra);
+      if (raInUse) {
+        Alert.alert("Esse RA já está em uso! Verifique se digitou corretamente.");
+        return;
+      }
+    }
     if (currentStep < 4) setCurrentStep(currentStep + 1);
     else {
-      setLoading(true);
-      signUp(values, onCreationSuccess, onCreationError);
+      if (Object.keys(formProps.errors).length === 0){
+        setLoading(true);
+        signUp(values, onCreationSuccess, onCreationError);
+      }
     }
   } 
 
@@ -213,7 +257,8 @@ const SignUp: React.FC = () => {
           password: '',
           confirmPassword: '',
           ra: '',
-          campusId: ''
+          campusId: undefined,
+          departmentId: undefined
         }}
         onSubmit={(values) => signUp(values, onCreationSuccess, onCreationError)}
       >

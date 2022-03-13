@@ -13,6 +13,7 @@ import ClockIcon from '../../../assets/clock.png';
 import { useGroupSelect } from '../../hooks/GroupsSelect';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { HomeStackParamList } from '../../routes/app.routes';
+import { useStatisticsModal } from '../../hooks/StatisticsModal';
 
 interface CustomHeaderProps{
   title: string;
@@ -25,12 +26,8 @@ type ProfileScreenProp = StackNavigationProp<HomeStackParamList, 'EditProfile'>;
 const CustomHeader: React.FC<CustomHeaderProps> = ({title, leftIconType, rightIconType }) => {
   const navigation = useNavigation<ProfileScreenProp>();
 
-  useEffect(() => {
-    console.log("NAVIGATION: ", navigation);
-  }, [navigation])
-  
-
   const { setModalVisible } = useGroupSelect();
+  const { setModalVisible: setStatisticsModalVisible} = useStatisticsModal();
 
   const generateRightIcon = () => {
     switch (rightIconType) {
@@ -49,7 +46,7 @@ const CustomHeader: React.FC<CustomHeaderProps> = ({title, leftIconType, rightIc
        
       case RIGHT_ICON_TYPES.HELP:
         return (
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => setStatisticsModalVisible(true)}>
             <MaterialIcons name="help" size={24} color="white" />
           </TouchableOpacity>
         )

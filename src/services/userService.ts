@@ -32,3 +32,10 @@ export const createUser = (payload: any) => {
 		data: payload.body
 	})
 };
+
+export const fetchUsers = () => {
+  return api.request({
+		method: 'GET',
+		url: '/users',
+	})
+}

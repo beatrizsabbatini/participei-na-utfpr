@@ -17,7 +17,7 @@ export const getStepFieldsToValidate = (currentStep: number) => {
     case 1: return ['email'];
     case 2: return ['password', 'confirmPassword'];
     case 3: return ['ra'];
-    case 4: return ['campusId'];
+    case 4: return ['campusId', 'departmentId'];
     default: return []
   }
 }

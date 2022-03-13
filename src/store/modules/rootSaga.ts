@@ -15,6 +15,7 @@ import createCategoriesSagas from './Categories/createCategory/sagas';
 import getCategoriesSagas from './Categories/getCategories/sagas';
 import updateCategorySagas from './Categories/updateCategory/sagas';
 import deleteCategorySagas from './Categories/deleteCategory/sagas';
+import getUsersSagas from './OtherUsers/getUsers/sagas';
 
 export default function* rootSaga() {
 	yield all([
@@ -32,6 +33,7 @@ export default function* rootSaga() {
     createCategoriesSagas(),
     getCategoriesSagas(),
     updateCategorySagas(),
-    deleteCategorySagas()
+    deleteCategorySagas(),
+    getUsersSagas()
 	]);
 }

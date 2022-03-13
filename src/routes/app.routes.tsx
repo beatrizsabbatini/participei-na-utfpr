@@ -83,7 +83,7 @@ const Tabs = () => {
               <CustomHeader 
                 title={data?.admin ? "Estatísticas" : "Suas estatísticas"}
                 leftIconType={LEFT_ICON_TYPES.MENU} 
-                rightIconType={data?.admin ? RIGHT_ICON_TYPES.CLOCK_ICON : RIGHT_ICON_TYPES.HELP}
+                rightIconType={RIGHT_ICON_TYPES.HELP}
               />
             )
           }}

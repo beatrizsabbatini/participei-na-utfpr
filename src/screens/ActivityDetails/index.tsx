@@ -1,9 +1,10 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 
-import { TouchableOpacity, View } from 'react-native';
+import { TouchableOpacity, View, Image } from 'react-native';
 import { useRoute, RouteProp } from '@react-navigation/native';
 import { MaterialIcons } from '@expo/vector-icons'; 
 import { useNavigation } from '@react-navigation/native';
+import base64 from 'react-native-base64'
 
 import Badge from '../../components/Badge';
 import theme from '../../global/styles/theme';
@@ -18,7 +19,8 @@ import {
   ActivityTitle,
   ActivityDescription,
   DarkBlueText,
-  SaveOrReport
+  SaveOrReport,
+  ActivityImage
 } from './styles';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { useDispatch, useSelector } from 'react-redux';
@@ -34,17 +36,28 @@ const ActivityDetails: React.FC = () => {
   const { navigate, push } = useNavigation<HomeScreenProp>();
   const { setPressedActivity, setModalVisible, setIsSaved } = useConfirmationModal();
 
+  const [image, setImage] = useState<string | undefined>();
+
   const route = useRoute<RouteProp<HomeStackParamList, 'ActivityDetails'>>();
   const userData = useSelector((state: IState) => state.userData);
   const otherUsersData = useSelector((state: IState) => state.otherUsersData);
   const dispatch = useDispatch();
 
   const { data, cameFromUserProfile } = route.params;
-  //const renderImages: ListRenderItem<IActivity> = ({ item, index }) => <CustomImage source={item} />;
 
   useEffect(() => {
     if (data.publisherId) dispatch(getOtherUsersDataRequest({ id: data.publisherId }));
   }, [data])
+
+  useEffect(() => {
+    if (data.image){
+      //const base64Image = base64.decode(data.image);
+      const base64Image = `data:image/gif;base64,${data.image}`
+      console.log("base64Image", base64Image)
+      setImage(base64Image);
+    }
+  }, [data])
+  
 
   const handlePressName = () => {
     if (data.publisherId === userData.data.uid){
@@ -85,14 +98,13 @@ const ActivityDetails: React.FC = () => {
         <CategoryTitle>{data?.category.label}</CategoryTitle>
         <ActivityTitle>{data?.title}</ActivityTitle>
         <ActivityDescription>{data?.description || "..."}</ActivityDescription>
-        {/* {data?.images  && (
-          <FlatList data={data?.images} renderItem={renderImages} keyExtractor={({item}) => item}/>
-        )} */}
+        <ActivityImage source={{uri: `data:image/png;base64,${data?.image}`}}
+        />
       </View>
       <SaveOrReport>
         <Row>
-          <MaterialIcons name="report-problem" size={24} color={theme.colors.primary} />
-          <DarkBlueText>Reportar</DarkBlueText>
+          {/* <MaterialIcons name="report-problem" size={24} color={theme.colors.primary} />
+          <DarkBlueText>Reportar</DarkBlueText> */}
         </Row>
         <TouchableOpacity onPress={handlePressedFolder}>
           <MaterialIcons name={data.saved ? 'folder' : 'folder-open'} size={24} color={theme.colors.primary_light} />

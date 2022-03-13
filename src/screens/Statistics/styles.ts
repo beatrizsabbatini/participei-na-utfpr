@@ -51,3 +51,25 @@ export const GrayRectangle = styled.View`
   margin-right: 10px;
   background-color: #EFEFEF;
 `
+
+export const ModalTitle = styled.Text`
+  font-size: ${RFValue(18)}px;
+  font-weight: bold;
+  padding-bottom: ${RFValue(20)}px;
+  color: ${({ theme }) => theme.colors.primary_light};
+`
+
+export const ModalText = styled.Text`
+  font-size: ${RFValue(14)}px;
+  padding-bottom: ${RFValue(10)}px;
+  color: ${({ theme }) => theme.colors.secondary};
+  text-align: justify;
+`
+export const ModalBox = styled.View`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #fff;
+  border-radius: ${RFValue(10)}px;
+  padding: ${RFValue(30)}px;
+`;

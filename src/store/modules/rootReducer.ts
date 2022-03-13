@@ -16,6 +16,7 @@ import getCategories from './Categories/getCategories/reducer';
 import listCategories from './Categories/getCategories/reducer';
 import updateCategory from './Categories/updateCategory/reducer';
 import deleteCategory from './Categories/deleteCategory/reducer';
+import getUsers from './OtherUsers/getUsers/reducer';
 
 const appReducer = combineReducers({
   userData,
@@ -33,7 +34,8 @@ const appReducer = combineReducers({
   getCategories,
   listCategories,
   updateCategory,
-  deleteCategory
+  deleteCategory,
+  getUsers
 });
 
 const rootReducer = (state: any, action: any) => {

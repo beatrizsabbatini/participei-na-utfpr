@@ -33,7 +33,7 @@ const Home: React.FC = () => {
   const [refreshing, setRefreshing] = useState(false);
   const userUid = firebase.auth().currentUser?.uid;
   
-  const { navigate, push } = useNavigation<HomeScreenProp>();
+  const { push } = useNavigation<HomeScreenProp>();
 
   const { modalVisible, setModalVisible, groups } = useGroupSelect();
 

@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from 'react';
 
-import { View } from 'react-native';
-
 import { PieChart } from 'react-native-svg-charts';
 import { Text } from 'react-native-svg'
 import { useSelector } from 'react-redux';
 import { IState } from '../../store';
-import { Description, MainContainer, NumberText, Row, Title } from './styles';
+import { Description, MainContainer, ModalBox, ModalText, ModalTitle, NumberText, Row, Title } from './styles';
 import Badge from '../../components/Badge';
+import Modal from 'react-native-modal';
+import { useStatisticsModal } from '../../hooks/StatisticsModal';
+import { adminHelpText } from '../../constants/statistics';
 
 // import { Container } from './styles';
 
@@ -24,6 +25,8 @@ const AdminStatistics: React.FC = () => {
   const [group2NumberOfActivities, setGroup2Activities] = useState<number>(0);
   const [group3NumberOfActivities, setGroup3Activities] = useState<number>(0);
 
+  const { modalVisible, setModalVisible } = useStatisticsModal();
+  
   useEffect(() => {
     if (activitiesData?.length > 0){
 
@@ -82,28 +85,39 @@ const Labels = ({ slices, height, width }: any) => {
 }
 
   return (
-    <MainContainer>
-      <Title>
-        N° de atividades publicadas: 
-        <NumberText> {activitiesData.length}</NumberText>
-      </Title>
-      <PieChart
-        style={{ height: 200 }}
-        valueAccessor={({ item }) => item.amount}
-        data={data}
-        outerRadius={'95%'}
+    <>
+      <MainContainer>
+        <Title>
+          N° de atividades publicadas: 
+          <NumberText> {activitiesData.length}</NumberText>
+        </Title>
+        <PieChart
+          style={{ height: 200 }}
+          valueAccessor={({ item }) => item.amount}
+          data={data}
+          outerRadius={'95%'}
+        >
+          <Labels/>
+        </PieChart>
+        <Row>
+          <Badge group={1}/>
+          <Badge group={2}/>
+          <Badge group={3}/>
+        </Row>
+      </MainContainer>
+
+      <Modal
+        animationIn="fadeIn"
+        animationOut="fadeOut"
+        isVisible={modalVisible}
+        onBackdropPress={() => setModalVisible(false)}
       >
-        <Labels/>
-      </PieChart>
-      <Row>
-        <Badge group={1}/>
-        <Badge group={2}/>
-        <Badge group={3}/>
-      </Row>
-      <Description>
-        Com esses dados você pode analisar quais são os grupos predominantes nas atividades publicadas. Podendo assim ajudar a universidade a proporcionar mais atividades para o/os grupos em menor abundância.
-      </Description>
-    </MainContainer>
+        <ModalBox>
+          <ModalTitle>Sobre os dados mostrados: </ModalTitle>
+          <ModalText>{adminHelpText}</ModalText>
+        </ModalBox>
+      </Modal>
+    </>
   )
 }
 
