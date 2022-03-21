@@ -19,36 +19,19 @@ const EditProfile: React.FC = () => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
   
-  const [formData, setFormData] = useState<any>();
-  const [imageLocalUrl, setImageLocalUrl] = useState<string>('');
   const [profileName, setProfileName] = useState<string>(data.name);
-
-  const pickImage = async () => {
-
-    const image: any = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.All,
+  const [profilePicture, setProfilePicture] = useState<string>();
+  
+  const getDocument = async () => {
+    const file: any = await ImagePicker.launchImageLibraryAsync({
       allowsEditing: true,
-      aspect: [2, 2],
-      quality: 0.2,
+      base64: true,
+      quality: 0.1,
+      aspect: [4, 3]
     });
 
-    const localUri = image.uri;
-    const filename = localUri.split('/').pop();
-    setImageLocalUrl(image.uri);
-
-    // Infer the type of the image
-    const match = /\.(\w+)$/.exec(filename);
-    const type = match ? `image/${match[1]}` : `image`;
-
-    const formData: any = new FormData();
-    formData.append('file', { type:type, uri: localUri, name: filename});
-    formData.append('name', profileName);
-
-
-    if (!image.cancelled) {
-      setFormData(formData);
-    }
-  };
+    setProfilePicture(file.base64);
+  }
 
   const onError = () => {
     errors?.forEach(error => {
@@ -70,7 +53,7 @@ const EditProfile: React.FC = () => {
   const handleFinishEditing = () => {
     if (data._id){
 
-      const editUserData = formData ? formData : { name: profileName }
+      const editUserData = { name: profileName, image: profilePicture }
 
       dispatch(
         editUserRequest(
@@ -86,8 +69,8 @@ const EditProfile: React.FC = () => {
   return (
     <Container>
       <DataContainer>
-        <TouchableOpacity onPress={pickImage}>
-          <Avatar size='big' url={imageLocalUrl ? imageLocalUrl : data.image?.url}/>
+        <TouchableOpacity onPress={getDocument}>
+          <Avatar size='big' base64={profilePicture ? profilePicture : data.image}/>
         </TouchableOpacity>
         <Input placeholder='Nome' value={profileName} onChangeText={(text: string) => setProfileName(text)} />
       </DataContainer>

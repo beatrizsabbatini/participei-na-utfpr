@@ -18,7 +18,6 @@ import {
   CategoryTitle,
   ActivityTitle,
   ActivityDescription,
-  DarkBlueText,
   SaveOrReport,
   ActivityImage
 } from './styles';
@@ -36,8 +35,6 @@ const ActivityDetails: React.FC = () => {
   const { navigate, push } = useNavigation<HomeScreenProp>();
   const { setPressedActivity, setModalVisible, setIsSaved } = useConfirmationModal();
 
-  const [image, setImage] = useState<string | undefined>();
-
   const route = useRoute<RouteProp<HomeStackParamList, 'ActivityDetails'>>();
   const userData = useSelector((state: IState) => state.userData);
   const otherUsersData = useSelector((state: IState) => state.otherUsersData);
@@ -48,16 +45,6 @@ const ActivityDetails: React.FC = () => {
   useEffect(() => {
     if (data.publisherId) dispatch(getOtherUsersDataRequest({ id: data.publisherId }));
   }, [data])
-
-  useEffect(() => {
-    if (data.image){
-      //const base64Image = base64.decode(data.image);
-      const base64Image = `data:image/gif;base64,${data.image}`
-      console.log("base64Image", base64Image)
-      setImage(base64Image);
-    }
-  }, [data])
-  
 
   const handlePressName = () => {
     if (data.publisherId === userData.data.uid){
@@ -80,12 +67,12 @@ const ActivityDetails: React.FC = () => {
           <Row onPress={handlePressName}>
             {data.publisherId === userData.data.uid ? (
             <>
-              <Avatar size='small' url={userData.data.image?.url}/>
+              <Avatar size='small' base64={userData.data?.image}/>
               <UserName>{data?.publisherName || '-'}</UserName>
             </>
           ) : (
             <>
-              <Avatar size='small' url={otherUsersData.data.image?.url}/>
+              <Avatar size='small' base64={otherUsersData.data?.image}/>
               <UserName>{otherUsersData.data?.name || '-'}</UserName>
             </>
           )}

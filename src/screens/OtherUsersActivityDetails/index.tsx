@@ -67,12 +67,12 @@ const ActivityDetails: React.FC = () => {
           <Row onPress={handlePressName}>
             {data.publisherId === userData.data.uid ? (
             <>
-              <Avatar size='small' url={userData.data.image?.url}/>
+              <Avatar size='small' base64={userData.data.image}/>
               <UserName>{data?.publisherName || '-'}</UserName>
             </>
           ) : (
             <>
-              <Avatar size='small' url={otherUsersData.data.image?.url}/>
+              <Avatar size='small' base64={otherUsersData.data.image}/>
               <UserName>{otherUsersData.data?.name || '-'}</UserName>
             </>
           )}

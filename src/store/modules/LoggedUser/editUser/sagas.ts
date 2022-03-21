@@ -15,7 +15,7 @@ function* editUser(action: any): any {
     if (action.payload.onSuccess) action.payload.onSuccess();
 
 	} catch (err: any) {
-    console.log(err)
+    console.log("ERROR UPDATING USER: ", err)
 		yield put(editUserError(err));
 
 		action.payload.onError();

@@ -5,12 +5,11 @@ export function editUserRequest(
   data: any, 
   onError: () => void, 
   onSuccess?: () => void,
-  isFormData?: boolean
 ){
 
   return {
     type: Types.EDIT_USER_REQUEST,
-    payload: { params, data, onError, onSuccess, isFormData }
+    payload: { params, data, onError, onSuccess }
   }
 }
 

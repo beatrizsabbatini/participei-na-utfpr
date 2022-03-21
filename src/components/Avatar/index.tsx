@@ -8,10 +8,10 @@ import { Image, ImageSourcePropType } from 'react-native';
 
 interface AvatarProps{
   size?: 'normal' | 'big' | 'small',
-  url?: string
+  base64?: string
 }
 
-const Avatar: React.FC<AvatarProps> = ({ size, url }) => {
+const Avatar: React.FC<AvatarProps> = ({ size, base64 }) => {
   const [iconSize, setIconSize] = useState<number>(24);
 
   const getIconSize = () => {
@@ -40,12 +40,28 @@ const Avatar: React.FC<AvatarProps> = ({ size, url }) => {
     getIconSize();
   }, [])
 
+  const signatures: any = {
+    JVBERi0: "application/pdf",
+    R0lGODdh: "image/gif",
+    R0lGODlh: "image/gif",
+    iVBORw0KGgo: "image/png",
+    "/9j/": "image/jpg"
+  };
+  
+  function detectMimeType() {
+    for (var s in signatures) {
+      if (base64?.indexOf(s) === 0) {
+        return signatures[s];
+      }
+    }
+  }
+
   return (
     <>
-      {url ? (
+      {base64 ? (
         <ImageAvatar
           size={size} 
-          source={{uri: url }} 
+          source={{uri: `data:${detectMimeType()};base64,${base64}`}}
           resizeMode="cover"
         />
       ) : (

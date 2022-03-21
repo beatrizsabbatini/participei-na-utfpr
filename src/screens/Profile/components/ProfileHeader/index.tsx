@@ -49,7 +49,7 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = ({ activityData, isVisitingO
 
   return (
     <Container>
-      <Avatar url={isVisitingOtherProfile ? otherUsersData.data.image?.url : userData.data.image?.url}/>
+      <Avatar base64={isVisitingOtherProfile ? otherUsersData.data.image : userData.data.image}/>
      
         {userData.loading ? (
           <ActivityIndicator color={theme.colors.primary} size="large"/>

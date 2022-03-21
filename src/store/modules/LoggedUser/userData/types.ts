@@ -5,9 +5,9 @@ export interface IUserData{
   name: string,
   ra: number,
   campusId: string,
-  image?: Image,
+  image?: string,
   email: string,
-  certificate?: Image,
+  certificate?: string,
   publishedActivitiesIds: string[],
   savedActivities: SavedActivity[],
   group1Points: number,
@@ -26,11 +26,6 @@ export interface Certificate{
 export interface SavedActivity{
   id: string,
   certificate?: Certificate
-}
-
-export interface Image{
-  key: string,
-  url: string
 }
 
 export interface IUserDataState{

@@ -37,6 +37,7 @@ interface ChartProps {
 const Statistics: React.FC = () => {
 
   const { data } = useSelector((state: IState) => state.userData);
+  const { data: savedActivitiesData } = useSelector((state: IState) => state.loggedUserSavedActivities);
   const [totalPoints, setTotalPoints] = useState<any>({group1: 0, group2: 0, group3: 0, availablePoints: 100});
   const [groupsData, setGroupsData] = useState<any[]>([]);
   const [labels, setLabels] = useState<string[]>([]);
@@ -44,12 +45,28 @@ const Statistics: React.FC = () => {
   const { modalVisible, setModalVisible } = useStatisticsModal();
 
   useEffect(() => {
-    const sum3groups = data.group1Points + data.group2Points + data.group3Points;
+    let sum3groups = 0;
+    let group1 = 0;
+    let group2 = 0;
+    let group3 = 0;
+
+    savedActivitiesData.map((item: any) => {
+
+      if (item.certificate !== null) {
+        console.log("ITEM points: ", item.category.points);
+
+        sum3groups = sum3groups + item.category.points;
+
+        if (item.category.group === 1) group1 = group1 + item.category.points;
+        if (item.category.group === 2) group2 = group2 + item.category.points;
+        if (item.category.group === 3) group3 = group3 + item.category.points;
+      }
+    })
 
     const pointsObject = {
-      group1: data.group1Points,
-      group2: data.group2Points,
-      group3: data.group3Points,
+      group1,
+      group2,
+      group3,
       availablePoints: 100 - sum3groups
     }
 
@@ -59,8 +76,8 @@ const Statistics: React.FC = () => {
       {
         points: [
           {
-            pointsAvailable: 30 - data.group1Points,
-            pointsAchieved: data.group1Points,
+            pointsAvailable: 30 - group1,
+            pointsAchieved: group1,
           }
         ],
         colors: ['#2DB3F0', '#EFEFEF'],
@@ -71,8 +88,8 @@ const Statistics: React.FC = () => {
       {
         points: [
           {
-            pointsAvailable: 30 - data.group2Points,
-            pointsAchieved: data.group2Points,
+            pointsAvailable: 30 - group2,
+            pointsAchieved: group2,
           }
         ],
         colors: ['#63E27F', '#EFEFEF'],
@@ -83,8 +100,8 @@ const Statistics: React.FC = () => {
       {
         points: [
           {
-            pointsAvailable: 40 - data.group3Points,
-            pointsAchieved: data.group3Points,
+            pointsAvailable: 40 - group3,
+            pointsAchieved: group3,
           }
         ],
         colors: ['#FBCF7B', '#EFEFEF'],
@@ -96,9 +113,9 @@ const Statistics: React.FC = () => {
 
     setGroupsData(groupsPoints);
 
-    const generateLabels = [`1-${data.group1Points} pontos`, `2-${data.group2Points} pontos`, `3-${data.group3Points} pontos` ];
+    const generateLabels = [`1-${group1} pontos`, `2-${group2} pontos`, `3-${group3} pontos` ];
     setLabels(generateLabels);
-  }, [data])
+  }, [savedActivitiesData])
 
   const HorizontalLine = ({ y, x, minimalValue, horizontalChart }: ChartProps) => {
 

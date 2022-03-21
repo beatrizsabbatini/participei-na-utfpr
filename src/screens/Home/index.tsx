@@ -25,6 +25,7 @@ import ConfirmationModalContent from '../../components/ConfirmationModalContent'
 import { editUserRequest } from '../../store/modules/LoggedUser/editUser/actions';
 import { useConfirmationModal } from '../../hooks/ConfirmationModal';
 import { getCampusesRequest } from '../../store/modules/Campuses/getCampuses/actions';
+import { getUserSavedActivitiesRequest } from '../../store/modules/LoggedUser/savedActivities/actions';
 
 type HomeScreenProp = StackNavigationProp<HomeStackParamList, 'ActivityDetails'>;
 
@@ -65,6 +66,9 @@ const Home: React.FC = () => {
 
   useEffect(() => {
     if (userData) {
+      const savedActivities = userData.savedActivities || [];
+      const userDataSavedActivitiesIds = savedActivities?.map(item => item.id);
+      dispatch(getUserSavedActivitiesRequest({ids: userDataSavedActivitiesIds, onError}))
       dispatch(getActivitiesRequest());
     }
   }, [userData]);

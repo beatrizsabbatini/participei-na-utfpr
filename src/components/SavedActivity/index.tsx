@@ -7,6 +7,8 @@ import { Entypo } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import * as ImagePicker from 'expo-image-picker';
+import * as FileSystem from 'expo-file-system';
+import * as MediaLibrary from 'expo-media-library';
 
 import { IActivity } from '../../types';
 import theme from '../../global/styles/theme';
@@ -34,7 +36,6 @@ interface SavedActivityProps{
   onPress: () => void;
   userPublished?: boolean;
 }
-
 
 type HomeScreenProp = StackNavigationProp<HomeStackParamList, 'ActivityDetails'>;
 
@@ -67,24 +68,28 @@ const SavedActivity: React.FC<SavedActivityProps> = ({ data, onPress }) => {
     dispatch(getUserSavedActivitiesRequest({id: userData.uid}));
   }
 
-  const uploadCertificate = async() => {
-    const image: any = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.All,
+  const getDocument = async () => {
+    const file: any = await ImagePicker.launchImageLibraryAsync({
       allowsEditing: false,
+      base64: true,
+      quality: 0.5,
     });
 
-    const localUri = image.uri;
-    const filename = localUri.split('/').pop();
+    return file.base64
 
-    // Infer the type of the image
-    const match = /\.(\w+)$/.exec(filename);
-    const type = match ? `image/${match[1]}` : `image`;
+    // let result = await DocumentPicker.getDocumentAsync({
+    //     copyToCacheDirectory: false,
+    //     type: '*/*'
+    //   });
 
-    const formData: any = new FormData();
-    formData.append('savedActivities',  JSON.stringify(userData.savedActivities || []));
-    formData.append('file', { type:type, uri: localUri, name: filename});
+    // return result
+  }
+
+  const uploadCertificate = async() => {
+    const file: any = await getDocument();
+
  
-    if (!image.cancelled) {
+    if (file) {
         if (userData._id){
 
           const groupPreviousPoints = () => {
@@ -102,6 +107,11 @@ const SavedActivity: React.FC<SavedActivityProps> = ({ data, onPress }) => {
                 break;
             }
           }
+
+          const body = {
+            savedActivities: userData.savedActivities,
+            certificate: file
+          }
     
           dispatch(
             editUserRequest(
@@ -112,14 +122,72 @@ const SavedActivity: React.FC<SavedActivityProps> = ({ data, onPress }) => {
                 points: data.category.points,
                 previousGroupPoints: groupPreviousPoints()
               }, 
-              formData,
+              body,
               onError,
               onSuccess,
-              true
             )
           );
         }
     }
+  }
+
+  const fileTypesSignatures: any = {
+    JVBERi0: "pdf",
+    R0lGODdh: "gif",
+    R0lGODlh: "gif",
+    iVBORw0KGgo: "png",
+    "/9j/": "jpg"
+  };
+
+  function detectFileType() {
+    for (var s in signatures) {
+      if ( data.certificate?.indexOf(s) === 0) {
+        return fileTypesSignatures[s];
+      }
+    }
+  }
+
+  const signatures: any = {
+    JVBERi0: "application/pdf",
+    R0lGODdh: "image/gif",
+    R0lGODlh: "image/gif",
+    iVBORw0KGgo: "image/png",
+    "/9j/": "image/jpg"
+  };
+  
+  function detectMimeType() {
+    for (var s in signatures) {
+      if (data.certificate.indexOf(s) === 0) {
+        return signatures[s];
+      }
+    }
+  }
+
+  const handleDownloadCertificate = async () => {
+
+    const permission: any = await  ImagePicker.requestMediaLibraryPermissionsAsync();
+
+    if (!permission.canAskAgain || permission.status === "denied") {
+      Alert.alert("Erro!", "Sem aceitar as permissões não é possível baixar o certificado! Tente novamente.")
+    } else {
+
+      const type = detectFileType();
+
+      const filename = FileSystem.documentDirectory + "certificado." + type;
+  
+      try {
+        await FileSystem.writeAsStringAsync(filename, data.certificate, {
+          encoding: FileSystem.EncodingType.Base64,
+        });
+        
+        await MediaLibrary.saveToLibraryAsync(filename);
+
+        Alert.alert("Sucesso!", "Certificado foi salvo no seu dispositivo")
+      } catch (error) {
+        Alert.alert("Erro!", "Não foi possível baixar o certificado")
+      }
+    }
+
   }
 
   return (
@@ -144,8 +212,8 @@ const SavedActivity: React.FC<SavedActivityProps> = ({ data, onPress }) => {
         </TouchableOpacity>
       </CardBottom>
         {data.certificate ? (
-          <CertificateContainer containsCertificate={data.certificate}>
-            <ThinText>Visualizar certificado</ThinText>
+          <CertificateContainer containsCertificate={data.certificate} onPress={handleDownloadCertificate}>
+            <ThinText>Baixar certificado</ThinText>
             <Entypo name="trophy" size={15} color={theme.colors.secondary} />
           </CertificateContainer>
         ) : (
