@@ -7,6 +7,7 @@ import { Entypo } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import * as ImagePicker from 'expo-image-picker';
+import * as DocumentPicker from 'expo-document-picker';
 import * as FileSystem from 'expo-file-system';
 import * as MediaLibrary from 'expo-media-library';
 
@@ -30,6 +31,7 @@ import { editUserRequest } from '../../store/modules/LoggedUser/editUser/actions
 import { IState } from '../../store';
 import { getUserDataRequest } from '../../store/modules/LoggedUser/userData/actions';
 import { getUserSavedActivitiesRequest } from '../../store/modules/LoggedUser/savedActivities/actions';
+import { EncodingType } from 'expo-file-system';
 
 interface SavedActivityProps{
   data: IActivity;
@@ -69,66 +71,76 @@ const SavedActivity: React.FC<SavedActivityProps> = ({ data, onPress }) => {
   }
 
   const getDocument = async () => {
-    const file: any = await ImagePicker.launchImageLibraryAsync({
-      allowsEditing: false,
-      base64: true,
-      quality: 0.5,
-    });
+    // const file: any = await ImagePicker.launchImageLibraryAsync({
+    //   allowsEditing: false,
+    //   base64: true,
+    //   quality: 0.5,
+    // });
 
-    return file.base64
+    // return file.base64
 
-    // let result = await DocumentPicker.getDocumentAsync({
-    //     copyToCacheDirectory: false,
-    //     type: '*/*'
-    //   });
+    let result: any = await DocumentPicker.getDocumentAsync({
+        type: '*/*'
+      });
 
-    // return result
+      console.log("PDF RESULT: ", result);  
+      const fileUri = 'file://' + result.uri;
+
+      FileSystem.readAsStringAsync(result.uri, {encoding: EncodingType.Base64}).then((converted) => { 
+        console.log("converted base64",converted);     
+        return converted
+        
+      }).catch((error) => {
+        console.log("Error converting to base64: ", error)
+      })
+
+    return result
   }
 
   const uploadCertificate = async() => {
     const file: any = await getDocument();
 
  
-    if (file) {
-        if (userData._id){
+    // if (file) {
+    //     if (userData._id){
 
-          const groupPreviousPoints = () => {
-            switch (data.category.group) {
-              case 1:
-                return userData.group1Points;
+    //       const groupPreviousPoints = () => {
+    //         switch (data.category.group) {
+    //           case 1:
+    //             return userData.group1Points;
 
-              case 2:
-              return userData.group2Points;
+    //           case 2:
+    //           return userData.group2Points;
 
-              case 3:
-              return userData.group3Points
+    //           case 3:
+    //           return userData.group3Points
             
-              default:
-                break;
-            }
-          }
+    //           default:
+    //             break;
+    //         }
+    //       }
 
-          const body = {
-            savedActivities: userData.savedActivities,
-            certificate: file
-          }
+    //       const body = {
+    //         savedActivities: userData.savedActivities,
+    //         certificate: file
+    //       }
     
-          dispatch(
-            editUserRequest(
-              { 
-                _id: userData._id, 
-                activityId: data.id, 
-                group: data.category.group, 
-                points: data.category.points,
-                previousGroupPoints: groupPreviousPoints()
-              }, 
-              body,
-              onError,
-              onSuccess,
-            )
-          );
-        }
-    }
+    //       dispatch(
+    //         editUserRequest(
+    //           { 
+    //             _id: userData._id, 
+    //             activityId: data.id, 
+    //             group: data.category.group, 
+    //             points: data.category.points,
+    //             previousGroupPoints: groupPreviousPoints()
+    //           }, 
+    //           body,
+    //           onError,
+    //           onSuccess,
+    //         )
+    //       );
+    //     }
+    // }
   }
 
   const fileTypesSignatures: any = {

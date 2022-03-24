@@ -6,12 +6,14 @@ import { fetchUser } from '../../../../services/userService';
 function* getUser(action: any): any {
 
 	try {
+    console.log("Chamou getUser");
 		const response = yield call(fetchUser, action.payload.id);
 
 		yield put(getUserDataSuccess(response.data));
+    console.log("Success no getUser");
 
 	} catch (err: any) {
-
+    console.log("Fail getUser", err);
 		yield put(getUserDataError(err));
 
 		action.payload.onError();

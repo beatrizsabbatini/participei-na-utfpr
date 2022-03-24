@@ -31,7 +31,7 @@ function* getCampuses(action: any): any {
     yield put(getCampusesSuccess(formattedResponse));
 
 	} catch (err: any) {
-
+    console.log("ERROR getting campuses: ", err)
 		yield put(getCampusesError(err));
 
 		action.payload.onError();

@@ -66,6 +66,7 @@ const Home: React.FC = () => {
 
   useEffect(() => {
     if (userData) {
+      console.log("Entrou!");
       const savedActivities = userData.savedActivities || [];
       const userDataSavedActivitiesIds = savedActivities?.map(item => item.id);
       dispatch(getUserSavedActivitiesRequest({ids: userDataSavedActivitiesIds, onError}))

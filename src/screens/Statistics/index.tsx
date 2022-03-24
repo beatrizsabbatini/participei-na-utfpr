@@ -25,6 +25,7 @@ import AdminStatistics from '../AdminStatistics';
 import Modal from "react-native-modal";
 import { useStatisticsModal } from '../../hooks/StatisticsModal';
 import { adminHelpText, helpText } from '../../constants/statistics';
+import { isStyledComponent } from 'styled-components';
 
 
 interface ChartProps {
@@ -50,18 +51,24 @@ const Statistics: React.FC = () => {
     let group2 = 0;
     let group3 = 0;
 
-    savedActivitiesData.map((item: any) => {
+    const allActivitiesWithCertificateIds = data.savedActivities.filter(item => {
+      if (item.certificate) return item.id;
+    })
 
-      if (item.certificate !== null) {
-        console.log("ITEM points: ", item.category.points);
+    allActivitiesWithCertificateIds.map(item => {
+      const activity: any = savedActivitiesData.find(savedActivity => savedActivity.id === item.id);
+      if (activity) {
+        sum3groups = sum3groups + activity.category.points;
 
-        sum3groups = sum3groups + item.category.points;
-
-        if (item.category.group === 1) group1 = group1 + item.category.points;
-        if (item.category.group === 2) group2 = group2 + item.category.points;
-        if (item.category.group === 3) group3 = group3 + item.category.points;
+        if (activity.category.group === 1) group1 = group1 + activity.category.points;
+        if (activity.category.group === 2) group2 = group2 + activity.category.points;
+        if (activity.category.group === 3) group3 = group3 + activity.category.points;
       }
     })
+
+    console.log("sum3groups", sum3groups);
+
+
 
     const pointsObject = {
       group1,
@@ -115,7 +122,7 @@ const Statistics: React.FC = () => {
 
     const generateLabels = [`1-${group1} pontos`, `2-${group2} pontos`, `3-${group3} pontos` ];
     setLabels(generateLabels);
-  }, [savedActivitiesData])
+  }, [data])
 
   const HorizontalLine = ({ y, x, minimalValue, horizontalChart }: ChartProps) => {
 

@@ -10,3 +10,12 @@ declare module '*.png';
 declare module "react-native-step-indicator"
 
 declare module "react-native-loading-spinner-overlay"
+
+declare type DocumentInfo = {
+  uri: string;
+};
+declare type DocumentPickerResult = {
+  cancelled: true;
+} | ({
+  cancelled: false;
+  } & DocumentInfo);

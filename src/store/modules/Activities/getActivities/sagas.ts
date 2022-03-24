@@ -32,6 +32,7 @@ function* getActivities(action: any): any {
 		yield put(getActivitiesSuccess(activitiesFormatted.reverse()));
 
 	} catch (err: any) {
+    console.log("ERROR getting activities: ", err)
 		yield put(getActivitiesError(err));
 	}
 }

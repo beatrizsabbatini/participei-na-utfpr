@@ -6,12 +6,13 @@ import { fetchActivitiesByIds } from '../../../../services/activitiesService';
 function* getSavedActivities(action: any): any {
 
 	try {
+    console.log("Chamou getSavedActivities");
 		const response = yield call(fetchActivitiesByIds, {ids: action.payload.ids || []});
 
 		yield put(getUserSavedActivitiesSuccess(response.data.reverse()));
 
 	} catch (err: any) {
-
+    console.log("Fail no getSavedActivities");
     console.log(err)
 
 		yield put(getUserSavedActivitiesError(err));

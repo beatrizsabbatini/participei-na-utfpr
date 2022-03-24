@@ -2,7 +2,12 @@
 import api from './api';
 
 export const fetchUser = (id: string) => {
-
+  console.log(api.request({
+		method: 'GET',
+		url: '/user',
+		params: { uid: id }
+	}));
+  
 	return api.request({
 		method: 'GET',
 		url: '/user',

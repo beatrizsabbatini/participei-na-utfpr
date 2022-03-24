@@ -19,7 +19,7 @@ import { StatusBar } from 'react-native';
 import AppProvider from './src/hooks';
 import { firebaseConfig } from './firebase';
 import store from './src/store';
- 
+
 const App = () =>{
 
   const [fontsLoaded] = useFonts({
@@ -33,6 +33,8 @@ const App = () =>{
   }
 
   firebase.initializeApp(firebaseConfig);
+
+  
 
   return (
     <ThemeProvider theme={theme}>
