@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "participei-na-utfpr",
+    "name": "Participei na UTFPR",
     "slug": "participei-na-utfpr",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -14,8 +14,8 @@
       [
         "expo-media-library",
         {
-          "photosPermission": "Allow $(participei-na-utfpr) to access your photos.",
-          "savePhotosPermission": "Allow $(participei-na-utfpr) to save photos.",
+          "photosPermission": "Allow $(Participei na UTFPR) to access your photos.",
+          "savePhotosPermission": "Allow $(Participei na UTFPR) to save photos.",
           "isAccessMediaLocationEnabled": true
         }
       ]
