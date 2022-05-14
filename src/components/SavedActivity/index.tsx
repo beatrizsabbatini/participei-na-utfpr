@@ -7,6 +7,8 @@ import { Entypo } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import * as ImagePicker from 'expo-image-picker';
+import * as FileSystem from 'expo-file-system';
+import * as MediaLibrary from 'expo-media-library';
 
 import { IActivity } from '../../types';
 import theme from '../../global/styles/theme';
@@ -28,6 +30,7 @@ import { editUserRequest } from '../../store/modules/LoggedUser/editUser/actions
 import { IState } from '../../store';
 import { getUserDataRequest } from '../../store/modules/LoggedUser/userData/actions';
 import { getUserSavedActivitiesRequest } from '../../store/modules/LoggedUser/savedActivities/actions';
+import { useConfirmationModal } from '../../hooks/ConfirmationModal';
 
 interface SavedActivityProps{
   data: IActivity;
@@ -42,23 +45,12 @@ const SavedActivity: React.FC<SavedActivityProps> = ({ data, onPress }) => {
   const { navigate } = useNavigation<HomeScreenProp>();
   const dispatch = useDispatch();
   const { data: userData, errors } = useSelector((state: IState) => state.userData);
-  const [errorsString, setErrorsString] = useState<string>('');
 
-  useEffect(() => {
-    if (errors){
-      const printErrors = '';
-      errors.forEach(item => {
-        printErrors.concat(` ${item}`);
-      })
-      setErrorsString(printErrors);
-    }
-  }, [errors]);
-  
+  const { setPressedActivity, setModalVisible, setIsSaved } = useConfirmationModal();
   
   const onError = () => {
       Alert.alert(
         'Erro ao anexar certificado!',
-        errorsString
       );
   }
 
@@ -76,7 +68,7 @@ const SavedActivity: React.FC<SavedActivityProps> = ({ data, onPress }) => {
     const localUri = image.uri;
     const filename = localUri.split('/').pop();
 
-    // Infer the type of the image
+    //Infer the type of the image
     const match = /\.(\w+)$/.exec(filename);
     const type = match ? `image/${match[1]}` : `image`;
 
@@ -88,6 +80,7 @@ const SavedActivity: React.FC<SavedActivityProps> = ({ data, onPress }) => {
         if (userData._id){
 
           const groupPreviousPoints = () => {
+            console.log("data.category: ", data.category)
             switch (data.category.group) {
               case 1:
                 return userData.group1Points;
@@ -122,6 +115,33 @@ const SavedActivity: React.FC<SavedActivityProps> = ({ data, onPress }) => {
     }
   }
 
+  const downloadCertificate = (url: string, name: string) => {
+    
+    FileSystem.downloadAsync(
+      url,
+      FileSystem.documentDirectory + name
+    )
+      .then(async ({ uri }) => {
+
+        const asset = await MediaLibrary.createAssetAsync(uri);
+
+        MediaLibrary.createAlbumAsync("Certificados", asset, false)
+          .then(() =>  Alert.alert('Certificado baixado com sucesso!', 'confira sua galeria.'))
+          .catch((err) =>  Alert.alert('Erro ao baixar certificado!', err));
+
+      })
+      .catch(error => {
+        console.error(error);
+      });
+
+  }
+
+  const handlePressedFolder = () => {
+    setIsSaved(true);
+    setPressedActivity(data);
+    setModalVisible(true);
+  }
+
   return (
     <Container onPress={onPress}>
       <CardTop>
@@ -139,18 +159,18 @@ const SavedActivity: React.FC<SavedActivityProps> = ({ data, onPress }) => {
           <MaterialIcons name="add" size={14} color={theme.colors.primary_light} />
           <SeeMoreText>Toque para ver mais</SeeMoreText>
         </SeeMoreContainer>
-        <TouchableOpacity>
-        <FontAwesome5 name="trash" size={18} color={theme.colors.secondary} />
+        <TouchableOpacity onPress={handlePressedFolder}>
+          <MaterialIcons name='folder' size={24} color={theme.colors.primary_light} />
         </TouchableOpacity>
       </CardBottom>
         {data.certificate ? (
-          <CertificateContainer containsCertificate={data.certificate}>
-            <ThinText>Visualizar certificado</ThinText>
+          <CertificateContainer containsCertificate={data.certificate} onPress={() => downloadCertificate(data.certificate.url, data.certificate.key)}>
+            <ThinText>Baixar certificado</ThinText>
             <Entypo name="trophy" size={15} color={theme.colors.secondary} />
           </CertificateContainer>
         ) : (
           <CertificateContainer onPress={() => uploadCertificate()}>
-            <ThinText>Adicionar certificado</ThinText>
+            <ThinText>Adicionar foto do certificado</ThinText>
             <MaterialIcons name="note-add" size={18} color={theme.colors.secondary} />
           </CertificateContainer>
         )}

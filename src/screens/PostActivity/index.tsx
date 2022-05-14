@@ -136,7 +136,8 @@ const PostActivity: React.FC = () => {
       category: categoryData,
       publisherId: userUid || '', 
       publisherName: userData.name,
-      image: base64Image
+      image: base64Image,
+      hidden: false
     }
 
     await dispatch(publishActivityRequest({activity, onSuccess, onError}));

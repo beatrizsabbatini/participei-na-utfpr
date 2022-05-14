@@ -37,6 +37,7 @@ interface ChartProps {
 const Statistics: React.FC = () => {
 
   const { data } = useSelector((state: IState) => state.userData);
+  const { data: activitiesData } = useSelector((state: IState) => state.activities);
   const [totalPoints, setTotalPoints] = useState<any>({group1: 0, group2: 0, group3: 0, availablePoints: 100});
   const [groupsData, setGroupsData] = useState<any[]>([]);
   const [labels, setLabels] = useState<string[]>([]);
@@ -44,60 +45,75 @@ const Statistics: React.FC = () => {
   const { modalVisible, setModalVisible } = useStatisticsModal();
 
   useEffect(() => {
-    const sum3groups = data.group1Points + data.group2Points + data.group3Points;
-
-    const pointsObject = {
-      group1: data.group1Points,
-      group2: data.group2Points,
-      group3: data.group3Points,
-      availablePoints: 100 - sum3groups
+    if (activitiesData){
+      const activitiesWithCertificate = data.savedActivities.filter(activity => activity.certificate);
+      const activitiesIds = activitiesWithCertificate.map(item => item.id);
+      const activitiesWithPoints = activitiesData.filter(activity => activitiesIds.includes(activity.id));
+  
+      const sum3groups = activitiesWithPoints.reduce(function (acc, obj: any) { return acc + obj.category.points }, 0);
+  
+      const activitiesGroup1 = activitiesWithPoints.filter(item => item.category.group === 1);
+      const activitiesGroup2 = activitiesWithPoints.filter(item => item.category.group === 2);
+      const activitiesGroup3 = activitiesWithPoints.filter(item => item.category.group === 3);
+  
+      const sumGroup1 = activitiesGroup1.reduce(function (acc, obj: any) { return acc + obj.category.points }, 0);
+      const sumGroup2 = activitiesGroup2.reduce(function (acc, obj: any) { return acc + obj.category.points }, 0);
+      const sumGroup3 = activitiesGroup3.reduce(function (acc, obj: any) { return acc + obj.category.points }, 0);
+  
+      const pointsObject = {
+        group1: sumGroup1,
+        group2: sumGroup2,
+        group3: sumGroup3,
+        availablePoints: 100 - sum3groups
+      }
+  
+      setTotalPoints(pointsObject);
+  
+      const groupsPoints = [
+        {
+          points: [
+            {
+              pointsAvailable: 30 - sumGroup1,
+              pointsAchieved: sumGroup1,
+            }
+          ],
+          colors: ['#2DB3F0', '#EFEFEF'],
+          height: RFValue(160),
+          minimalValue: 20,
+          maximumValue: 30,
+        },
+        {
+          points: [
+            {
+              pointsAvailable: 30 - sumGroup2,
+              pointsAchieved: sumGroup2,
+            }
+          ],
+          colors: ['#63E27F', '#EFEFEF'],
+          height: RFValue(160),
+          minimalValue: 20,
+          maximumValue: 30,
+        },
+        {
+          points: [
+            {
+              pointsAvailable: 40 - sumGroup3,
+              pointsAchieved: sumGroup3,
+            }
+          ],
+          colors: ['#FBCF7B', '#EFEFEF'],
+          height: RFValue(203.5),
+          minimalValue: 20,
+          maximumValue: 40,
+        },
+      ]
+  
+      setGroupsData(groupsPoints);
+  
+      const generateLabels = [`1-${sumGroup1} pontos`, `2-${sumGroup2} pontos`, `3-${sumGroup3} pontos` ];
+      setLabels(generateLabels);
     }
-
-    setTotalPoints(pointsObject);
-
-    const groupsPoints = [
-      {
-        points: [
-          {
-            pointsAvailable: 30 - data.group1Points,
-            pointsAchieved: data.group1Points,
-          }
-        ],
-        colors: ['#2DB3F0', '#EFEFEF'],
-        height: RFValue(160),
-        minimalValue: 20,
-        maximumValue: 30,
-      },
-      {
-        points: [
-          {
-            pointsAvailable: 30 - data.group2Points,
-            pointsAchieved: data.group2Points,
-          }
-        ],
-        colors: ['#63E27F', '#EFEFEF'],
-        height: RFValue(160),
-        minimalValue: 20,
-        maximumValue: 30,
-      },
-      {
-        points: [
-          {
-            pointsAvailable: 40 - data.group3Points,
-            pointsAchieved: data.group3Points,
-          }
-        ],
-        colors: ['#FBCF7B', '#EFEFEF'],
-        height: RFValue(203.5),
-        minimalValue: 20,
-        maximumValue: 40,
-      },
-    ]
-
-    setGroupsData(groupsPoints);
-
-    const generateLabels = [`1-${data.group1Points} pontos`, `2-${data.group2Points} pontos`, `3-${data.group3Points} pontos` ];
-    setLabels(generateLabels);
+   
   }, [data])
 
   const HorizontalLine = ({ y, x, minimalValue, horizontalChart }: ChartProps) => {

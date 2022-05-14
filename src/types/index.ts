@@ -1,5 +1,6 @@
 export interface IActivity{
   id: string,
+  _id?: string,
   title: string,
   category: ICategory,
   description?: string
@@ -7,7 +8,8 @@ export interface IActivity{
   publisherId: string,
   image?: string,
   certificate?: any,
-  saved?: boolean
+  saved?: boolean,
+  hidden?: boolean,
 }
 
 export interface ICampus{
