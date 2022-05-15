@@ -19,14 +19,13 @@ import {
   ModalText,
   ModalBox
 } from './styles';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { IState } from '../../store';
 import AdminStatistics from '../AdminStatistics';
 import Modal from "react-native-modal";
 import { useStatisticsModal } from '../../hooks/StatisticsModal';
 import { helpText } from '../../constants/statistics';
-import { getUserDataRequest } from '../../store/modules/LoggedUser/userData/actions';
-import firebase from 'firebase';
+import { SavedActivity } from '../../store/modules/LoggedUser/userData/types';
 
 
 interface ChartProps {
@@ -52,8 +51,9 @@ const Statistics: React.FC = () => {
       let sumGroup2 = 0;
       let sumGroup3 = 0;
       let sum3groups = 0;
+      let activitiesWithCertificate: SavedActivity[] = [];
 
-      const activitiesWithCertificate = data.savedActivities.filter(activity => activity.certificate);
+      if (data.savedActivities) activitiesWithCertificate = data.savedActivities.filter(activity => activity.certificate);
 
       if (activitiesWithCertificate.length > 0){
         const activitiesIds = activitiesWithCertificate.map(item => item.id);
