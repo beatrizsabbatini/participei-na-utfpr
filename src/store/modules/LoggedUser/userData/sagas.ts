@@ -10,6 +10,8 @@ function* getUser(action: any): any {
 
 		yield put(getUserDataSuccess(response.data));
 
+    console.log("User data:", response.data)
+
 	} catch (err: any) {
 
 		yield put(getUserDataError(err));

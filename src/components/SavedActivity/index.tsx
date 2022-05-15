@@ -165,7 +165,7 @@ const SavedActivity: React.FC<SavedActivityProps> = ({ data, onPress }) => {
       </CardBottom>
         {data.certificate ? (
           <CertificateContainer containsCertificate={data.certificate} onPress={() => downloadCertificate(data.certificate.url, data.certificate.key)}>
-            <ThinText>Baixar certificado</ThinText>
+            <ThinText>Baixar foto do certificado</ThinText>
             <Entypo name="trophy" size={15} color={theme.colors.secondary} />
           </CertificateContainer>
         ) : (

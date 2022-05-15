@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, Alert } from 'react-native';
 
 import * as scale from 'd3-scale'
 import { StackedBarChart, XAxis } from 'react-native-svg-charts';
@@ -19,12 +19,14 @@ import {
   ModalText,
   ModalBox
 } from './styles';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { IState } from '../../store';
 import AdminStatistics from '../AdminStatistics';
 import Modal from "react-native-modal";
 import { useStatisticsModal } from '../../hooks/StatisticsModal';
-import { adminHelpText, helpText } from '../../constants/statistics';
+import { helpText } from '../../constants/statistics';
+import { getUserDataRequest } from '../../store/modules/LoggedUser/userData/actions';
+import firebase from 'firebase';
 
 
 interface ChartProps {
@@ -46,20 +48,28 @@ const Statistics: React.FC = () => {
 
   useEffect(() => {
     if (activitiesData){
+      let sumGroup1 = 0;
+      let sumGroup2 = 0;
+      let sumGroup3 = 0;
+      let sum3groups = 0;
+
       const activitiesWithCertificate = data.savedActivities.filter(activity => activity.certificate);
-      const activitiesIds = activitiesWithCertificate.map(item => item.id);
-      const activitiesWithPoints = activitiesData.filter(activity => activitiesIds.includes(activity.id));
-  
-      const sum3groups = activitiesWithPoints.reduce(function (acc, obj: any) { return acc + obj.category.points }, 0);
-  
-      const activitiesGroup1 = activitiesWithPoints.filter(item => item.category.group === 1);
-      const activitiesGroup2 = activitiesWithPoints.filter(item => item.category.group === 2);
-      const activitiesGroup3 = activitiesWithPoints.filter(item => item.category.group === 3);
-  
-      const sumGroup1 = activitiesGroup1.reduce(function (acc, obj: any) { return acc + obj.category.points }, 0);
-      const sumGroup2 = activitiesGroup2.reduce(function (acc, obj: any) { return acc + obj.category.points }, 0);
-      const sumGroup3 = activitiesGroup3.reduce(function (acc, obj: any) { return acc + obj.category.points }, 0);
-  
+
+      if (activitiesWithCertificate.length > 0){
+        const activitiesIds = activitiesWithCertificate.map(item => item.id);
+        const activitiesWithPoints = activitiesData.filter(activity => activitiesIds.includes(activity.id));
+    
+        sum3groups = activitiesWithPoints.reduce(function (acc, obj: any) { return acc + obj.category.points }, 0);
+    
+        const activitiesGroup1 = activitiesWithPoints.filter(item => item.category.group === 1);
+        const activitiesGroup2 = activitiesWithPoints.filter(item => item.category.group === 2);
+        const activitiesGroup3 = activitiesWithPoints.filter(item => item.category.group === 3);
+    
+        sumGroup1 = activitiesGroup1.reduce(function (acc, obj: any) { return acc + obj.category.points }, 0);
+        sumGroup2 = activitiesGroup2.reduce(function (acc, obj: any) { return acc + obj.category.points }, 0);
+        sumGroup3 = activitiesGroup3.reduce(function (acc, obj: any) { return acc + obj.category.points }, 0);
+      }
+      
       const pointsObject = {
         group1: sumGroup1,
         group2: sumGroup2,
@@ -112,9 +122,11 @@ const Statistics: React.FC = () => {
   
       const generateLabels = [`1-${sumGroup1} pontos`, `2-${sumGroup2} pontos`, `3-${sumGroup3} pontos` ];
       setLabels(generateLabels);
+    } else {
+      console.log("blabla")
     }
    
-  }, [data])
+  }, [data, activitiesData])
 
   const HorizontalLine = ({ y, x, minimalValue, horizontalChart }: ChartProps) => {
 
