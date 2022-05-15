@@ -3,8 +3,6 @@ import { Types } from "./types";
 
 export function getCampusesRequest(){
 
-  console.log("DISPATCH getCampusesRequest()")
-
   return {
     type: Types.GET_CAMPUSES_REQUEST,
   }

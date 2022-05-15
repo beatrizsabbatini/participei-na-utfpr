@@ -122,8 +122,6 @@ const Statistics: React.FC = () => {
   
       const generateLabels = [`1-${sumGroup1} pontos`, `2-${sumGroup2} pontos`, `3-${sumGroup3} pontos` ];
       setLabels(generateLabels);
-    } else {
-      console.log("blabla")
     }
    
   }, [data, activitiesData])

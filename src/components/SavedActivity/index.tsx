@@ -80,7 +80,6 @@ const SavedActivity: React.FC<SavedActivityProps> = ({ data, onPress }) => {
         if (userData._id){
 
           const groupPreviousPoints = () => {
-            console.log("data.category: ", data.category)
             switch (data.category.group) {
               case 1:
                 return userData.group1Points;

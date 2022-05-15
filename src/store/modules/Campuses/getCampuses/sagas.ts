@@ -8,17 +8,11 @@ import { Types } from './types';
 
 function* getCampuses(action: any): any {
 
-  console.log("Entrou no getCampuses")
-
 	try {
-
-    console.log("Entrou no TRY getCampuses");
 
     const response = yield call(fetchCampuses)
 
     if (response){
-
-    console.log("response getCampuses(): ", response)
 
     const responseWithLabel = response.data.map((item: any) => (
       {
@@ -42,8 +36,6 @@ function* getCampuses(action: any): any {
   }
 
 	} catch (err: any) {
-
-    console.log("error getCampuses(): ", err)
 
 		yield put(getCampusesError(err));
 

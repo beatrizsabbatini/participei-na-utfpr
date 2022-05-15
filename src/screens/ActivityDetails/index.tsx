@@ -53,7 +53,6 @@ const ActivityDetails: React.FC = () => {
     if (data.image){
       //const base64Image = base64.decode(data.image);
       const base64Image = `data:image/gif;base64,${data.image}`
-      console.log("base64Image", base64Image)
       setImage(base64Image);
     }
   }, [data])
