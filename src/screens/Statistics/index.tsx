@@ -51,77 +51,80 @@ const Statistics: React.FC = () => {
     let group2 = 0;
     let group3 = 0;
 
-    const allActivitiesWithCertificateIds = data.savedActivities.filter(item => {
-      if (item.certificate) return item.id;
-    })
+    if (data){
 
-    allActivitiesWithCertificateIds.map(item => {
-      const activity: any = savedActivitiesData.find(savedActivity => savedActivity.id === item.id);
-      if (activity) {
-        sum3groups = sum3groups + activity.category.points;
+      console.log('DATA: ', data);
 
-        if (activity.category.group === 1) group1 = group1 + activity.category.points;
-        if (activity.category.group === 2) group2 = group2 + activity.category.points;
-        if (activity.category.group === 3) group3 = group3 + activity.category.points;
+      const allActivitiesWithCertificateIds = data.savedActivities?.filter(item => {
+        if (item.certificate) return item.id;
+      })
+
+      if (allActivitiesWithCertificateIds){
+        allActivitiesWithCertificateIds.map(item => {
+          const activity: any = savedActivitiesData.find(savedActivity => savedActivity.id === item.id);
+          if (activity) {
+            sum3groups = sum3groups + activity.category.points;
+  
+            if (activity.category.group === 1) group1 = group1 + activity.category.points;
+            if (activity.category.group === 2) group2 = group2 + activity.category.points;
+            if (activity.category.group === 3) group3 = group3 + activity.category.points;
+          }
+        })
+  
+        const pointsObject = {
+          group1,
+          group2,
+          group3,
+          availablePoints: 100 - sum3groups
+        }
+  
+        setTotalPoints(pointsObject);
       }
-    })
-
-    console.log("sum3groups", sum3groups);
-
-
-
-    const pointsObject = {
-      group1,
-      group2,
-      group3,
-      availablePoints: 100 - sum3groups
     }
+  
+      const groupsPoints = [
+        {
+          points: [
+            {
+              pointsAvailable: 30 - group1,
+              pointsAchieved: group1,
+            }
+          ],
+          colors: ['#2DB3F0', '#EFEFEF'],
+          height: RFValue(160),
+          minimalValue: 20,
+          maximumValue: 30,
+        },
+        {
+          points: [
+            {
+              pointsAvailable: 30 - group2,
+              pointsAchieved: group2,
+            }
+          ],
+          colors: ['#63E27F', '#EFEFEF'],
+          height: RFValue(160),
+          minimalValue: 20,
+          maximumValue: 30,
+        },
+        {
+          points: [
+            {
+              pointsAvailable: 40 - group3,
+              pointsAchieved: group3,
+            }
+          ],
+          colors: ['#FBCF7B', '#EFEFEF'],
+          height: RFValue(203.5),
+          minimalValue: 20,
+          maximumValue: 40,
+        },
+      ]
 
-    setTotalPoints(pointsObject);
+      setGroupsData(groupsPoints);
 
-    const groupsPoints = [
-      {
-        points: [
-          {
-            pointsAvailable: 30 - group1,
-            pointsAchieved: group1,
-          }
-        ],
-        colors: ['#2DB3F0', '#EFEFEF'],
-        height: RFValue(160),
-        minimalValue: 20,
-        maximumValue: 30,
-      },
-      {
-        points: [
-          {
-            pointsAvailable: 30 - group2,
-            pointsAchieved: group2,
-          }
-        ],
-        colors: ['#63E27F', '#EFEFEF'],
-        height: RFValue(160),
-        minimalValue: 20,
-        maximumValue: 30,
-      },
-      {
-        points: [
-          {
-            pointsAvailable: 40 - group3,
-            pointsAchieved: group3,
-          }
-        ],
-        colors: ['#FBCF7B', '#EFEFEF'],
-        height: RFValue(203.5),
-        minimalValue: 20,
-        maximumValue: 40,
-      },
-    ]
-
-    setGroupsData(groupsPoints);
-
-    const generateLabels = [`1-${group1} pontos`, `2-${group2} pontos`, `3-${group3} pontos` ];
-    setLabels(generateLabels);
+      const generateLabels = [`1-${group1} pontos`, `2-${group2} pontos`, `3-${group3} pontos` ];
+      setLabels(generateLabels);
   }, [data])
 
   const HorizontalLine = ({ y, x, minimalValue, horizontalChart }: ChartProps) => {

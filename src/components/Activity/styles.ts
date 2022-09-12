@@ -29,7 +29,7 @@ export const CardTop = styled.View`
 `
 
 export const Category = styled.Text`
-  font-weight: 100;
+  font-weight: 300;
   font-size: ${RFValue(13)}px;
   color: ${({theme}) => theme.colors.secondary};
 `

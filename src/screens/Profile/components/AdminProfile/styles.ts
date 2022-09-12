@@ -9,14 +9,14 @@ export const Container = styled.View`
 `
 
 export const Title = styled.Text`
-  font-weight: 100;
+  font-weight: 300;
   font-size: ${RFValue(18)}px;
   color: ${({ theme }) => theme.colors.primary};
   padding: 0 0 20px 8px;
 `
 
 export const CategoryLabel = styled.Text`
-  font-weight: 100;
+  font-weight: 300;
   font-size: ${RFValue(14)}px;
   color: #000;
 `

@@ -22,7 +22,7 @@ export const ClockIcon = styled.Image`
 
 export const Message = styled.Text`
   color: ${({theme}) => theme.colors.primary};
-  font-weight: 100;
+  font-weight: 300;
   font-size: ${RFValue(14)}px;
 `
 

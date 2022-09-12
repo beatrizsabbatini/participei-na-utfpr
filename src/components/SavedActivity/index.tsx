@@ -101,46 +101,46 @@ const SavedActivity: React.FC<SavedActivityProps> = ({ data, onPress }) => {
     const file: any = await getDocument();
 
  
-    // if (file) {
-    //     if (userData._id){
+    if (file) {
+        if (userData._id){
 
-    //       const groupPreviousPoints = () => {
-    //         switch (data.category.group) {
-    //           case 1:
-    //             return userData.group1Points;
+          const groupPreviousPoints = () => {
+            switch (data.category.group) {
+              case 1:
+                return userData.group1Points;
 
-    //           case 2:
-    //           return userData.group2Points;
+              case 2:
+              return userData.group2Points;
 
-    //           case 3:
-    //           return userData.group3Points
+              case 3:
+              return userData.group3Points
             
-    //           default:
-    //             break;
-    //         }
-    //       }
+              default:
+                break;
+            }
+          }
 
-    //       const body = {
-    //         savedActivities: userData.savedActivities,
-    //         certificate: file
-    //       }
+          const body = {
+            savedActivities: userData.savedActivities,
+            certificate: file
+          }
     
-    //       dispatch(
-    //         editUserRequest(
-    //           { 
-    //             _id: userData._id, 
-    //             activityId: data.id, 
-    //             group: data.category.group, 
-    //             points: data.category.points,
-    //             previousGroupPoints: groupPreviousPoints()
-    //           }, 
-    //           body,
-    //           onError,
-    //           onSuccess,
-    //         )
-    //       );
-    //     }
-    // }
+          dispatch(
+            editUserRequest(
+              { 
+                _id: userData._id, 
+                activityId: data.id, 
+                group: data.category.group, 
+                points: data.category.points,
+                previousGroupPoints: groupPreviousPoints()
+              }, 
+              body,
+              onError,
+              onSuccess,
+            )
+          );
+        }
+    }
   }
 
   const fileTypesSignatures: any = {

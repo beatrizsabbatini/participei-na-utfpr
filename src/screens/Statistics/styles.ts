@@ -37,7 +37,7 @@ export const BlueLine = styled(RedLine)`
 export const Instructions = styled.Text`
   color: ${({ theme }) => theme.colors.secondary};
   font-size: ${RFValue(14)}px;
-  font-weight: 100;
+  font-weight: 300;
   width: 85%;
 `
 

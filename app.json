@@ -23,7 +23,8 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
-      }
+      },
+      "package": "com.biaschwartz.participeinautfpr"
     },
     "web": {
       "favicon": "./assets/favicon.png"
@@ -43,6 +44,11 @@
         "wasm",
         "svg"
       ]
+    },
+    "extra": {
+      "eas": {
+        "projectId": "34147256-9b9b-44b2-9506-0d31efb48af2"
+      }
     }
   }
 }

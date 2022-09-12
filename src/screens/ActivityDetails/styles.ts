@@ -17,7 +17,7 @@ export const Row = styled.TouchableOpacity`
 
 export const UserName = styled.Text`
   color: ${({theme}) => theme.colors.primary_light};
-  font-weight: 100;
+  font-weight: 300;
   font-size: ${RFValue(18)}px;
 `
 
@@ -34,7 +34,7 @@ export const BadgesRow = styled.TouchableOpacity`
 `
 
 export const CategoryTitle = styled.Text`
-  font-weight: 100;
+  font-weight: 300;
   font-size: ${RFValue(18)}px;
   color: ${({ theme }) => theme.colors.secondary};
 `
@@ -48,7 +48,7 @@ export const ActivityTitle = styled(CategoryTitle)`
 
 export const ActivityDescription = styled.Text`
   font-size: ${RFValue(15)}px;
-  font-weight: 100;
+  font-weight: 300;
   color: ${({ theme }) => theme.colors.secondary_light};
 `
 

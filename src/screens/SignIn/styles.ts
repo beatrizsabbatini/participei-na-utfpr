@@ -52,7 +52,7 @@ export const Row = styled.View`
 
 export const GreyText = styled.Text`
   color: #C4C4C4;
-  font-weight: 100;
+  font-weight: 300;
 `
 
 export const Shadow = styled.View`

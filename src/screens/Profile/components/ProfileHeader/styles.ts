@@ -14,7 +14,7 @@ export const Container = styled.View`
 `;
 
 export const CustomText = styled.Text<CustomTextProps>`
-  font-weight: 100;
+  font-weight: 300;
   font-size: ${({bigger}) => bigger ? RFValue(22) : RFValue(15)}px;
   color: ${({theme}) => theme.colors.primary};
 `

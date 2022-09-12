@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { TouchableOpacity } from 'react-native';
 import { RFValue } from 'react-native-responsive-fontsize';
 import { useDispatch } from 'react-redux';
-import CheckBox from '@react-native-community/checkbox';
+import CheckBox from 'expo-checkbox';
 
 import Button from '../Button';
 import theme from '../../global/styles/theme';
@@ -59,7 +59,7 @@ const GroupSelect: React.FC<GroupSelectProps> = ({ searchQuery }) => {
               disabled={false}
               value={group1Local}
               onValueChange={() => setGroup1Local(!group1Local)}
-              tintColor={theme.colors.secondary_dark}
+              color={theme.colors.secondary_dark}
             />
             <CheckboxLabel>Grupo 1</CheckboxLabel>
           </CheckboxContainer>

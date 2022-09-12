@@ -32,7 +32,7 @@ export const CardTop = styled.View`
 `
 
 export const Category = styled.Text`
-  font-weight: 100;
+  font-weight: 300;
   font-size: ${RFValue(13)}px;
   color: ${({theme}) => theme.colors.secondary};
 `
@@ -80,7 +80,7 @@ export const CertificateContainer = styled.TouchableOpacity<CertificateContainer
 `
 
 export const ThinText = styled.Text`
-  font-weight: 100;
+  font-weight: 300;
   font-size: ${RFValue(13)}px;
   color: ${({theme}) => theme.colors.secondary};
   margin-right: ${RFValue(8)}px;
