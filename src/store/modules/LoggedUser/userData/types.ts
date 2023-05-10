@@ -25,7 +25,8 @@ export interface Certificate{
 
 export interface SavedActivity{
   id: string,
-  certificate?: Certificate
+  certificate?: Certificate,
+  participated?: Boolean
 }
 
 export interface IUserDataState{

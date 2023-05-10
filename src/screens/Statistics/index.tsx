@@ -19,14 +19,14 @@ import {
   ModalText,
   ModalBox
 } from './styles';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { IState } from '../../store';
 import AdminStatistics from '../AdminStatistics';
 import Modal from "react-native-modal";
 import { useStatisticsModal } from '../../hooks/StatisticsModal';
-import { adminHelpText, helpText } from '../../constants/statistics';
-import { isStyledComponent } from 'styled-components';
-
+import { helpText } from '../../constants/statistics';
+import { getUserSavedActivitiesRequest } from '../../store/modules/LoggedUser/savedActivities/actions';
+import { useFocusEffect } from '@react-navigation/native';
 
 interface ChartProps {
   x?: any;
@@ -36,7 +36,7 @@ interface ChartProps {
 }
 
 const Statistics: React.FC = () => {
-
+  
   const { data } = useSelector((state: IState) => state.userData);
   const { data: savedActivitiesData } = useSelector((state: IState) => state.loggedUserSavedActivities);
   const [totalPoints, setTotalPoints] = useState<any>({group1: 0, group2: 0, group3: 0, availablePoints: 100});
@@ -44,6 +44,19 @@ const Statistics: React.FC = () => {
   const [labels, setLabels] = useState<string[]>([]);
 
   const { modalVisible, setModalVisible } = useStatisticsModal();
+  const dispatch = useDispatch();
+
+  const onError = () => console.log('error');
+
+  // useFocusEffect(() => {
+  //   console.log("OIIII")
+  //   if (data){
+  //     const savedActivities = data.savedActivities || [];
+  //     const userDataSavedActivitiesIds = savedActivities?.map(item => item.id);
+  //     dispatch(getUserSavedActivitiesRequest({ids: userDataSavedActivitiesIds, onError}))
+  //   }
+  // });
+  
 
   useEffect(() => {
     let sum3groups = 0;
@@ -51,18 +64,22 @@ const Statistics: React.FC = () => {
     let group2 = 0;
     let group3 = 0;
 
+    console.log("AAAAAAAAAAAAAAA N AGUENTO MAIS");
+    console.log(data.savedActivities);
+
     if (data){
 
-      console.log('DATA: ', data);
-
       const allActivitiesWithCertificateIds = data.savedActivities?.filter(item => {
-        if (item.certificate) return item.id;
+        if (item.participated ) return item.id;
       })
 
       if (allActivitiesWithCertificateIds){
         allActivitiesWithCertificateIds.map(item => {
+          console.log("entrou aqui")
+          console.log("savedActivitiesData: ", savedActivitiesData);
           const activity: any = savedActivitiesData.find(savedActivity => savedActivity.id === item.id);
           if (activity) {
+            console.log("activity", activity)
             sum3groups = sum3groups + activity.category.points;
   
             if (activity.category.group === 1) group1 = group1 + activity.category.points;
@@ -125,7 +142,9 @@ const Statistics: React.FC = () => {
 
       const generateLabels = [`1-${group1} pontos`, `2-${group2} pontos`, `3-${group3} pontos` ];
       setLabels(generateLabels);
-  }, [data])
+
+      console.log("group3", group3);
+  }, [data, savedActivitiesData])
 
   const HorizontalLine = ({ y, x, minimalValue, horizontalChart }: ChartProps) => {
 

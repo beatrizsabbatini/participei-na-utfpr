@@ -2,17 +2,19 @@
 import api from './api';
 
 export const fetchUser = (id: string) => {
-  console.log(api.request({
-		method: 'GET',
-		url: '/user',
-		params: { uid: id }
-	}));
+
+  console.log("AAAAAAAAAAAAAAAAAAA")
+  console.log("uid: ", id);
+  console.log("CHEGOU NA REQUEST CARAIOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO")
   
-	return api.request({
+	const response = api.request({
 		method: 'GET',
 		url: '/user',
 		params: { uid: id }
 	})
+
+  console.log("response: ", response);
+  return response
 };
 
 export const updateUser = (payload: any) => {

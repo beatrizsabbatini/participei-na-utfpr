@@ -97,51 +97,91 @@ const SavedActivity: React.FC<SavedActivityProps> = ({ data, onPress }) => {
     return result
   }
 
-  const uploadCertificate = async() => {
-    const file: any = await getDocument();
+  const markParticipated = async(previousParticipatedStatus: boolean) => {
+    const newStatus = !previousParticipatedStatus;
+
+    const groupPreviousPoints = () => {
+      switch (data.category.group) {
+        case 1:
+          return userData.group1Points;
+
+        case 2:
+        return userData.group2Points;
+
+        case 3:
+        return userData.group3Points
+      
+        default:
+          break;
+      }
+    }
+
+    const body = {
+      savedActivities: userData.savedActivities,
+    }
+
+    dispatch(
+      editUserRequest(
+        { 
+          _id: userData._id, 
+          activityId: data.id, 
+          group: data.category.group, 
+          points: data.category.points,
+          previousGroupPoints: groupPreviousPoints(),
+          participated: !previousParticipatedStatus,
+        }, 
+        body,
+        onError,
+        onSuccess,
+      )
+    );
+  }
+
+  // const uploadCertificate = async() => {
+  //   const file: any = await getDocument();
 
  
-    if (file) {
-        if (userData._id){
+  //   if (file) {
+  //       if (userData._id){
 
-          const groupPreviousPoints = () => {
-            switch (data.category.group) {
-              case 1:
-                return userData.group1Points;
+  //         const groupPreviousPoints = () => {
+  //           switch (data.category.group) {
+  //             case 1:
+  //               return userData.group1Points;
 
-              case 2:
-              return userData.group2Points;
+  //             case 2:
+  //             return userData.group2Points;
 
-              case 3:
-              return userData.group3Points
+  //             case 3:
+  //             return userData.group3Points
             
-              default:
-                break;
-            }
-          }
+  //             default:
+  //               break;
+  //           }
+  //         }
 
-          const body = {
-            savedActivities: userData.savedActivities,
-            certificate: file
-          }
+  //         const body = {
+  //           savedActivities: userData.savedActivities,
+  //           certificate: file
+  //         }
     
-          dispatch(
-            editUserRequest(
-              { 
-                _id: userData._id, 
-                activityId: data.id, 
-                group: data.category.group, 
-                points: data.category.points,
-                previousGroupPoints: groupPreviousPoints()
-              }, 
-              body,
-              onError,
-              onSuccess,
-            )
-          );
-        }
-    }
-  }
+  //         dispatch(
+  //           editUserRequest(
+  //             { 
+  //               _id: userData._id, 
+  //               activityId: data.id, 
+  //               group: data.category.group, 
+  //               points: data.category.points,
+  //               previousGroupPoints: groupPreviousPoints()
+  //             }, 
+  //             body,
+  //             onError,
+  //             onSuccess,
+  //           )
+  //         );
+  //       }
+  //   }
+  // }
 
   const fileTypesSignatures: any = {
     JVBERi0: "pdf",
@@ -223,15 +263,15 @@ const SavedActivity: React.FC<SavedActivityProps> = ({ data, onPress }) => {
         <FontAwesome5 name="trash" size={18} color={theme.colors.secondary} />
         </TouchableOpacity>
       </CardBottom>
-        {data.certificate ? (
-          <CertificateContainer containsCertificate={data.certificate} onPress={handleDownloadCertificate}>
-            <ThinText>Baixar certificado</ThinText>
+        {Boolean(data.participated) ? (
+          <CertificateContainer containsCertificate={!!data.participated} onPress={() => markParticipated(!!data.participated)}>
+            <ThinText>Participação concluída! (Toque para desfazer)</ThinText>
             <Entypo name="trophy" size={15} color={theme.colors.secondary} />
           </CertificateContainer>
         ) : (
-          <CertificateContainer onPress={() => uploadCertificate()}>
-            <ThinText>Adicionar certificado</ThinText>
-            <MaterialIcons name="note-add" size={18} color={theme.colors.secondary} />
+          <CertificateContainer onPress={() => markParticipated(!!data.participated)}>
+            <ThinText>Se já participou, toque aqui</ThinText>
+              <Entypo name="trophy" size={15} color={theme.colors.secondary} />
           </CertificateContainer>
         )}
     </Container>

@@ -7,7 +7,15 @@ function* getSavedActivities(action: any): any {
 
 	try {
     console.log("Chamou getSavedActivities");
+    console.log(action.payload.ids)
 		const response = yield call(fetchActivitiesByIds, {ids: action.payload.ids || []});
+
+    console.log("SUCCESS no getSavedActivities");
+    const x = response.data.reverse();
+
+    x.forEach((element: any) => {
+      console.log('element id: ', element.id);
+    });
 
 		yield put(getUserSavedActivitiesSuccess(response.data.reverse()));
 

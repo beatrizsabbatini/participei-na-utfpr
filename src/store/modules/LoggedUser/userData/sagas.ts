@@ -6,8 +6,12 @@ import { fetchUser } from '../../../../services/userService';
 function* getUser(action: any): any {
 
 	try {
-    console.log("Chamou getUser");
+    console.log("Chamou MOZAO AAAAAAAAAAAAAAAAAAAAAAAAAAOOOOOOOOOOOOOOOOOOOOOOOO");
 		const response = yield call(fetchUser, action.payload.id);
+
+    console.log("response: ", response);
+
+    console.log("response.data.savedActivities: ", response.data.savedActivities);
 
 		yield put(getUserDataSuccess(response.data));
     console.log("Success no getUser");

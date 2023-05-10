@@ -7,6 +7,7 @@ export interface IActivity{
   publisherId: string,
   image?: string,
   certificate?: any,
+  participated?: boolean,
   saved?: boolean
 }
 

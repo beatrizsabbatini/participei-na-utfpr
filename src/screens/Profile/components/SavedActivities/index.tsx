@@ -27,13 +27,14 @@ const SavedActivities: React.FC = () => {
 
   const renderActivities: ListRenderItem<IActivity> = ({ item }) => {
     const savedActivities = userData.savedActivities || [];
-    const activityFound = savedActivities?.find(activity => activity.id === item.id && activity.certificate);
+    // const activityFound = savedActivities?.find(activity => activity.id === item.id && activity.certificate);
+    const activityFound = savedActivities?.find(activity => activity.id === item.id && activity.participated);
     let dataUpdated = item;
 
     if (activityFound) {
       dataUpdated = {
         ...item, 
-        certificate: activityFound.certificate,
+        participated: !!activityFound.participated,
       };
     }
     return (
@@ -48,7 +49,7 @@ const SavedActivities: React.FC = () => {
             <MaterialIcons name="info" size={24} color={theme.colors.primary} />
             <InstructionsText>
                 Suas atividades salvas serão mostradas na aba de estatísticas assim que você 
-                anexar um certificado/comprovante de participação.
+                marcá-las como participação concluída.
             </InstructionsText>
           </Row>
           <ShadowDivider/>
