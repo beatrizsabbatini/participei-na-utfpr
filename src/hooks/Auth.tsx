@@ -1,4 +1,5 @@
-import React, { createContext, ReactNode, useContext, useState } from "react";
+import firebase from "firebase";
+import React, { createContext, ReactNode, useContext, useEffect, useState } from "react";
 
 interface AuthProps{
   isAuthenticated: boolean;
@@ -16,6 +17,17 @@ const AuthContext = createContext({} as AuthProps);
 function AuthProvider({children, }: AuthProviderProps){
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
   const [isAdmin, setIsAdmin] = useState<boolean>(false);
+
+  useEffect(() => {
+    firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        setIsAuthenticated(true);
+      } else {
+        setIsAuthenticated(false);
+      }
+    }); 
+  }, [])
+  
 
   return(
     <AuthContext.Provider 

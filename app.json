@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "participei-na-utfpr",
+    "name": "Participei na UTFPR",
     "slug": "participei-na-utfpr",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -10,6 +10,16 @@
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
+    "plugins": [
+      [
+        "expo-media-library",
+        {
+          "photosPermission": "Allow $(Participei na UTFPR) to access your photos.",
+          "savePhotosPermission": "Allow $(Participei na UTFPR) to save photos.",
+          "isAccessMediaLocationEnabled": true
+        }
+      ]
+    ],
     "updates": {
       "fallbackToCacheTimeout": 0
     },
@@ -17,11 +27,15 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "infoPlist": {
+        "NSPhotoLibraryUsageDescription": "Allow $(Participei na UTFPR) to access your photos.",
+        "NSPhotoLibraryAddUsageDescription": "Allow $(Participei na UTFPR) to save photos."
+      }
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
+        "foregroundImage": "./assets/icon.png",
         "backgroundColor": "#FFFFFF"
       },
       "package": "com.biaschwartz.participeinautfpr"

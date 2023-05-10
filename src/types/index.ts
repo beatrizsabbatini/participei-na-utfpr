@@ -1,5 +1,6 @@
 export interface IActivity{
   id: string,
+  _id?: string,
   title: string,
   category: ICategory,
   description?: string

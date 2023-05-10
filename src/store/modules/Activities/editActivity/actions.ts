@@ -3,7 +3,7 @@ import { Types } from "./types";
 
 interface EditActivityPayload {
   id: string,
-  activity: Omit<IActivity, "id" | "publisherId" | "publisherName" | "category">,
+  activity: any,
   onSuccess: () => void,
   onError: () => void
 }

@@ -18,7 +18,9 @@ function* getActivities(action: any): any {
     const savedActivities = userData.data.savedActivities || [];
     const savedActivitiesIds = savedActivities?.map((item: SavedActivity) => item.id);
 
-    const activitiesFormatted = response.data.activities.map((item: IActivity) => {
+    const removeHiddenActivities = response.data.activities.filter((item: IActivity) => !item.hidden);
+
+    const activitiesFormatted = removeHiddenActivities.map((item: IActivity) => {
       if (savedActivitiesIds?.includes(item.id)){
         return {
           ...item,

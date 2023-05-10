@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, Alert } from 'react-native';
 
 import * as scale from 'd3-scale'
 import { StackedBarChart, XAxis } from 'react-native-svg-charts';

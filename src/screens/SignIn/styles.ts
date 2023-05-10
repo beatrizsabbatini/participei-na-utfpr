@@ -16,6 +16,11 @@ export const Background = styled.View`
   background-color: ${({theme }) => theme.colors.background };
 `
 
+export const ForgotPasswordContainer = styled.TouchableOpacity`
+  flex-direction: row;
+  justify-content: flex-end;
+`
+
 export const ForgotPassword = styled.Text`
   color: ${({theme }) => theme.colors.primary_light };
   textDecorationLine: underline;

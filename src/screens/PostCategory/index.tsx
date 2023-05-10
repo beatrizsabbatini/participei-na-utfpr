@@ -122,7 +122,7 @@ const AdminPostCategory: React.FC = () => {
               />
                <Dropdown 
                 enabled
-                placeholder="Selecione um grupo para essa categoria" 
+                placeholder="Grupo dessa categoria" 
                 value={group}
                 onValueChange={(value: number) => setFieldValue('group', value)} 
                 list={groups} 

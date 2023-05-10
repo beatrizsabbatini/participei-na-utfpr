@@ -2,13 +2,6 @@ import styled from 'styled-components/native';
 import { RFValue } from 'react-native-responsive-fontsize';
 import { MaterialIcons } from '@expo/vector-icons'; 
 
-export const Container = styled.View`
-  background-color: ${({theme}) => theme.colors.background};
-  flex: 1;
-  padding: ${RFValue(30)}px;
-  justify-content: space-between;
-`;
-
 export const Row = styled.TouchableOpacity`
   display: flex;
   flex-direction: row;
@@ -60,6 +53,7 @@ export const CustomImage = styled.Image`
 
 export const SaveOrReport = styled.View`
   width: 100%;
+  padding-top: ${RFValue(15)}px;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;

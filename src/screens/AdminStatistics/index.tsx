@@ -65,9 +65,9 @@ const AdminStatistics: React.FC = () => {
     },
 ]
 
-const Labels = ({ slices, height, width }: any) => {
+const Labels = ({ slices }: any) => {
   return slices.map((slice: any, index: number) => {
-      const { labelCentroid, pieCentroid, data } = slice;
+      const { pieCentroid, data } = slice;
       return (
           <Text
             key={index}
@@ -89,7 +89,7 @@ const Labels = ({ slices, height, width }: any) => {
       <MainContainer>
         <Title>
           N° de atividades publicadas: 
-          <NumberText> {activitiesData.length}</NumberText>
+          <NumberText> {activitiesData ? activitiesData.length || 0 : 0}</NumberText>
         </Title>
         <PieChart
           style={{ height: 200 }}

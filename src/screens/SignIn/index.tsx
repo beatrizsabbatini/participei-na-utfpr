@@ -24,7 +24,8 @@ import {
   Trace,
   Row,
   GreyText,
-  Shadow
+  Shadow,
+  ForgotPasswordContainer
 } from './styles';
 import Input from '../../components/Input';
 
@@ -112,6 +113,7 @@ const SignIn: React.FC = () => {
             <View>
               <Input 
                 autoCorrect={false}
+                autoCapitalize="none"
                 disabled={loading}
                 error={errors.email}
                 placeholder={errors.email || "E-mail ou RA"}
@@ -122,13 +124,14 @@ const SignIn: React.FC = () => {
                 disabled={loading}
                 error={errors.password}
                 secureTextEntry 
+                autoCapitalize="none"
                 placeholder={errors.password || "Senha"} 
                 value={values.password} 
                 onChangeText={(text: string) => setFieldValue('password', text)}
               />
-              <TouchableOpacity onPress={() => navigate('ForgotPassword')}>
+              <ForgotPasswordContainer onPress={() => navigate('ForgotPassword')}>
                 <ForgotPassword>Esqueci minha senha</ForgotPassword>
-              </TouchableOpacity>
+              </ForgotPasswordContainer>
             </View>
             <View>
               <Button onPress={() => handleSubmit(values)} type="light">Entrar</Button>

@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 
-import { View, TouchableOpacity } from 'react-native';
-import { MaterialIcons } from '@expo/vector-icons'; 
+import { View, TouchableOpacity, Alert } from 'react-native';
+import { MaterialIcons, Ionicons } from '@expo/vector-icons'; 
+import Modal from "react-native-modal";
 
 import theme from '../../global/styles/theme';
 import Badge from '../Badge';
@@ -20,6 +21,12 @@ import {
   SeeMoreText,
   Row
 } from './styles';
+import { useAuth } from '../../hooks/Auth';
+import { useDispatch, useSelector } from 'react-redux';
+import { editActivityRequest } from '../../store/modules/Activities/editActivity/actions';
+import { IState } from '../../store';
+import ConfirmationModalContent from '../ConfirmationModalContent';
+import { getActivitiesRequest } from '../../store/modules/Activities/getActivities/actions';
 
 interface ActivityProps{
   data: IActivity;
@@ -30,10 +37,13 @@ interface ActivityProps{
 type HomeScreenProp = StackNavigationProp<HomeStackParamList, 'ActivityDetails'>;
 
 const Activity: React.FC<ActivityProps> = ({data, onPress, userPublished}) => {
+  const [hideActivityModalVisible, setHideActivityModalVisible] = useState<boolean>(false);
   const { navigate, push } = useNavigation<HomeScreenProp>();
+  const dispatch = useDispatch();
 
   const { setPressedActivity, setModalVisible, setIsSaved } = useConfirmationModal();
-
+  const { data: userData } = useSelector((state: IState) => state.userData);
+ 
   const handleEditActivity = () => {
     navigate('EditActivity', { data } )
   }
@@ -42,6 +52,21 @@ const Activity: React.FC<ActivityProps> = ({data, onPress, userPublished}) => {
     setIsSaved(data.saved || false);
     setPressedActivity(data);
     setModalVisible(true);
+  }
+
+  const onSuccess = () => {
+    dispatch(getActivitiesRequest());
+    setHideActivityModalVisible(false);
+    return Alert.alert('Sucesso ao arquivar atividade!', 'Agora esta atividade não aparecerá mais no feed.');
+  }
+
+  const onError = () => {
+    setHideActivityModalVisible(false);
+    return Alert.alert('Erro ao arquivar atividade!', 'Verifique sua conexão com a internet.');
+  }
+
+  const handleHideActivityFromFeed = () => {
+    dispatch(editActivityRequest({id: data.id, activity: { hidden: true }, onSuccess, onError}));
   }
 
   return (
@@ -62,7 +87,12 @@ const Activity: React.FC<ActivityProps> = ({data, onPress, userPublished}) => {
             <MaterialIcons name="add" size={14} color={theme.colors.primary_light} />
             <SeeMoreText>Toque para ver mais</SeeMoreText>
           </SeeMoreContainer>
-          <Row userPublished={userPublished}>
+          {userData.admin ? (
+            <TouchableOpacity onPress={() => setHideActivityModalVisible(true)}>
+              <Ionicons name="file-tray" size={22} color={theme.colors.primary_light} />
+            </TouchableOpacity>
+          ) : (
+            <Row userPublished={userPublished}>
             {userPublished && (
               <TouchableOpacity onPress={handleEditActivity}>
                 <MaterialIcons name="edit" size={22} color={theme.colors.primary_light} />
@@ -72,8 +102,20 @@ const Activity: React.FC<ActivityProps> = ({data, onPress, userPublished}) => {
               <MaterialIcons name={data.saved ? 'folder' : 'folder-open'} size={24} color={theme.colors.primary_light} />
             </TouchableOpacity>
           </Row>
+          )}
         </CardBottom>
       </Container>
+      <Modal
+          animationIn="fadeIn"
+          animationOut="fadeOut"
+          isVisible={hideActivityModalVisible}
+          onBackdropPress={() => setHideActivityModalVisible(false)}
+        >
+          <ConfirmationModalContent 
+            title={`Deseja arquivar a atividade "${data.title}"? Essa ação não poderá ser desfeita!`}
+            onYes={handleHideActivityFromFeed}
+          />
+      </Modal>
     </>
   )
 }
